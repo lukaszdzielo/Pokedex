@@ -1,18 +1,21 @@
 const config = {
     url: 'https://pokeapi.co/api/v2',
-    nameList: '/pokemon-species/',
+    nameList: '/pokemon-species',
     nameListLimit: '/pokemon-species/?limit=',
 }
 
 export class Pokedex {
     constructor(app) {
         this.app = app;
+        this.appNav = '';
+        this.appList = '';
         this.PokemonsNumber = 0;
         this.Pokemons = [];
         this.init();
     };
 
     init() {
+        this.buildApp()
         this.fetchAPI(config.url).then( () => {
             this.getPokemonsNumber();
         });
@@ -45,7 +48,7 @@ export class Pokedex {
 
         if (localStorage.getItem("PokemonsNames") && (localStorage.getItem("PokemonsNames").length === this.PokemonsNumber || localStorage.getItem("PokemonsNames").split(',').length === this.PokemonsNumber)) {
             this.Pokemons = JSON.parse(localStorage.getItem("PokemonsNames"))
-            this.buildApp()
+            this.updateList()
         } else {
             this.getPokemons()
         }
@@ -62,36 +65,35 @@ export class Pokedex {
             });
             this.Pokemons = pokemonNames;
             localStorage.setItem("PokemonsNames", JSON.stringify(pokemonNames));
-            this.buildApp()
         });
     }
 
-    getPokemonNames(url) {
-        // console.log('%c getPokemonNames() ', 'background: #3B78FF');
-
-        // (async () => {
-        //     try {
-        //         const res = await fetch(url);
-        //         if (!res.ok) {
-        //             throw new Error(`Http error: ${res.status}`);
-        //         }
-        //         const json = await res.json();
-
-        //         console.log(json);
-
-        //     } catch (error) {
-        //         console.error(error);
-        //     }
-        // })();
-
-    }
     buildApp() {
+        this.appNav = document.createElement('nav');
+        this.appList = document.createElement('div');
+
+        this.appList.classList.add('list');
+
+        this.app.appendChild(this.appNav);
+        this.app.appendChild(this.appList);
+    }
+
+    updateNav() {
+        
+    }
+
+    updateList() {
         console.log('build?', this.Pokemons);
-        let htmlTemplate = '';
-        this.Pokemons.forEach(pokemon => {
-            htmlTemplate += `<div class="item"><div class='name'>${pokemon.name}</div></div>`;
+        const pattern = (pokemon, i) => {
+            return `<div id="Pokemon--${i+1}" class="list__item">
+                <div class='id'>${i+1}</div>
+                <img src="https://github.com/PokeAPI/sprites/raw/master/sprites/pokemon/other/dream-world/${i+1}.svg" alt="${pokemon.name}" style="width: 100%;" loading="lazy">
+                <div class='name'>${pokemon.name}</div>
+            </div>`};
+        this.Pokemons.forEach( (pokemon, i) => {
+            const item = document.createElement("div");
+            item.innerHTML = pattern(pokemon, i);
+            this.appList.append(item.firstChild);
         })
-        console.log(this)
-        this.app.innerHTML = htmlTemplate;
     }
 }
