@@ -11,8 +11,8 @@ export class Pokedex {
         this.appNav;
         this.appList;
         this.appLoader;
-        this.PokemonsNumber = 2; // '' for all
-        this.Pokemons = [];
+        this.pokemonsNumber = 5; // '' for all
+        this.pokemons = [];
         this.init();
     };
 
@@ -39,17 +39,20 @@ export class Pokedex {
 
     getPokemonsNumber() {
         console.log('%c getPokemonsNumber() ', 'background: #3B78FF; color: #fff;');
-        
-        this.fetchAPI(config.url + config.species).then(res => {
-            this.PokemonsNumber = this.PokemonsNumber || res.count;
-            this.checkPokemons();
-        });
+        if (this.pokemonsNumber) {
+            this.checkPokemons()
+        } else {
+            this.fetchAPI(config.url + config.species).then(res => {
+                this.pokemonsNumber = res.count;
+                this.checkPokemons();
+            });
+        }
     }
 
     checkPokemons() {
         console.log('%c getPokemons() ', 'background: #3B78FF; color: #fff;');
-        if (localStorage.getItem("PokemonsNames") && (localStorage.getItem("PokemonsNames").length === this.PokemonsNumber || localStorage.getItem("PokemonsNames").split(',').length === this.PokemonsNumber)) {
-            this.Pokemons = JSON.parse(localStorage.getItem("PokemonsNames"));
+        if (localStorage.getItem("PokemonsNames") && (localStorage.getItem("PokemonsNames").length === this.pokemonsNumber || localStorage.getItem("PokemonsNames").split(',').length === this.pokemonsNumber)) {
+            this.pokemons = JSON.parse(localStorage.getItem("PokemonsNames"));
             this.updateList();
         } else {
             this.getPokemons();
@@ -59,13 +62,13 @@ export class Pokedex {
     getPokemons() {
         console.log('%c getPokemons() ', 'background: #3B78FF; color: #fff;');
         
-        this.fetchAPI(config.url + config.listLimit + this.PokemonsNumber).then(res => {
+        this.fetchAPI(config.url + config.listLimit + this.pokemonsNumber).then(res => {
             console.log(config.url + config.listLimit);
             const pokemonNames = []
             res.results.forEach(pokemon => {
                 pokemonNames.push({name: pokemon.name})
             });
-            this.Pokemons = pokemonNames;
+            this.pokemons = pokemonNames;
             localStorage.setItem("PokemonsNames", JSON.stringify(pokemonNames));
             this.updateList();
         });
@@ -108,7 +111,7 @@ export class Pokedex {
                 <div class='item__name'>${pokemon.name}</div>
             </div>`};
             // https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i+1}.png
-        this.Pokemons.forEach( (pokemon, i) => {
+        this.pokemons.forEach( (pokemon, i) => {
             const item = document.createElement("div");
             item.innerHTML = pattern(pokemon, i);
             this.appList.append(item.firstChild);
