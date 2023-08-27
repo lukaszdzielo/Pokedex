@@ -1,5 +1,8 @@
 const config = {
     baseUrl: 'https://pokeapi.co/api/v2/',
+    species: 'https://pokeapi.co/api/v2/pokemon-species/',
+    pokemon: 'https://pokeapi.co/api/v2/pokemon/',
+    generation: 'https://pokeapi.co/api/v2/generation/', 
     limit: 'limit=',
     offset: 'offset=',
 }
@@ -11,12 +14,13 @@ export class Pokedex {
         this.appNav;
         this.appList;
         this.appLoader;
-        this.pokemonsNumber = 30; // '' for all
+        this.pokemonsNumber = ''; // '' for all
         this.pokemons = {};
         this.init();
     };
 
     init() {
+        console.log('%c 1 getPokemonsSpeciesNumber() ', 'background: #3B78FF; color: #fff;');
         this.buildApp()
         this.getAppUrls()
     }
@@ -36,6 +40,7 @@ export class Pokedex {
     }
 
     getAppUrls() {
+        console.log('%c 2 getAppUrls() ', 'background: #3B78FF; color: #fff;');
         this.fetchAPI(config.baseUrl).then( (res) => {
             this.appConfig = res;
             this.getPokemonsSpeciesNumber();
@@ -43,6 +48,7 @@ export class Pokedex {
     }
 
     getPokemonsSpeciesNumber() {
+        console.log('%c 3 getPokemonsSpeciesNumber() ', 'background: #3B78FF; color: #fff;');
         if (this.pokemonsNumber > 0) {
             this.checkPokemons()
         } else {
@@ -54,6 +60,7 @@ export class Pokedex {
     }
 
     checkPokemons() {
+        console.log('%c 4 checkPokemons() ', 'background: #3B78FF; color: #fff;');
         // console.log('%c checkPokemons() ', 'background: #3B78FF; color: #fff;');
 
         // if (localStorage.getItem("PokemonsNames") && (localStorage.getItem("PokemonsNames").length === this.pokemonsNumber || localStorage.getItem("PokemonsNames").split(',').length === this.pokemonsNumber)) {
@@ -68,49 +75,15 @@ export class Pokedex {
     }
 
     async getPokemonData() {
-        // ToDo create empty objects {} inside array
-        // this.pokemons.length = 5;
-        // console.log( this.pokemons, this.pokemons.length );
-        // console.log({})
-        // const x = this.pokemons.map(() => {
-        //     return ({'s':'s'})
-        // })
-        // console.log( x );
-        // console.log( this.pokemons, this.pokemons.length );
-
+        console.log('%c 5 getPokemonData() ', 'background: #3B78FF; color: #fff;');
         await this.getPokemonNames();
         await this.getPokemonTypes();
-        
-        // const promise1 = new Promise((resolve, reject) => {
-        //     // Wykonaj asynchroniczne zadanie 1
-        //     setTimeout(() => {
-        //         resolve( );
-        //     }, 2000);
-        // });
-          
-        // const promise2 = new Promise((resolve, reject) => {
-        //     // Wykonaj asynchroniczne zadanie 2
-            
-        //     setTimeout(() => {
-        //       resolve( this.getPokemonTypes() );
-        //     }, 2000);
-        // });
-          
-        // // Wykonaj funkcję 3 dopiero kiedy obydwie funkcje 1 i 2 zostaną wykonane
-        // promise1.then(() => {
-        //     // Funkcja 1 jest wykonana
-        //     console.log("Funkcja 1 jest wykonana");
-            
-        //     // Wykonaj funkcję 3
-        //     promise2.then((result) => {
-        //         console.log(result);
-        //     });
-        // });
-
+        // await this.getPokemonTypes();
+        console.log(this.pokemons)
     }
 
     async getPokemonNames() {
-        console.log('%c getPokemonNames() ', 'background: #3B78FF; color: #fff;');
+        console.log('%c 6 getPokemonNames() ', 'background: #3B78FF; color: #fff;');
         const res = await this.fetchAPI(this.appConfig['pokemon-species'] + '?' + config.limit + this.pokemonsNumber);
         for await (const [i, pokemon] of res.results.entries()) {
             let name = '';
@@ -118,22 +91,25 @@ export class Pokedex {
                 const res = await this.fetchAPI(this.appConfig['pokemon-species'] + pokemon.name);
                 name = (res.names.find((object) => object.language.name === "en")).name;
             }
-
             this.pokemons[pokemon.name] = {
                 id: i,
                 name: name || pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
             }
-        }
-        console.log(this.pokemons)
+        } 
     }
 
-    getPokemonTypes() {
-        console.log('%c getPokemonTypes() ', 'background: #3B78FF; color: #fff;');
-        
-        // this.fetchAPI( config.API + config.pokemon + '?' + config.limit + this.pokemonsNumber).then(res => {
-        //     this.pokemons = res.results.map(elem => ({nssame: elem.name}) );
-        //     console.log(this.pokemons)
-        // });
+    async getPokemonTypes() {
+        console.log('%c 7 getPokemonTypes() ', 'background: #3B78FF; color: #fff;');
+        const res = await this.fetchAPI(this.appConfig.type)
+        res.results.forEach(type => {
+            this.fetchAPI(type.url).then(res => {
+                res.pokemon.forEach(elem => {
+                    if (!this.pokemons[elem.pokemon.name]) return;
+                    if (!this.pokemons[elem.pokemon.name].type) this.pokemons[elem.pokemon.name].type = [];
+                    this.pokemons[elem.pokemon.name].type[elem.slot-1] = type.name;
+                })
+            });
+        })
     }
 
     buildLocalStorage() {
