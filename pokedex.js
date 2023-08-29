@@ -20,7 +20,7 @@ export class Pokedex {
     };
 
     init() {
-        console.log('%c 1 getPokemonsSpeciesNumber() ', 'background: #3B78FF; color: #fff;');
+        console.log('%c 1 getPokemonsSpeciesNumber() ', 'background: #1976D2; color: #fff;');
         this.buildApp()
         this.getAppUrls()
     }
@@ -40,7 +40,7 @@ export class Pokedex {
     }
 
     getAppUrls() {
-        console.log('%c 2 getAppUrls() ', 'background: #3B78FF; color: #fff;');
+        console.log('%c 2 getAppUrls() ', 'background: #1976D2; color: #fff;');
         this.fetchAPI(config.baseUrl).then( (res) => {
             this.appConfig = res;
             this.getPokemonsSpeciesNumber();
@@ -48,7 +48,7 @@ export class Pokedex {
     }
 
     getPokemonsSpeciesNumber() {
-        console.log('%c 3 getPokemonsSpeciesNumber() ', 'background: #3B78FF; color: #fff;');
+        console.log('%c 3 getPokemonsSpeciesNumber() ', 'background: #1976D2; color: #fff;');
         if (this.pokemonsNumber > 0) {
             this.checkPokemons()
         } else {
@@ -60,8 +60,7 @@ export class Pokedex {
     }
 
     checkPokemons() {
-        console.log('%c 4 checkPokemons() ', 'background: #3B78FF; color: #fff;');
-        // console.log('%c checkPokemons() ', 'background: #3B78FF; color: #fff;');
+        console.log('%c 4 checkPokemons() ', 'background: #1976D2; color: #fff;');
 
         // if (localStorage.getItem("PokemonsNames") && (localStorage.getItem("PokemonsNames").length === this.pokemonsNumber || localStorage.getItem("PokemonsNames").split(',').length === this.pokemonsNumber)) {
         //     this.pokemons = JSON.parse(localStorage.getItem("PokemonsNames"));
@@ -75,45 +74,90 @@ export class Pokedex {
     }
 
     async getPokemonData() {
-        console.log('%c 5 getPokemonData() ', 'background: #3B78FF; color: #fff;');
-        await this.getPokemonNames();
-        await this.getPokemonTypes();
-        // await this.getPokemonTypes();
-        console.log(this.pokemons)
+        console.log('%c 5 getPokemonData() ', 'background: #1976D2; color: #fff;');
+
+        console.log('%c - getPokemonData() ', 'background: #2196F3; color: #fff;');
+
+        const incorrectNames = await this.getPokemonNames();
+
+
+        Promise.all([
+            this.getPokemonCorrectNames(incorrectNames),
+        //     this.getPokemonTypes(),
+        //     this.getPokemonGenerations(),
+        ])
+        .then( () => {
+            console.log('uruchom updateList'); //["user data", "books data", "pets data"]
+        //     this.updateList();
+        });
+
+        //     this.updateList();
+        console.log('END', this.pokemons)
     }
 
+
+
+
     async getPokemonNames() {
-        console.log('%c 6 getPokemonNames() ', 'background: #3B78FF; color: #fff;');
+        console.log('%c 5.1 getPokemonNames() ', 'background: #1976D2; color: #fff;');
+
+        const incorrectNames = []
+
         const res = await this.fetchAPI(this.appConfig['pokemon-species'] + '?' + config.limit + this.pokemonsNumber);
         for await (const [i, pokemon] of res.results.entries()) {
-            let name = '';
-            if (/\-/.test(pokemon.name)) {
-                const res = await this.fetchAPI(this.appConfig['pokemon-species'] + pokemon.name);
-                name = (res.names.find((object) => object.language.name === "en")).name;
-            }
+            if (/\-/.test(pokemon.name)) incorrectNames.push(pokemon.name);
             this.pokemons[pokemon.name] = {
-                id: i,
-                name: name || pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
+                id: i+1,
+                name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
             }
         } 
+        return incorrectNames;
+    }
+
+    getPokemonCorrectNames(incorrectNames) {
+        console.log('%c 5.2 getPokemonCorrectNames() ', 'background: #1976D2; color: #fff;');
+
+        for (const name of incorrectNames) {
+            this.fetchAPI(this.appConfig['pokemon-species'] + name).then( res => {
+                this.pokemons[name].name = (res.names.find((object) => object.language.name === "en")).name;
+                console.log(this.pokemons[name].name, name);
+            })
+        }
+
+        new Promise((resolve, reject) => {
+            // Przetwarzaj każde zadanie w kolejce.
+            for (const name of incorrectNames) {
+                
+            }
+        });
     }
 
     async getPokemonTypes() {
-        console.log('%c 7 getPokemonTypes() ', 'background: #3B78FF; color: #fff;');
-        const res = await this.fetchAPI(this.appConfig.type)
-        res.results.forEach(type => {
-            this.fetchAPI(type.url).then(res => {
-                res.pokemon.forEach(elem => {
-                    if (!this.pokemons[elem.pokemon.name]) return;
-                    if (!this.pokemons[elem.pokemon.name].type) this.pokemons[elem.pokemon.name].type = [];
-                    this.pokemons[elem.pokemon.name].type[elem.slot-1] = type.name;
-                })
-            });
-        })
+        console.log('%c 5.3 getPokemonTypes() ', 'background: #1976D2; color: #fff;');
+
+        await setTimeout(1500);
+        console.log('%c - getPokemonTypes() ', 'background: #2196F3; color: #fff;');
+
+        // const res = await this.fetchAPI(this.appConfig.type)
+        // for await (const type of res.results) {
+        //     const res = await this.fetchAPI(type.url)
+        //     for await (const elem of res.pokemon) {
+        //         if (!this.pokemons[elem.pokemon.name]) continue;
+        //         if (!this.pokemons[elem.pokemon.name].type) this.pokemons[elem.pokemon.name].type = [];
+        //         this.pokemons[elem.pokemon.name].type[elem.slot-1] = type.name;
+        //     } 
+        // }
+    }
+
+    async getPokemonGenerations() {
+        console.log('%c 5.4 getPokemonGenerations() ', 'background: #1976D2; color: #fff;');
+        
+        await setTimeout(1500);
+        console.log('%c - - getPokemonGenerations() ', 'background: #2196F3; color: #fff;');
     }
 
     buildLocalStorage() {
-        console.log('%c buildLocalStorage() ', 'background: #3B78FF; color: #fff;');
+        console.log('%c buildLocalStorage() ', 'background: #1976D2; color: #fff;');
 
         // localStorage.setItem("PokemonsNames", JSON.stringify(pokemonNames));
     }
@@ -127,7 +171,7 @@ export class Pokedex {
     buildLoader() {
         this.appLoader = document.createElement('div');
         this.appLoader.classList.add('loader', 'loading--start');
-        this.appLoader.innerHTML = `<div class="loader--top">1</div><div class="loader--bottom">2</div>`;
+        // this.appLoader.innerHTML = `<div class="loader--top">1</div><div class="loader--bottom">2</div>`;
         this.app.appendChild(this.appLoader);
     }
 
@@ -143,22 +187,23 @@ export class Pokedex {
     }
 
     updateNav() {
-        console.log('%c updateNav() ', 'background: #3B78FF; color: #fff;');
+        console.log('%c updateNav() ', 'background: #1976D2; color: #fff;');
     }
 
     updateList() {
-        console.log('%c updateList() ', 'background: #3B78FF; color: #fff;');
-        const pattern = (pokemon, i) => {
-            return `<div id="Pokemon--${i+1}" class="list__item">
-                <div class="item__id">${i+1}</div>
-                <img src="" alt="${pokemon.name}" class="item__img">
-                <div class='item__name'>${pokemon.name}</div>
-            </div>`};
-            // https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i+1}.png
-        this.pokemons.forEach( (pokemon, i) => {
-            const item = document.createElement("div");
-            item.innerHTML = pattern(pokemon, i);
-            this.appList.append(item.firstChild);
-        })
+        console.log('%c updateList() ', 'background: #1976D2; color: #fff;');
+
+        // const pattern = pokemon => {
+        //     return `<div id="Pokemon--${this.pokemons[pokemon].id}" class="list__item">
+        //         <div class="item__id">${this.pokemons[pokemon].id}</div>
+        //         <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokemons[pokemon].id}.png" alt="${this.pokemons[pokemon].name}" class="item__img">
+        //         <div class='item__name'>${this.pokemons[pokemon].name}</div>
+        //     </div>`};
+        //     // https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i+1}.png
+        //     for (const pokemon in this.pokemons) {
+        //         const item = document.createElement("div");
+        //         item.innerHTML = pattern(pokemon);
+        //         this.appList.append(item.firstChild);
+        //     }
     }
 }
