@@ -1,8 +1,5 @@
 const config = {
     baseUrl: 'https://pokeapi.co/api/v2/',
-    species: 'https://pokeapi.co/api/v2/pokemon-species/',
-    pokemon: 'https://pokeapi.co/api/v2/pokemon/',
-    generation: 'https://pokeapi.co/api/v2/generation/', 
     limit: 'limit=',
     offset: 'offset=',
 }
@@ -19,58 +16,53 @@ export class Pokedex {
         this.init();
     };
 
-    init() {
+    async init() {
         // console.log('%c 1 getPokemonsSpeciesNumber() ', 'background: #1976D2; color: #fff;');
-        this.buildApp()
-        this.getAppUrls()
+        await this.buildApp();
+        await this.getAppUrls();
+        await this.getPokemonsSpeciesNumber();
+        await this.checkPokemons();
     }
 
     async fetchAPI(fetchUrl) {
         try {
             const res = await fetch(fetchUrl);
             if (!res.ok) {
+                console.log('ups1');
                 throw new Error(`Http error: ${res.status}`);
             }
             const json = await res.json();
             return json;
 
         } catch (error) {
+            console.log('ups2');
             console.error(error);
         }
     }
 
-    getAppUrls() {
+    async getAppUrls() {
         // console.log('%c 2 getAppUrls() ', 'background: #1976D2; color: #fff;');
-        this.fetchAPI(config.baseUrl).then( (res) => {
-            this.appConfig = res;
-            this.getPokemonsSpeciesNumber();
-        });
+        this.appConfig = await this.fetchAPI(config.baseUrl).then(res => res);
     }
 
-    getPokemonsSpeciesNumber() {
+    async getPokemonsSpeciesNumber() {
         // console.log('%c 3 getPokemonsSpeciesNumber() ', 'background: #1976D2; color: #fff;');
-        if (this.pokemonsNumber > 0) {
-            this.checkPokemons()
-        } else {
-            this.fetchAPI(this.appConfig['pokemon-species'] + '?' + config.limit + 1).then(res => {
-                this.pokemonsNumber = res.count;
-                this.checkPokemons();
-            });
-        }
+        this.pokemonsNumber = await this.fetchAPI(this.appConfig['pokemon-species'] + '?' + config.limit + 1).then(res => res.count);
     }
 
-    checkPokemons() {
-        // console.log('%c 4 checkPokemons() ', 'background: #1976D2; color: #fff;');
+    async checkPokemons() {
+        console.log('%c 4 checkPokemons() ', 'background: #1976D2; color: #fff;');
 
-        // if (localStorage.getItem("PokemonsNames") && (localStorage.getItem("PokemonsNames").length === this.pokemonsNumber || localStorage.getItem("PokemonsNames").split(',').length === this.pokemonsNumber)) {
-        //     this.pokemons = JSON.parse(localStorage.getItem("PokemonsNames"));
-        //     this.updateList();
-        // } else {
-            this.getPokemonData();
-        // }
-
-        // console.log(localStorage.getItem("PokemonsNames"));
-        // console.log(JSON.parse(localStorage.getItem("PokemonsNames")));
+        if (localStorage.getItem("PokemonsData")) this.pokemons = JSON.parse(localStorage.getItem("PokemonsData"));
+        if (localStorage.getItem("PokemonsData") && Object.keys(this.pokemons).length === this.pokemonsNumber) {
+            console.log('Use local storage');
+            this.pokemons = JSON.parse(localStorage.getItem("PokemonsData"));
+        } else {
+            console.log('Get new pokemon data and save localy');
+            await this.getPokemonData();
+            localStorage.setItem("PokemonsData", JSON.stringify(this.pokemons));
+        }
+        this.insertList();
     }
 
     async getPokemonData() {
@@ -78,138 +70,66 @@ export class Pokedex {
 
         const incorrectNames = await this.getPokemonCodeNames();
 
-         function test() {
-            for (const name of incorrectNames) {
-                // console.log(name, incorrectNames);
-                // console.log(config.species + name);
-                this.fetchAPI('https://pokeapi.co/api/v2/pokemon-species/' + name).then(res => {
-                    console.log(res);
-                });
-                // console.log(res);
-                // this.fetchAPI(this.appConfig['pokemon-species'] + name).then(res => {
-                //     this.pokemons[name].name = (res.names.find((object) => object.language.name === "en")).name;
-                //     console.log(this.pokemons[name].name, name);
-                //     console.log(name);
-                // })
-            }
-        }
-        test();
+        await this.getPokemonCorrectNames(incorrectNames);
+        await this.getPokemonTypes();
+        await this.getPokemonGenerations();
 
-        this.updateList();
-
-        // await Promise.all([
-        //     this.getPokemonCorrectNames(incorrectNames),
-        //     this.getPokemonTypes(),
-        //     this.getPokemonGenerations(),
-        // ]).then(()=>{
-        //     this.updateList();
-        // })
-
-        // const promises = [
-        //     new Promise((resolve, reject) => {
-        //         setTimeout(() => {
-        //             console.log('1');
-        //             resolve("Metoda 1");
-        //         }, 0);
-        //     }),
-        //     new Promise((resolve, reject) => {
-        //         setTimeout(() => {
-        //             console.log('2');
-        //             resolve("Metoda 2");
-        //         }, 5000); 
-        //     }),
-        //     new Promise((resolve, reject) => {
-        //         setTimeout(() => {
-        //             console.log('3');
-        //             resolve("Metoda 3");
-        //         }, 0);
-        //     }),
-        // ];
-        // // Uruchom obietnice.
-        // Promise.all(promises).then((values) => {
-        //       this.updateList();
-        // });
-
+        console.log('%c END ', 'background: #E53935; color: #fff;');
     }
 
     async getPokemonCodeNames() {
         console.log('%c 5.1 getPokemonNames() ', 'background: #1976D2; color: #fff;');
-
-        const incorrectNames = []
-
-        const res = await this.fetchAPI(this.appConfig['pokemon-species'] + '?' + config.limit + this.pokemonsNumber)
-        res.results.forEach((pokemon,i) => {
-            if (/\-/.test(pokemon.name)) incorrectNames.push(pokemon.name);
-            this.pokemons[pokemon.name] = {
-                id: i+1,
-                name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
-            }
+        const incorrectNames = [];
+        await this.fetchAPI(this.appConfig['pokemon-species'] + '?' + config.limit + this.pokemonsNumber).then(res => {
+            res.results.forEach((pokemon,i) => {
+                if (/\-/.test(pokemon.name)) incorrectNames.push(pokemon.name);
+                this.pokemons[pokemon.name] = {
+                    id: i+1,
+                    name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
+                };
+            });
         });
         return incorrectNames;
     }
 
-    getPokemonCorrectNames(incorrectNames) {
+    async getPokemonCorrectNames(incorrectNames) {
         console.log('%c 5.2 getPokemonCorrectNames() ', 'background: #1976D2; color: #fff;');
 
-        return new Promise((resolve, reject) => {
-            console.log('getPokemonCorrectNames', incorrectNames);
-            resolve();
-        });
-
-        // return new Promise((resolve, reject) => {
-        //     // Wykonaj pętlę z `setTimeout()`.
-        //     for (const name of incorrectNames) {
-        //         this.fetchAPI(this.appConfig['pokemon-species'] + name).then(res => {
-        //             this.pokemons[name].name = (res.names.find((object) => object.language.name === "en")).name;
-        //             console.log(this.pokemons[name].name, name);
-        //             console.log(name);
-        //         })
-        //     }
-        
-        //     resolve();
-        // });
-
-
-
-
-        // for (const name of incorrectNames) {
-        //     this.fetchAPI(this.appConfig['pokemon-species'] + name).then(res => {
-        //         this.pokemons[name].name = (res.names.find((object) => object.language.name === "en")).name;
-        //         console.log(this.pokemons[name].name, name);
-        //         console.log(name);
-        //     })
-        // }
-        console.log(this.pokemons);
+        for (const name of incorrectNames) {
+            await this.fetchAPI(this.appConfig['pokemon-species'] + name).then(res => {
+                this.pokemons[name].name = (res.names.find((object) => object.language.name === "en")).name;
+                console.log('correctNames:', name, this.pokemons[name].name);
+            });
+        };
     }
 
-     getPokemonTypes() {
+    async getPokemonTypes() {
         console.log('%c 5.3 getPokemonTypes() ', 'background: #1976D2; color: #fff;');
 
-        return new Promise((resolve, reject) => {
-            console.log('getPokemonTypes');
-            resolve();
-        });
-
-        // const res = await this.fetchAPI(this.appConfig.type);
-        // console.log(res);
-        // for await (const type of res.results) {
-        //     const res = await this.fetchAPI(type.url)
-        //     for await (const elem of res.pokemon) {
-        //         if (!this.pokemons[elem.pokemon.name]) continue;
-        //         if (!this.pokemons[elem.pokemon.name].type) this.pokemons[elem.pokemon.name].type = [];
-        //         this.pokemons[elem.pokemon.name].type[elem.slot-1] = type.name;
-        //     } 
-        // }
+        const res = await this.fetchAPI(this.appConfig.type);
+        for (const type of res.results) {
+            const res = await this.fetchAPI(type.url)
+            for (const elem of res.pokemon) {
+                if (!this.pokemons[elem.pokemon.name]) continue;
+                if (!this.pokemons[elem.pokemon.name].type) this.pokemons[elem.pokemon.name].type = [];
+                this.pokemons[elem.pokemon.name].type[elem.slot-1] = type.name;
+            };
+            console.log('types:', type);
+        };
     }
 
     async getPokemonGenerations() {
         console.log('%c 5.4 getPokemonGenerations() ', 'background: #1976D2; color: #fff;');
-    }
 
-    buildLocalStorage() {
-        console.log('%c buildLocalStorage() ', 'background: #1976D2; color: #fff;');
-
-        // localStorage.setItem("PokemonsNames", JSON.stringify(pokemonNames));
+        const res = await this.fetchAPI(this.appConfig.generation);
+        for (const gen of res.results) {
+            const res = await this.fetchAPI(gen.url)
+            for (const pokemon of res.pokemon_species) {
+                if (!this.pokemons[pokemon.name]) continue;
+                this.pokemons[pokemon.name].generation = gen.name;
+            };
+            console.log('gen:', gen);
+        };
     }
 
     buildApp() {
@@ -219,229 +139,57 @@ export class Pokedex {
     }
 
     buildLoader() {
-        this.appLoader = document.createElement('div');
-        this.appLoader.classList.add('loader', 'loading--start');
-        // this.appLoader.innerHTML = `<div class="loader--top">1</div><div class="loader--bottom">2</div>`;
-        this.app.appendChild(this.appLoader);
+        this.appLoader = document.querySelector('.loader');
+        // this.appLoader = document.createElement('div');
+        // this.appLoader.classList.add('loader', 'loading');
+        // this.appLoader.innerHTML = `<div class="loader--top"></div><div class="loader--bottom"></div>`;
+        // this.app.appendChild(this.appLoader);
+        this.showLoader()
     }
 
     buildNav() {
-        this.appNav = document.createElement('nav');
-        this.app.appendChild(this.appNav);
+        this.appNav = document.querySelector('nav');
     }
 
     buildList() {
-        this.appList = document.createElement('div');
-        this.appList.classList.add('list');
-        this.app.appendChild(this.appList);
+        this.appList = document.querySelector('.list');
     }
 
     updateNav() {
-        console.log('%c updateNav() ', 'background: #1976D2; color: #fff;');
+        console.log('%c updateNav() ', 'background: #43A047; color: #fff;');
     }
 
-    updateList() {
-        console.log('%c updateList() ', 'background: #E53935; color: #fff;');
+    showLoader() {
+        console.log('%c showLoader() ', 'background: #43A047; color: #fff;');
+        document.documentElement.classList.add('scrollDisabled');
+        this.appLoader.classList.add('loading');
+    }
 
-        // const pattern = pokemon => {
-        //     return `<div id="Pokemon--${this.pokemons[pokemon].id}" class="list__item">
-        //         <div class="item__id">${this.pokemons[pokemon].id}</div>
-        //         <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokemons[pokemon].id}.png" alt="${this.pokemons[pokemon].name}" class="item__img">
-        //         <div class='item__name'>${this.pokemons[pokemon].name}</div>
-        //     </div>`};
-        //     // https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i+1}.png
-        //     for (const pokemon in this.pokemons) {
-        //         const item = document.createElement("div");
-        //         item.innerHTML = pattern(pokemon);
-        //         this.appList.append(item.firstChild);
-        //     }
+    hideLoader() {
+        console.log('%c hideLoader() ', 'background: #43A047; color: #fff;');
+        setTimeout(() => {
+            document.documentElement.classList.remove('scrollDisabled');
+            this.appLoader.classList.remove('loading');
+        }, 10000);
+    }
+
+    insertList() {
+        console.log('%c insertList() ', 'background: #43A047; color: #fff;');
+
+        const pokemonCard = pokemon => {
+            return `<div data-pokemon-id="${this.pokemons[pokemon].id}" data-pokemon-generation="${this.pokemons[pokemon].generation}" class="list__item">
+                <div class="item__id">${this.pokemons[pokemon].id}</div>
+                <div class='item__name'>${this.pokemons[pokemon].name}</div>
+                <div class='item__types'>${this.pokemons[pokemon].type}</div>
+                <img src="" alt="" class="item__img">
+            </div>`};
+        // https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokemons[pokemon].id}.png
+        for (const pokemon in this.pokemons) {
+            const item = document.createElement("div");
+            item.innerHTML = pokemonCard(pokemon);
+            this.appList.append(item.firstChild);
+        }
+
+        this.hideLoader();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// export class Pokedex {
-//     constructor(app) {
-//         this.app = app;
-//         this.appConfig = {};
-//         this.appNav;
-//         this.appList;
-//         this.appLoader;
-//         this.pokemonsNumber = ''; // '' for all
-//         this.pokemons = {};
-//         this.init();
-//     };
-
-//     init() {
-//         console.log('%c 1 getPokemonsSpeciesNumber() ', 'background: #3B78FF; color: #fff;');
-//         this.buildApp()
-//         this.getAppUrls()
-//     }
-
-//     async fetchAPI(fetchUrl) {
-//         try {
-//             const res = await fetch(fetchUrl);
-//             if (!res.ok) {
-//                 throw new Error(`Http error: ${res.status}`);
-//             }
-//             const json = await res.json();
-//             return json;
-
-//         } catch (error) {
-//             console.error(error);
-//         }
-//     }
-
-//     getAppUrls() {
-//         console.log('%c 2 getAppUrls() ', 'background: #3B78FF; color: #fff;');
-//         this.fetchAPI(config.baseUrl).then( (res) => {
-//             this.appConfig = res;
-//             this.getPokemonsSpeciesNumber();
-//         });
-//     }
-
-//     getPokemonsSpeciesNumber() {
-//         console.log('%c 3 getPokemonsSpeciesNumber() ', 'background: #3B78FF; color: #fff;');
-//         if (this.pokemonsNumber > 0) {
-//             this.checkPokemons()
-//         } else {
-//             this.fetchAPI(this.appConfig['pokemon-species'] + '?' + config.limit + 1).then(res => {
-//                 this.pokemonsNumber = res.count;
-//                 this.checkPokemons();
-//             });
-//         }
-//     }
-
-//     checkPokemons() {
-//         console.log('%c 4 checkPokemons() ', 'background: #3B78FF; color: #fff;');
-//         // console.log('%c checkPokemons() ', 'background: #3B78FF; color: #fff;');
-
-//         // if (localStorage.getItem("PokemonsNames") && (localStorage.getItem("PokemonsNames").length === this.pokemonsNumber || localStorage.getItem("PokemonsNames").split(',').length === this.pokemonsNumber)) {
-//         //     this.pokemons = JSON.parse(localStorage.getItem("PokemonsNames"));
-//         //     this.updateList();
-//         // } else {
-//             this.getPokemonData();
-//         // }
-
-//         // console.log(localStorage.getItem("PokemonsNames"));
-//         // console.log(JSON.parse(localStorage.getItem("PokemonsNames")));
-//     }
-
-//     async getPokemonData() {
-//         console.log('%c 5 getPokemonData() ', 'background: #3B78FF; color: #fff;');
-//         await this.getPokemonNames();
-//         await this.getPokemonTypes();
-//         // await this.getPokemonTypes();
-//         console.log(this.pokemons)
-//     }
-
-//     async getPokemonNames() {
-//         console.log('%c 6 getPokemonNames() ', 'background: #3B78FF; color: #fff;');
-//         const res = await this.fetchAPI(this.appConfig['pokemon-species'] + '?' + config.limit + this.pokemonsNumber);
-//         for await (const [i, pokemon] of res.results.entries()) {
-//             let name = '';
-//             if (/\-/.test(pokemon.name)) {
-//                 const res = await this.fetchAPI(this.appConfig['pokemon-species'] + pokemon.name);
-//                 name = (res.names.find((object) => object.language.name === "en")).name;
-//             }
-//             this.pokemons[pokemon.name] = {
-//                 id: i,
-//                 name: name || pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
-//             }
-//         } 
-//     }
-
-//     async getPokemonTypes() {
-//         console.log('%c 7 getPokemonTypes() ', 'background: #3B78FF; color: #fff;');
-//         const res = await this.fetchAPI(this.appConfig.type)
-//         res.results.forEach(type => {
-//             this.fetchAPI(type.url).then(res => {
-//                 res.pokemon.forEach(elem => {
-//                     if (!this.pokemons[elem.pokemon.name]) return;
-//                     if (!this.pokemons[elem.pokemon.name].type) this.pokemons[elem.pokemon.name].type = [];
-//                     this.pokemons[elem.pokemon.name].type[elem.slot-1] = type.name;
-//                 })
-//             });
-//         })
-//     }
-
-//     buildLocalStorage() {
-//         console.log('%c buildLocalStorage() ', 'background: #3B78FF; color: #fff;');
-
-//         // localStorage.setItem("PokemonsNames", JSON.stringify(pokemonNames));
-//     }
-
-//     buildApp() {
-//         this.buildLoader();
-//         this.buildNav();
-//         this.buildList();
-//     }
-
-//     buildLoader() {
-//         this.appLoader = document.createElement('div');
-//         this.appLoader.classList.add('loader', 'loading--start');
-//         this.appLoader.innerHTML = `<div class="loader--top">1</div><div class="loader--bottom">2</div>`;
-//         this.app.appendChild(this.appLoader);
-//     }
-
-//     buildNav() {
-//         this.appNav = document.createElement('nav');
-//         this.app.appendChild(this.appNav);
-//     }
-
-//     buildList() {
-//         this.appList = document.createElement('div');
-//         this.appList.classList.add('list');
-//         this.app.appendChild(this.appList);
-//     }
-
-//     updateNav() {
-//         console.log('%c updateNav() ', 'background: #3B78FF; color: #fff;');
-//     }
-
-//     updateList() {
-//         console.log('%c updateList() ', 'background: #3B78FF; color: #fff;');
-//         const pattern = (pokemon, i) => {
-//             return `<div id="Pokemon--${i+1}" class="list__item">
-//                 <div class="item__id">${i+1}</div>
-//                 <img src="" alt="${pokemon.name}" class="item__img">
-//                 <div class='item__name'>${pokemon.name}</div>
-//             </div>`};
-//             // https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i+1}.png
-//         this.pokemons.forEach( (pokemon, i) => {
-//             const item = document.createElement("div");
-//             item.innerHTML = pattern(pokemon, i);
-//             this.appList.append(item.firstChild);
-//         })
-//     }
-// }
