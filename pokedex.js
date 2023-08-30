@@ -73,94 +73,101 @@ export class Pokedex {
         // console.log(JSON.parse(localStorage.getItem("PokemonsNames")));
     }
 
-     getPokemonData() {
+    async getPokemonData() {
         console.log('%c 5 getPokemonData() ', 'background: #1976D2; color: #fff;');
 
-        const promises = [
-            new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    console.log('1');
-                    resolve("Metoda 1");
-                }, 0);
-            }),
-            new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    console.log('2');
-                    resolve("Metoda 2");
-                }, 5000); 
-            }),
-            new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    console.log('3');
-                    resolve("Metoda 3");
-                }, 0);
-            }),
-        ];
-        // Uruchom obietnice.
-        Promise.all(promises).then((values) => {
-              this.updateList();
-        });
+        const incorrectNames = await this.getPokemonCodeNames();
 
-        console.log('%c - getPokemonData() ', 'background: #2196F3; color: #fff;');
+         function test() {
+            for (const name of incorrectNames) {
+                // console.log(name, incorrectNames);
+                // console.log(config.species + name);
+                this.fetchAPI('https://pokeapi.co/api/v2/pokemon-species/' + name).then(res => {
+                    console.log(res);
+                });
+                // console.log(res);
+                // this.fetchAPI(this.appConfig['pokemon-species'] + name).then(res => {
+                //     this.pokemons[name].name = (res.names.find((object) => object.language.name === "en")).name;
+                //     console.log(this.pokemons[name].name, name);
+                //     console.log(name);
+                // })
+            }
+        }
+        test();
+
+        this.updateList();
+
+        // await Promise.all([
+        //     this.getPokemonCorrectNames(incorrectNames),
+        //     this.getPokemonTypes(),
+        //     this.getPokemonGenerations(),
+        // ]).then(()=>{
+        //     this.updateList();
+        // })
+
+        // const promises = [
+        //     new Promise((resolve, reject) => {
+        //         setTimeout(() => {
+        //             console.log('1');
+        //             resolve("Metoda 1");
+        //         }, 0);
+        //     }),
+        //     new Promise((resolve, reject) => {
+        //         setTimeout(() => {
+        //             console.log('2');
+        //             resolve("Metoda 2");
+        //         }, 5000); 
+        //     }),
+        //     new Promise((resolve, reject) => {
+        //         setTimeout(() => {
+        //             console.log('3');
+        //             resolve("Metoda 3");
+        //         }, 0);
+        //     }),
+        // ];
+        // // Uruchom obietnice.
+        // Promise.all(promises).then((values) => {
+        //       this.updateList();
+        // });
+
     }
-
-
-    dupa() {
-        new Promise((resolve, reject) => {
-            setTimeout(() => {
-              console.log('The second promise has resolved');
-              resolve();
-            }, 1000);
-        });
-    }
-
 
     async getPokemonCodeNames() {
         console.log('%c 5.1 getPokemonNames() ', 'background: #1976D2; color: #fff;');
 
         const incorrectNames = []
 
-        // this.fetchAPI(this.appConfig['pokemon-species'] + '?' + config.limit + this.pokemonsNumber).then(res=>{
-        //     res.results.forEach((pokemon,i) => {
-        //         console.log(i, pokemon);
-        //         if (/\-/.test(pokemon.name)) incorrectNames.push(pokemon.name);
-        //         this.pokemons[pokemon.name] = {
-        //             id: i+1,
-        //             name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
-        //         }
-        //     });
-        // })
-
-        const res = await this.fetchAPI(this.appConfig['pokemon-species'] + '?' + config.limit + this.pokemonsNumber);
-        console.log(res);
-        // for await (const [i, pokemon] of res.results.entries()) {
-        //     if (/\-/.test(pokemon.name)) incorrectNames.push(pokemon.name);
-        //     this.pokemons[pokemon.name] = {
-        //         id: i+1,
-        //         name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
-        //     }
-        // } 
+        const res = await this.fetchAPI(this.appConfig['pokemon-species'] + '?' + config.limit + this.pokemonsNumber)
+        res.results.forEach((pokemon,i) => {
+            if (/\-/.test(pokemon.name)) incorrectNames.push(pokemon.name);
+            this.pokemons[pokemon.name] = {
+                id: i+1,
+                name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
+            }
+        });
         return incorrectNames;
     }
 
     getPokemonCorrectNames(incorrectNames) {
         console.log('%c 5.2 getPokemonCorrectNames() ', 'background: #1976D2; color: #fff;');
 
-
-
-
         return new Promise((resolve, reject) => {
-            // Wykonaj pętlę z `setTimeout()`.
-            for (const name of incorrectNames) {
-                this.fetchAPI(this.appConfig['pokemon-species'] + name).then(res => {
-                    this.pokemons[name].name = (res.names.find((object) => object.language.name === "en")).name;
-                    console.log(this.pokemons[name].name, name);
-                    console.log(name);
-                })
-            }
-        
+            console.log('getPokemonCorrectNames', incorrectNames);
             resolve();
         });
+
+        // return new Promise((resolve, reject) => {
+        //     // Wykonaj pętlę z `setTimeout()`.
+        //     for (const name of incorrectNames) {
+        //         this.fetchAPI(this.appConfig['pokemon-species'] + name).then(res => {
+        //             this.pokemons[name].name = (res.names.find((object) => object.language.name === "en")).name;
+        //             console.log(this.pokemons[name].name, name);
+        //             console.log(name);
+        //         })
+        //     }
+        
+        //     resolve();
+        // });
 
 
 
@@ -175,8 +182,13 @@ export class Pokedex {
         console.log(this.pokemons);
     }
 
-    async getPokemonTypes() {
+     getPokemonTypes() {
         console.log('%c 5.3 getPokemonTypes() ', 'background: #1976D2; color: #fff;');
+
+        return new Promise((resolve, reject) => {
+            console.log('getPokemonTypes');
+            resolve();
+        });
 
         // const res = await this.fetchAPI(this.appConfig.type);
         // console.log(res);
