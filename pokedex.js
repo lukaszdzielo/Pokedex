@@ -140,10 +140,6 @@ export class Pokedex {
 
     buildLoader() {
         this.appLoader = document.querySelector('.loader');
-        // this.appLoader = document.createElement('div');
-        // this.appLoader.classList.add('loader', 'loading');
-        // this.appLoader.innerHTML = `<div class="loader--top"></div><div class="loader--bottom"></div>`;
-        // this.app.appendChild(this.appLoader);
         this.showLoader()
     }
 
@@ -170,24 +166,35 @@ export class Pokedex {
         setTimeout(() => {
             document.documentElement.classList.remove('scrollDisabled');
             this.appLoader.classList.remove('loading');
-        }, 10000);
+        }, 800);
     }
 
     insertList() {
         console.log('%c insertList() ', 'background: #43A047; color: #fff;');
 
         const pokemonCard = pokemon => {
-            return `<div data-pokemon-id="${this.pokemons[pokemon].id}" data-pokemon-generation="${this.pokemons[pokemon].generation}" class="list__item">
+            return `<div class="list__item loading" data-pokemon-id="${this.pokemons[pokemon].id}" data-pokemon-generation="${this.pokemons[pokemon].generation}">
                 <div class="item__id">${this.pokemons[pokemon].id}</div>
                 <div class='item__name'>${this.pokemons[pokemon].name}</div>
-                <div class='item__types'>${this.pokemons[pokemon].type}</div>
-                <img src="" alt="" class="item__img">
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokemons[pokemon].id}.png" alt="${this.pokemons[pokemon].name}" class="item__img" loading="lazy">
             </div>`};
         // https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokemons[pokemon].id}.png
         for (const pokemon in this.pokemons) {
             const item = document.createElement("div");
             item.innerHTML = pokemonCard(pokemon);
             this.appList.append(item.firstChild);
+            // this.pokemons[pokemon].type.forEach(type => {
+            //     console.log(this.pokemons[pokemon], type);
+            // })
+        }
+
+        const pokemonCards = this.appList.querySelectorAll(".list__item");
+        for (const card of pokemonCards) {
+            card.querySelector(".item__img").addEventListener("load", () => {
+                setTimeout(() => {
+                    card.classList.remove("loading");
+                }, 400);
+            });
         }
 
         this.hideLoader();

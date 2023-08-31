@@ -4,6 +4,7 @@
 }
 
 #app {
+    position: relative;
     min-height: 100dvh;
     background: var(--app__bg);
 }
@@ -37,20 +38,54 @@ body {
         box-sizing: border-box;
         font: 0.875rem sans-serif;
 
+        &:before {
+            content: ""; 
+            position: absolute;
+            inset: 0;
+            border-radius: 4px;
+            background: #BDBDBD;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transition: .3s;
+        }
+
+        &:after {
+            content: " ";
+            position: absolute;
+            z-index: 2;
+            display: block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 6px solid #fff;
+            border-color: #fff transparent #fff transparent;
+            animation: lds-dual-ring 1.2s linear infinite;
+            pointer-events: none;
+            opacity: 0;
+            transition: .3s;
+        }
+
         &.loading {
-            &:before {
-                content: "";
-                position: absolute;
-                inset: 0;
-                border-radius: 4px;
-                background: #BDBDBD;
-                z-index: 1;
+            &:before,
+            &:after {
+                opacity: 1;
+                pointer-events: auto;
             }
         }
+
+        @keyframes lds-dual-ring {
+            0% {
+              transform: rotate(0deg);
+            }
+            100% {
+              transform: rotate(360deg);
+            }
+          }
         
         .item__id {
             position: absolute;
-            inset: 4px 4px auto auto;
+            inset: 8px 8px auto auto;
             text-align: center;
         }
 
@@ -60,7 +95,7 @@ body {
 
         .item__name {
             position: absolute;
-            inset: 4px auto auto 4px;
+            inset: 8px auto auto 8px;
             text-align: center;
             text-transform: capitalize;
         }
@@ -77,8 +112,12 @@ body {
 .loader  {
     position: fixed;
     inset: 0;
-    z-index: 1;
+    z-index: 99;
     pointer-events: none;
+
+    .scrollDisabled & {
+        overflow-y: scroll;
+    }
     
     .loader--top,
     .loader--bottom {
