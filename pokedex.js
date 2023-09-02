@@ -28,14 +28,14 @@ export class Pokedex {
         try {
             const res = await fetch(fetchUrl);
             if (!res.ok) {
-                console.log('ups1');
+                console.error('Res not ok :(');
                 throw new Error(`Http error: ${res.status}`);
             }
             const json = await res.json();
             return json;
 
         } catch (error) {
-            console.log('ups2');
+            console.error('Catch error');
             console.error(error);
         }
     }
@@ -74,6 +74,8 @@ export class Pokedex {
         await this.getPokemonTypes();
         await this.getPokemonGenerations();
 
+        
+
         console.log('%c END ', 'background: #E53935; color: #fff;');
     }
 
@@ -106,7 +108,7 @@ export class Pokedex {
     async getPokemonTypes() {
         console.log('%c 5.3 getPokemonTypes() ', 'background: #1976D2; color: #fff;');
 
-        const res = await this.fetchAPI(this.appConfig.type);
+        const res = await this.fetchAPI(this.appConfig['type']);
         for (const type of res.results) {
             const res = await this.fetchAPI(type.url)
             for (const elem of res.pokemon) {
@@ -116,12 +118,26 @@ export class Pokedex {
             };
             console.log('types:', type);
         };
+
+        const missingType = [];
+        for (const [codeName, obj] of Object.entries(this.pokemons)) {
+            if (!obj.type) missingType.push(obj)
+        }
+
+        for (const obj of missingType) {
+            const res = await this.fetchAPI(this.appConfig['pokemon'] + obj.id)
+            res.types.forEach(elem => {
+                if (!obj.type) obj.type = []
+                obj.type[elem.slot-1] = elem.type.name;
+            })
+        }
+
     }
 
     async getPokemonGenerations() {
         console.log('%c 5.4 getPokemonGenerations() ', 'background: #1976D2; color: #fff;');
 
-        const res = await this.fetchAPI(this.appConfig.generation);
+        const res = await this.fetchAPI(this.appConfig['generation']);
         for (const gen of res.results) {
             const res = await this.fetchAPI(gen.url)
             for (const pokemon of res.pokemon_species) {
@@ -172,20 +188,18 @@ export class Pokedex {
     insertList() {
         console.log('%c insertList() ', 'background: #43A047; color: #fff;');
 
-        const pokemonCard = pokemon => {
-            return `<div class="list__item loading" data-pokemon-id="${this.pokemons[pokemon].id}" data-pokemon-generation="${this.pokemons[pokemon].generation}">
-                <div class="item__id">${this.pokemons[pokemon].id}</div>
-                <div class='item__name'>${this.pokemons[pokemon].name}</div>
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokemons[pokemon].id}.png" alt="${this.pokemons[pokemon].name}" class="item__img" loading="lazy">
+        const pokemonCard = (codeName, pokemon) => {
+            return `<div class="list__item loading" data-pokemon-code-name="${codeName}" data-pokemon-generation="${pokemon.generation}">
+                <div class="item__id">${pokemon.id}</div>
+                <div class='item__name'>${pokemon.name}</div>
+                <div class='item__type'>${pokemon.type}</div>
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" alt="${pokemon.name}" class="item__img" loading="lazy">
             </div>`};
-        // https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokemons[pokemon].id}.png
-        for (const pokemon in this.pokemons) {
+        
+        for (const [codeName, pokemon] of Object.entries(this.pokemons)) {
             const item = document.createElement("div");
-            item.innerHTML = pokemonCard(pokemon);
+            item.innerHTML = pokemonCard(codeName, pokemon);
             this.appList.append(item.firstChild);
-            // this.pokemons[pokemon].type.forEach(type => {
-            //     console.log(this.pokemons[pokemon], type);
-            // })
         }
 
         const pokemonCards = this.appList.querySelectorAll(".list__item");
