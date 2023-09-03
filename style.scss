@@ -21,10 +21,12 @@ body {
 }
 
 .list {
-    display: flex;
-    flex-wrap: wrap;
     gap: 16px;
     padding: 16px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
+    grid-gap: 16px;
 
     .list__item {
         position: relative;
@@ -32,7 +34,6 @@ body {
         justify-content: center;
         align-items: center;
         aspect-ratio: 1/1;
-        width: min(136px, 200px);
         border-radius: 4px;
         background: var(--item__card__bg, #ffffff);
         box-sizing: border-box;
@@ -96,6 +97,13 @@ body {
         .item__name {
             position: absolute;
             inset: 8px auto auto 8px;
+            text-align: center;
+            text-transform: capitalize;
+        }
+
+        .item__type {
+            position: absolute;
+            inset: auto auto 8px auto;
             text-align: center;
             text-transform: capitalize;
         }
