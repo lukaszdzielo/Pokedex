@@ -36,7 +36,9 @@ body {
   border-radius: 4px;
   background: var(--item__card__bg, #ffffff);
   box-sizing: border-box;
-  font: 0.875rem sans-serif;
+  font: 0.75rem sans-serif;
+  container-type: inline-size;
+  container-name: card;
 }
 .list .list__item:before {
   content: "";
@@ -81,6 +83,11 @@ body {
   inset: 8px 8px auto auto;
   text-align: center;
 }
+@container card (width >= 180px) {
+  .list .list__item .item__id {
+    font: 1rem sans-serif;
+  }
+}
 .list .list__item .item__image {
   text-align: center;
 }
@@ -89,6 +96,12 @@ body {
   inset: 8px auto auto 8px;
   text-align: center;
   text-transform: capitalize;
+  font: 0.75rem sans-serif;
+}
+@container card (width >= 180px) {
+  .list .list__item .item__name {
+    font: 1rem sans-serif;
+  }
 }
 .list .list__item .item__type {
   position: absolute;
@@ -133,4 +146,25 @@ body {
 }
 .loader.loading .loader--bottom {
   inset: auto 0 0 0;
+}
+
+footer {
+  padding: 5em 16px 6em;
+  text-align: center;
+  font: 0.875rem sans-serif;
+}
+footer p:first-of-type {
+  margin-top: 0;
+}
+footer p:last-of-type {
+  margin-bottom: 0;
+}
+footer a {
+  text-decoration: none;
+}
+footer .copyright {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }/*# sourceMappingURL=style.css.map */
