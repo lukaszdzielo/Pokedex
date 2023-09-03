@@ -6,7 +6,7 @@ const config = {
 
 export class DataBuilder {
     constructor(app) {
-        console.log('%c 0 constructor() ', 'background: #42A5F5; color: #fff;');
+        console.log('%c 0 DataBuilder constructor() ', 'background: #42A5F5; color: #fff;');
         this.app = app;
         this.appConfig;
         this.pokemonsNumber;
