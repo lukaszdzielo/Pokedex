@@ -6,17 +6,16 @@ const config = {
 
 export class DataBuilder {
     constructor(app) {
+        console.log(app);
         console.log('%c 0 DataBuilder constructor() ', 'background: #42A5F5; color: #fff;');
         this.app = app;
         this.appConfig;
-        this.pokemonsNumber;
         this.pokemons;
     };
 
     async init(app) {
         console.log('%c 1 init() ', 'background: #42A5F5; color: #fff;');
         this.appConfig = app.appConfig;
-        this.pokemonsNumber = app.pokemonsNumber;
         this.pokemons = app.pokemons;
         await this.getPokemonData();
     }
@@ -57,7 +56,7 @@ export class DataBuilder {
 
         const incorrectNames = [];
 
-        await this.fetchAPI(this.appConfig['pokemon-species'] + '?' + config.limit + this.pokemonsNumber).then(res => {
+        await this.fetchAPI(this.appConfig['pokemon-species'] + '?' + config.limit + this.app.pokemonsNumber).then(res => {
             res.results.forEach((pokemon,i) => {
                 if (/\-/.test(pokemon.name)) incorrectNames.push(pokemon.name);
                 this.pokemons[pokemon.name] = {

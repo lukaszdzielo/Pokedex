@@ -1,4 +1,5 @@
 import { DataBuilder } from './dataBuilder.js';
+import { ListBuilder } from './listBuilder.js';
 
 const config = {
     baseUrl: 'https://pokeapi.co/api/v2/',
@@ -6,16 +7,24 @@ const config = {
     offset: 'offset=',
 }
 
+const pokemonCard = (codeName, pokemon) => {
+    return `<div class="list__item loading" data-pokemon-code-name="${codeName}" data-pokemon-generation="${pokemon.generation}">
+        <div class="item__id">${pokemon.id}</div>
+        <div class='item__name'>${pokemon.name}</div>
+        <div class='item__type'>${pokemon.type}</div>
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" alt="${pokemon.name}" class="item__img" loading="lazy">
+    </div>`};
+
 export class Pokedex {
     constructor(app) {
         this.app = app;
         this.appConfig = {};
         this.appNav;
-        this.appList;
         this.appLoader;
         this.pokemonsNumber = ''; // '' for all
         this.pokemons = {};
-        this.dataBuilder = new DataBuilder();
+        this.dataBuilder = new DataBuilder(this);
+        this.listBuilder = new ListBuilder(this);
         this.init();
     };
 
@@ -64,13 +73,14 @@ export class Pokedex {
             console.log('Get new pokemon data and save localy');
             await this.dataBuilder.init(this);
         }
-        this.insertList();
+
+        this.listBuilder.insertList();
     }
 
     buildApp() {
         this.buildLoader();
         this.buildNav();
-        this.buildList();
+        this.listBuilder.buildList();
     }
 
     buildLoader() {
@@ -80,10 +90,6 @@ export class Pokedex {
 
     buildNav() {
         this.appNav = document.querySelector('nav');
-    }
-
-    buildList() {
-        this.appList = document.querySelector('.list');
     }
 
     updateNav() {
@@ -102,34 +108,5 @@ export class Pokedex {
             document.documentElement.classList.remove('scrollDisabled');
             this.appLoader.classList.remove('loading');
         }, 800);
-    }
-
-    insertList() {
-        console.log('%c insertList() ', 'background: #43A047; color: #fff;');
-
-        const pokemonCard = (codeName, pokemon) => {
-            return `<div class="list__item loading" data-pokemon-code-name="${codeName}" data-pokemon-generation="${pokemon.generation}">
-                <div class="item__id">${pokemon.id}</div>
-                <div class='item__name'>${pokemon.name}</div>
-                <div class='item__type'>${pokemon.type}</div>
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" alt="${pokemon.name}" class="item__img" loading="lazy">
-            </div>`};
-        
-        for (const [codeName, pokemon] of Object.entries(this.pokemons)) {
-            const item = document.createElement("div");
-            item.innerHTML = pokemonCard(codeName, pokemon);
-            this.appList.append(item.firstChild);
-        }
-
-        const pokemonCards = this.appList.querySelectorAll(".list__item");
-        for (const card of pokemonCards) {
-            card.querySelector(".item__img").addEventListener("load", () => {
-                setTimeout(() => {
-                    card.classList.remove("loading");
-                }, 400);
-            });
-        }
-
-        this.hideLoader();
     }
 }
