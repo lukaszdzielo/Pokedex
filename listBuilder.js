@@ -7,7 +7,6 @@ export class ListBuilder {
 
     buildList() {
         this.appList = document.querySelector('.list');
-        console.log('s',this.appList);
     }
 
     insertList() {
