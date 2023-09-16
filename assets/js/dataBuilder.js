@@ -6,7 +6,6 @@ const config = {
 
 export class DataBuilder {
     constructor(app) {
-        console.log(app);
         console.log('%c 0 DataBuilder constructor() ', 'background: #42A5F5; color: #fff;');
         this.app = app;
         this.appConfig;
@@ -15,30 +14,13 @@ export class DataBuilder {
 
     async init(app) {
         console.log('%c 1 init() ', 'background: #42A5F5; color: #fff;');
-        this.appConfig = app.appConfig;
+        this.appConfig = app.linksAPI;
         this.pokemons = app.pokemons;
         await this.getPokemonData();
     }
 
-    async fetchAPI(fetchUrl) {
-        try {
-            const res = await fetch(fetchUrl);
-            if (!res.ok) {
-                console.error('Res not ok :(');
-                throw new Error(`Http error: ${res.status}`);
-            }
-            const json = await res.json();
-            return json;
-
-        } catch (error) {
-            console.error('Catch error');
-            console.error(error);
-        }
-    }
-
     async getPokemonData() {
         console.log('%c 2 getPokemonData() ', 'background: #42A5F5; color: #fff;');
-        console.log('---', this.pokemons);
 
         const incorrectNames = await this.getPokemonCodeNames();
 
@@ -56,7 +38,7 @@ export class DataBuilder {
 
         const incorrectNames = [];
 
-        await this.fetchAPI(this.appConfig['pokemon-species'] + '?' + config.limit + this.app.pokemonsNumber).then(res => {
+        await this.app.fetchAPI(this.appConfig['pokemon-species'] + '?' + config.limit + this.app.pokemonsNumber).then(res => {
             res.results.forEach((pokemon,i) => {
                 if (/\-/.test(pokemon.name)) incorrectNames.push(pokemon.name);
                 this.pokemons[pokemon.name] = {
@@ -72,9 +54,9 @@ export class DataBuilder {
         console.log('%c 4 getPokemonCorrectNames() ', 'background: #42A5F5; color: #fff;');
 
         for (const name of incorrectNames) {
-            await this.fetchAPI(this.appConfig['pokemon-species'] + name).then(res => {
+            await this.app.fetchAPI(this.appConfig['pokemon-species'] + name).then(res => {
                 this.pokemons[name].name = (res.names.find((object) => object.language.name === "en")).name;
-                console.log('correctNames:', name, this.pokemons[name].name);
+                // console.log('correctNames:', name, this.pokemons[name].name);
             });
         };
     }
@@ -82,15 +64,15 @@ export class DataBuilder {
     async getPokemonTypes() {
         console.log('%c 5 getPokemonTypes() ', 'background: #42A5F5; color: #fff;');
 
-        const res = await this.fetchAPI(this.appConfig['type']);
+        const res = await this.app.fetchAPI(this.appConfig['type']);
         for (const type of res.results) {
-            const res = await this.fetchAPI(type.url)
+            const res = await this.app.fetchAPI(type.url)
             for (const elem of res.pokemon) {
                 if (!this.pokemons[elem.pokemon.name]) continue;
                 if (!this.pokemons[elem.pokemon.name].type) this.pokemons[elem.pokemon.name].type = [];
                 this.pokemons[elem.pokemon.name].type[elem.slot-1] = type.name;
             };
-            console.log('types:', type);
+            // console.log('types:', type);
         };
 
         
@@ -102,12 +84,12 @@ export class DataBuilder {
         }
 
         for (const obj of missingType) {
-            const res = await this.fetchAPI(this.appConfig['pokemon'] + obj.id)
+            const res = await this.app.fetchAPI(this.appConfig['pokemon'] + obj.id)
             res.types.forEach(elem => {
                 if (!obj.type) obj.type = []
                 obj.type[elem.slot-1] = elem.type.name;
             })
-            console.log(obj.name, obj.type);
+            // console.log(obj.name, obj.type);
         }
 
     }
@@ -115,14 +97,14 @@ export class DataBuilder {
     async getPokemonGenerations() {
         console.log('%c 6 getPokemonGenerations() ', 'background: #42A5F5; color: #fff;');
 
-        const res = await this.fetchAPI(this.appConfig['generation']);
+        const res = await this.app.fetchAPI(this.appConfig['generation']);
         for (const gen of res.results) {
-            const res = await this.fetchAPI(gen.url)
+            const res = await this.app.fetchAPI(gen.url)
             for (const pokemon of res.pokemon_species) {
                 if (!this.pokemons[pokemon.name]) continue;
                 this.pokemons[pokemon.name].generation = gen.name;
             };
-            console.log('gen:', gen);
+            // console.log('gen:', gen);
         };
     }
 }
