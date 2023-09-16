@@ -21,7 +21,6 @@ export class Pokedex {
 
     async init() {
         // console.log('%c 1 init() ', 'background: #7E57C2; color: #fff;');
-        // await this.buildApp();
         await this.appBuilder.init();
         await this.getAppUrls();
         await this.getPokemonsSpeciesNumber();
@@ -55,7 +54,7 @@ export class Pokedex {
     }
 
     async checkPokemons() {
-        console.log('%c 4 checkPokemons() ', 'background: #7E57C2; color: #fff;');
+        console.log('%c checkPokemons() ', 'background: #7E57C2; color: #fff;');
 
         // if (localStorage.getItem("PokemonsData")) this.pokemons = JSON.parse(localStorage.getItem("PokemonsData"));
         // if (localStorage.getItem("PokemonsData") && Object.keys(this.pokemons).length === this.pokemonsNumber) {

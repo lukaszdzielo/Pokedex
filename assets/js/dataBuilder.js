@@ -6,21 +6,21 @@ const config = {
 
 export class DataBuilder {
     constructor(app) {
-        console.log('%c 0 DataBuilder constructor() ', 'background: #42A5F5; color: #fff;');
+        console.log('%c constructor() ', 'background: #42A5F5; color: #fff;');
         this.app = app;
         this.appConfig;
         this.pokemons;
     };
 
     async init(app) {
-        console.log('%c 1 init() ', 'background: #42A5F5; color: #fff;');
+        console.log('%c init() ', 'background: #42A5F5; color: #fff;');
         this.appConfig = app.linksAPI;
         this.pokemons = app.pokemons;
         await this.getPokemonData();
     }
 
     async getPokemonData() {
-        console.log('%c 2 getPokemonData() ', 'background: #42A5F5; color: #fff;');
+        console.log('%c getPokemonData() ', 'background: #42A5F5; color: #fff;');
 
         const incorrectNames = await this.getPokemonCodeNames();
 
@@ -34,7 +34,7 @@ export class DataBuilder {
     }
 
     async getPokemonCodeNames() {
-        console.log('%c 3 getPokemonNames() ', 'background: #42A5F5; color: #fff;');
+        console.log('%c getPokemonNames() ', 'background: #42A5F5; color: #fff;');
 
         const incorrectNames = [];
 
@@ -51,7 +51,7 @@ export class DataBuilder {
     }
 
     async getPokemonCorrectNames(incorrectNames) {
-        console.log('%c 4 getPokemonCorrectNames() ', 'background: #42A5F5; color: #fff;');
+        console.log('%c getPokemonCorrectNames() ', 'background: #42A5F5; color: #fff;');
 
         for (const name of incorrectNames) {
             await this.app.fetchAPI(this.appConfig['pokemon-species'] + name).then(res => {
@@ -62,7 +62,7 @@ export class DataBuilder {
     }
 
     async getPokemonTypes() {
-        console.log('%c 5 getPokemonTypes() ', 'background: #42A5F5; color: #fff;');
+        console.log('%c getPokemonTypes() ', 'background: #42A5F5; color: #fff;');
 
         const res = await this.app.fetchAPI(this.appConfig['type']);
         for (const type of res.results) {
@@ -76,7 +76,7 @@ export class DataBuilder {
         };
 
         
-        console.log('%c 5.1 getPokemonTypes() ', 'background: #42A5F5; color: #fff;');
+        console.log('%c getPokemonTypes() ', 'background: #42A5F5; color: #fff;');
 
         const missingType = [];
         for (const [codeName, obj] of Object.entries(this.pokemons)) {
@@ -95,7 +95,7 @@ export class DataBuilder {
     }
 
     async getPokemonGenerations() {
-        console.log('%c 6 getPokemonGenerations() ', 'background: #42A5F5; color: #fff;');
+        console.log('%c getPokemonGenerations() ', 'background: #42A5F5; color: #fff;');
 
         const res = await this.app.fetchAPI(this.appConfig['generation']);
         for (const gen of res.results) {
