@@ -38,11 +38,17 @@ export class DataBuilder {
     async getPokemonCorrectNames(incorrectNames) {
         console.log('%c getPokemonCorrectNames() ', 'background: #42A5F5; color: #fff;');
 
-        for (const name of incorrectNames) {
-            await this.app.fetchAPI(this.app.linksAPI['pokemon-species'] + name).then(res => {
-                this.app.pokemons[name].name = (res.names.find((object) => object.language.name === "en")).name;
-                // console.log('correctNames:', name, this.app.pokemons[name].name);
-            });
+        const responses = [];
+        for (const codeNames of incorrectNames) {
+            const response = this.app.fetchAPI(this.app.linksAPI['pokemon-species'] + codeNames);
+            responses.push(response);
+        }
+
+        const pokemonData = await Promise.all(responses);
+
+        for (const pokemon of pokemonData) {
+            this.app.pokemons[pokemon.name].name = pokemon.names.find((object) => object.language.name === "en").name;
+            // console.log('correct:', pokemon.name, this.app.pokemons[pokemon.name].name);
         };
     }
 
@@ -57,7 +63,7 @@ export class DataBuilder {
                 if (!this.app.pokemons[elem.pokemon.name].type) this.app.pokemons[elem.pokemon.name].type = [];
                 this.app.pokemons[elem.pokemon.name].type[elem.slot-1] = type.name;
             };
-            // console.log('types:', type);
+            console.log('types:', type);
         };
 
         
@@ -80,7 +86,7 @@ export class DataBuilder {
                 if (!obj.type) obj.type = []
                 obj.type[elem.slot-1] = elem.type.name;
             })
-            // console.log(obj.name, obj.type);
+            console.log(obj.name, obj.type);
         }
     }
 
@@ -94,7 +100,7 @@ export class DataBuilder {
                 if (!this.app.pokemons[pokemon.name]) continue;
                 this.app.pokemons[pokemon.name].generation = gen.name;
             };
-            // console.log('gen:', gen);
+            console.log('gen:', gen);
         };
     }
 }
