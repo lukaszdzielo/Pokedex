@@ -31,7 +31,7 @@ export class Pokedex {
 
     isDev() {
         console.log('test', window.location.href, window.location.hostname, this.options.hostName);
-        console.log('github', window.location.hostname === 'lukaszdzielo.github.io/Pokedex/');
+        console.log('github', window.location.hostname === 'lukaszdzielo.github.io');
         console.log('127', window.location.hostname === '127.0.0.1');
     }
 
