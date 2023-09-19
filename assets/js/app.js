@@ -5,6 +5,7 @@ const config = {
     baseUrl: 'https://pokeapi.co/api/v2/',
     limit: 'limit=',
     offset: 'offset=',
+    version: 0.1,
 }
 
 export class Pokedex {
@@ -16,6 +17,7 @@ export class Pokedex {
         this.pokemons = {};
         this.appBuilder = new AppBuilder(this);
         this.dataBuilder = new DataBuilder(this);
+        this.isDev();
         this.init();
     };
 
@@ -25,6 +27,12 @@ export class Pokedex {
         await this.getAppUrls();
         await this.getPokemonsSpeciesNumber();
         await this.checkPokemons();
+    }
+
+    isDev() {
+        console.log('test', window.location.href, window.location.hostname, this.options.hostName);
+        console.log('github', window.location.hostname === 'lukaszdzielo.github.io/Pokedex/');
+        console.log('127', window.location.hostname === '127.0.0.1');
     }
 
     async fetchAPI(fetchUrl) {
@@ -66,6 +74,17 @@ export class Pokedex {
         }
 
         this.appBuilder.insertList();
+
+        let localStorageSize = function () {
+            let _lsTotal = 0,_xLen, _x;
+            for (_x in localStorage) {
+                if (!localStorage.hasOwnProperty(_x)) continue;
+                _xLen = (localStorage[_x].length + _x.length) * 2;
+                _lsTotal += _xLen;
+            }
+          return  (_lsTotal / 1024).toFixed(2);
+         }
+         console.log( `size: ${localStorageSize()}kb`)
     }
 }
 
