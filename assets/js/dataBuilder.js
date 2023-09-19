@@ -1,11 +1,11 @@
 export class DataBuilder {
     constructor(app) {
-        console.log('%c constructor() ', 'background: #42A5F5; color: #fff;');
         this.app = app;
+        if (this.app.isDev) console.log('%c constructor() ', 'background: #42A5F5; color: #fff;');
     };
 
     async getPokemonData() {
-        console.group('%c getPokemonData() ', 'background: #42A5F5; color: #fff;');
+        if (this.app.isDev) console.group('%c getPokemonData() ', 'background: #42A5F5; color: #fff;');
 
         const incorrectNames = await this.getPokemonCodeNames();
 
@@ -15,12 +15,12 @@ export class DataBuilder {
 
         localStorage.setItem("PokemonsData", JSON.stringify(this.app.pokemons));
 
-        console.log('%c getPokemonData() - END', 'background: #E53935; color: #fff;');
-        console.groupEnd();
+        if (this.app.isDev) console.log('%c getPokemonData() - END', 'background: #E53935; color: #fff;');
+        if (this.app.isDev) console.groupEnd();
     }
 
     async getPokemonCodeNames() {
-        console.log('%c getPokemonNames() ', 'background: #42A5F5; color: #fff;');
+        if (this.app.isDev) console.log('%c getPokemonNames() ', 'background: #42A5F5; color: #fff;');
 
         const incorrectNames = [];
 
@@ -38,7 +38,7 @@ export class DataBuilder {
     }
 
     async getPokemonCorrectNames(incorrectNames) {
-        console.log('%c getPokemonCorrectNames() ', 'background: #42A5F5; color: #fff;');
+        if (this.app.isDev) console.log('%c getPokemonCorrectNames() ', 'background: #42A5F5; color: #fff;');
 
         const responses = [];
         incorrectNames.forEach(codeNames => {
@@ -56,7 +56,7 @@ export class DataBuilder {
     }
 
     async getPokemonTypes() {
-        console.log('%c getPokemonTypes() ', 'background: #42A5F5; color: #fff;');
+        if (this.app.isDev) console.log('%c getPokemonTypes() ', 'background: #42A5F5; color: #fff;');
 
         const res = await this.app.fetchAPI(this.app.linksAPI['type']);
 
@@ -70,7 +70,6 @@ export class DataBuilder {
 
         const types = await Promise.all(responses);
 
-        console.log();
         types.forEach(type => {
             type.pokemon.forEach(elem => {
                 if (!this.app.pokemons[elem.pokemon.name]) return;
@@ -87,7 +86,7 @@ export class DataBuilder {
     }
 
     async getPokemonMissingTypes(missingType) {
-        console.log('%c getPokemonMissingTypes() ', 'background: #42A5F5; color: #fff;');
+        if (this.app.isDev) console.log('%c getPokemonMissingTypes() ', 'background: #42A5F5; color: #fff;');
 
         const responses = [];
 
@@ -108,7 +107,7 @@ export class DataBuilder {
     }
 
     async getPokemonGenerations() {
-        console.log('%c getPokemonGenerations() ', 'background: #42A5F5; color: #fff;');
+        if (this.app.isDev) console.log('%c getPokemonGenerations() ', 'background: #42A5F5; color: #fff;');
 
         const res = await this.app.fetchAPI(this.app.linksAPI['generation']);
         const responses = [];

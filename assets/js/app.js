@@ -10,6 +10,7 @@ const config = {
 
 export class Pokedex {
     constructor() {
+        this.isDev = window.location.hostname !== 'lukaszdzielo.github.io';
         this.app = document.querySelector('#app');
         this.options = {... config};
         this.linksAPI = {};
@@ -17,22 +18,15 @@ export class Pokedex {
         this.pokemons = {};
         this.appBuilder = new AppBuilder(this);
         this.dataBuilder = new DataBuilder(this);
-        this.isDev();
         this.init();
     };
 
     async init() {
-        console.log('%c init() ', 'background: #7E57C2; color: #fff;');
+        if (this.isDev) console.log('%c init() ', 'background: #7E57C2; color: #fff;');
         await this.appBuilder.init();
         await this.getAppUrls();
         await this.getPokemonsSpeciesNumber();
         await this.checkPokemons();
-    }
-
-    isDev() {
-        console.log('test', window.location.href, window.location.hostname, this.options.hostName);
-        console.log('github', window.location.hostname === 'lukaszdzielo.github.io');
-        console.log('127', window.location.hostname === '127.0.0.1');
     }
 
     async fetchAPI(fetchUrl) {
@@ -52,24 +46,24 @@ export class Pokedex {
     }
 
     async getAppUrls() {
-        console.log('%c getAppUrls() ', 'background: #7E57C2; color: #fff;');
+        if (this.isDev) console.log('%c getAppUrls() ', 'background: #7E57C2; color: #fff;');
         this.linksAPI = await this.fetchAPI(this.options.baseUrl).then(res => res);
     }
 
     async getPokemonsSpeciesNumber() {
-        console.log('%c getPokemonsSpeciesNumber() ', 'background: #7E57C2; color: #fff;');
+        if (this.isDev) console.log('%c getPokemonsSpeciesNumber() ', 'background: #7E57C2; color: #fff;');
         this.speciesNumber = await this.fetchAPI(this.linksAPI['pokemon-species'] + '?' + this.options.limit + 1).then(res => res.count);
     }
 
     async checkPokemons() {
-        console.log('%c checkPokemons() ', 'background: #7E57C2; color: #fff;');
+        if (this.isDev) console.log('%c checkPokemons() ', 'background: #7E57C2; color: #fff;');
 
         if (localStorage.getItem("PokemonsData")) this.pokemons = JSON.parse(localStorage.getItem("PokemonsData"));
         if (localStorage.getItem("PokemonsData") && Object.keys(this.pokemons).length === this.speciesNumber) {
-            console.log('Use local storage');
+            if (this.isDev) console.log('Use local storage');
             this.pokemons = JSON.parse(localStorage.getItem("PokemonsData"));
         } else {
-            console.log('Get new pokemon data and save localy');
+            if (this.isDev) console.log('Get new pokemon data and save localy');
             await this.dataBuilder.getPokemonData();
         }
 
@@ -84,7 +78,7 @@ export class Pokedex {
             }
           return  (_lsTotal / 1024).toFixed(2);
          }
-         console.log( `size: ${localStorageSize()}kb`)
+         if (this.isDev) console.log( `size: ${localStorageSize()}kb`)
     }
 }
 

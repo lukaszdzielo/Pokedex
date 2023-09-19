@@ -7,30 +7,30 @@ export class AppBuilder {
     }
     
     init() {
-        console.log('%c init() ', 'background: #43A047; color: #fff;');
+        if (this.app.isDev) console.log('%c init() ', 'background: #43A047; color: #fff;');
         this.buildLoader();
         this.buildNav();
         this.buildList();
     }
 
     buildLoader() {
-        console.log('%c buildLoader() ', 'background: #43A047; color: #fff;');
+        if (this.app.isDev) console.log('%c buildLoader() ', 'background: #43A047; color: #fff;');
         this.appLoader = document.querySelector('.loader');
         this.showLoader();
     }
 
     buildNav() {
-        console.log('%c buildNav() ', 'background: #43A047; color: #fff;');
+        if (this.app.isDev) console.log('%c buildNav() ', 'background: #43A047; color: #fff;');
         this.appNav = document.querySelector('nav');
     }
 
     buildList() {
-        console.log('%c buildList() ', 'background: #43A047; color: #fff;');
+        if (this.app.isDev) console.log('%c buildList() ', 'background: #43A047; color: #fff;');
         this.appList = document.querySelector('.list');
     }
 
     insertList() {
-        console.log('%c insertList() ', 'background: #43A047; color: #fff;');
+        if (this.app.isDev) console.log('%c insertList() ', 'background: #43A047; color: #fff;');
 
         const pokemonCard = (codeName, pokemon) => {
 
@@ -64,13 +64,13 @@ export class AppBuilder {
     }
 
     showLoader() {
-        console.log('%c showLoader() ', 'background: #43A047; color: #fff;');
+        if (this.app.isDev) console.log('%c showLoader() ', 'background: #43A047; color: #fff;');
         document.documentElement.classList.add('scrollDisabled');
         this.appLoader.classList.add('loading');
     }
 
     hideLoader() {
-        console.log('%c hideLoader() ', 'background: #43A047; color: #fff;');
+        if (this.app.isDev) console.log('%c hideLoader() ', 'background: #43A047; color: #fff;');
         setTimeout(() => {
             document.documentElement.classList.remove('scrollDisabled');
             this.appLoader.classList.remove('loading');
