@@ -34,7 +34,7 @@ body {
         justify-content: center;
         align-items: center;
         aspect-ratio: 1/1;
-        border-radius: 4px;
+        border-radius: 8px;
         background: var(--item__card__bg, #ffffff);
         box-sizing: border-box;
         font: 0.75rem sans-serif;
@@ -104,7 +104,6 @@ body {
             position: absolute;
             inset: 8px auto auto 8px;
             text-align: center;
-            text-transform: capitalize;
             font: 0.75rem sans-serif;
             @container card (width >= 180px) {
                 font: 1rem sans-serif;
@@ -115,7 +114,6 @@ body {
             position: absolute;
             inset: auto auto 8px auto;
             text-align: center;
-            text-transform: capitalize;
         }
     }
 }
