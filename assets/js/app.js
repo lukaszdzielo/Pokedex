@@ -10,11 +10,10 @@ const config = {
 
 export class Pokedex {
     constructor() {
-        this.isDev = window.location.hostname !== 'lukaszdzielo.github.io';
         this.app = document.querySelector('#app');
         this.options = {... config};
         this.linksAPI = {};
-        this.speciesNumber = ''; // '' for all
+        this.speciesNumber = 10; // '' for all
         this.pokemons = {};
         this.appBuilder = new AppBuilder(this);
         this.dataBuilder = new DataBuilder(this);
@@ -22,11 +21,12 @@ export class Pokedex {
     };
 
     async init() {
-        if (this.isDev) console.log('%c init() ', 'background: #7E57C2; color: #fff;');
         await this.appBuilder.init();
         await this.getAppUrls();
         await this.getPokemonsSpeciesNumber();
         await this.checkPokemons();
+        this.appBuilder.insertList();
+        this.localStorageSize();
     }
 
     async fetchAPI(fetchUrl) {
@@ -46,40 +46,29 @@ export class Pokedex {
     }
 
     async getAppUrls() {
-        if (this.isDev) console.log('%c getAppUrls() ', 'background: #7E57C2; color: #fff;');
         this.linksAPI = await this.fetchAPI(this.options.baseUrl).then(res => res);
     }
 
     async getPokemonsSpeciesNumber() {
-        if (this.isDev) console.log('%c getPokemonsSpeciesNumber() ', 'background: #7E57C2; color: #fff;');
         this.speciesNumber = await this.fetchAPI(this.linksAPI['pokemon-species'] + '?' + this.options.limit + 1).then(res => res.count);
     }
-
     async checkPokemons() {
-        if (this.isDev) console.log('%c checkPokemons() ', 'background: #7E57C2; color: #fff;');
-
         if (localStorage.getItem("PokemonsData")) this.pokemons = JSON.parse(localStorage.getItem("PokemonsData"));
         if (localStorage.getItem("PokemonsData") && Object.keys(this.pokemons).length === this.speciesNumber) {
-            if (this.isDev) console.log('Use local storage');
+            console.log('Use local storage');
             this.pokemons = JSON.parse(localStorage.getItem("PokemonsData"));
         } else {
-            if (this.isDev) console.log('Get new pokemon data and save localy');
+            console.log('Get new pokemon data and save localy');
             await this.dataBuilder.getPokemonData();
         }
-
-        this.appBuilder.insertList();
-
-        let localStorageSize = function () {
-            let _lsTotal = 0,_xLen, _x;
-            for (_x in localStorage) {
-                if (!localStorage.hasOwnProperty(_x)) continue;
-                _xLen = (localStorage[_x].length + _x.length) * 2;
-                _lsTotal += _xLen;
-            }
-          return  (_lsTotal / 1024).toFixed(2);
-         }
-         if (this.isDev) console.log( `size: ${localStorageSize()}kb`)
     }
+
+    localStorageSize() {
+        const keys = Object.keys(localStorage);
+        let size = 0;
+        keys.forEach(key => size += key.length + localStorage.getItem(key).length )
+        console.log(`localStorage: ${(size / 1024).toFixed(2)} kb`);
+    };
 }
 
 globalThis.Pokedex = new Pokedex();

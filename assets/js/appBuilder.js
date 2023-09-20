@@ -7,33 +7,26 @@ export class AppBuilder {
     }
     
     init() {
-        if (this.app.isDev) console.log('%c init() ', 'background: #43A047; color: #fff;');
         this.buildLoader();
         this.buildNav();
         this.buildList();
     }
 
     buildLoader() {
-        if (this.app.isDev) console.log('%c buildLoader() ', 'background: #43A047; color: #fff;');
         this.appLoader = document.querySelector('.loader');
         this.showLoader();
     }
 
     buildNav() {
-        if (this.app.isDev) console.log('%c buildNav() ', 'background: #43A047; color: #fff;');
         this.appNav = document.querySelector('nav');
     }
 
     buildList() {
-        if (this.app.isDev) console.log('%c buildList() ', 'background: #43A047; color: #fff;');
         this.appList = document.querySelector('.list');
     }
 
     insertList() {
-        if (this.app.isDev) console.log('%c insertList() ', 'background: #43A047; color: #fff;');
-
         const pokemonCard = (codeName, pokemon) => {
-
             let types = '';
             pokemon.type.forEach(type => types += `<div class="${type}">${type}</div>`);
 
@@ -64,13 +57,11 @@ export class AppBuilder {
     }
 
     showLoader() {
-        if (this.app.isDev) console.log('%c showLoader() ', 'background: #43A047; color: #fff;');
         document.documentElement.classList.add('scrollDisabled');
         this.appLoader.classList.add('loading');
     }
 
     hideLoader() {
-        if (this.app.isDev) console.log('%c hideLoader() ', 'background: #43A047; color: #fff;');
         setTimeout(() => {
             document.documentElement.classList.remove('scrollDisabled');
             this.appLoader.classList.remove('loading');

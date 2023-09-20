@@ -37,6 +37,7 @@ body {
   background: var(--item__card__bg, #ffffff);
   box-sizing: border-box;
   font: 0.75rem sans-serif;
+  transition: 0.2s;
   container-type: inline-size;
   container-name: card;
 }
