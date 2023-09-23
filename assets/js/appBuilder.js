@@ -1,9 +1,14 @@
+import { AppCardBuilder } from './appCardBuilder.js';
+import { AppModalBuilder } from './appModalBuilder.js';
 export class AppBuilder {
     constructor(app) {
         this.app = app;
         this.appLoader;
         this.appNav;
         this.appList;
+        this.pokemonModal = document.querySelector('#pokemonModal');
+        this.appCardBuilder = new AppCardBuilder(this.app);
+        this.appModalBuilder = new AppModalBuilder(this.app);
     }
     
     init() {
@@ -26,34 +31,15 @@ export class AppBuilder {
     }
 
     insertList() {
-        const pokemonCard = (codeName, pokemon) => {
-            let types = '';
-            pokemon.type.forEach(type => types += `<div class="${type}">${type}</div>`);
+        let list = document.createElement("div");
 
-            return `<div class="list__item loading" data-pokemon-generation="${pokemon.generation}">
-                <div class="item__id">${pokemon.id}</div>
-                <div class='item__name'>${pokemon.name}</div>
-                <div class='item__type'>${types}</div>
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" alt="${pokemon.name}" class="item__img" loading="lazy">
-            </div>`
-        };
-        
-        for (const [a, pokemon] of Object.entries(this.app.pokemons)) {
-            const item = document.createElement("div");
-            item.innerHTML = pokemonCard(a, pokemon);
-            this.appList.append(item.firstChild);
+        for (const [codeName, pokemon] of Object.entries(this.app.pokemonList)) {
+            const card = this.appCardBuilder.init(codeName, pokemon);
+            // card.addEventListener('click', (e)=>{
+            //     this.appModalBuilder.init(codeName, pokemon);
+            // });
+            this.appList.appendChild(card)
         }
-
-        const pokemonCards = this.appList.querySelectorAll(".list__item");
-        for (const card of pokemonCards) {
-            card.querySelector(".item__img").addEventListener("load", () => {
-                setTimeout(() => {
-                    card.classList.remove("loading");
-                }, 400);
-            });
-        }
-
-        this.hideLoader();
     }
 
     showLoader() {

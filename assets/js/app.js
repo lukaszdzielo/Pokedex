@@ -13,8 +13,11 @@ export class Pokedex {
         this.app = document.querySelector('#app');
         this.options = {... config};
         this.linksAPI = {};
-        this.speciesNumber = 10; // '' for all
-        this.pokemons = {};
+        this.speciesNumber = ''; // '' for all
+        this.pokemonList = {};
+        this.pokemonTypes = [];
+        this.pokemonGenerations = [];
+        this.pokemon = {};
         this.appBuilder = new AppBuilder(this);
         this.dataBuilder = new DataBuilder(this);
         this.init();
@@ -24,8 +27,9 @@ export class Pokedex {
         await this.appBuilder.init();
         await this.getAppUrls();
         await this.getPokemonsSpeciesNumber();
-        await this.checkPokemons();
-        this.appBuilder.insertList();
+        await this.getPokemons();
+        await this.appBuilder.insertList();
+        this.appBuilder.hideLoader();
         this.localStorageSize();
     }
 
@@ -52,15 +56,17 @@ export class Pokedex {
     async getPokemonsSpeciesNumber() {
         this.speciesNumber = await this.fetchAPI(this.linksAPI['pokemon-species'] + '?' + this.options.limit + 1).then(res => res.count);
     }
-    async checkPokemons() {
-        if (localStorage.getItem("PokemonsData")) this.pokemons = JSON.parse(localStorage.getItem("PokemonsData"));
-        if (localStorage.getItem("PokemonsData") && Object.keys(this.pokemons).length === this.speciesNumber) {
+    async getPokemons() {
+        if (localStorage.getItem("PokemonsData")) this.pokemonList = JSON.parse(localStorage.getItem("PokemonsData"));
+        if (localStorage.getItem("PokemonsData") && Object.keys(this.pokemonList).length === this.speciesNumber) {
             console.log('Use local storage');
-            this.pokemons = JSON.parse(localStorage.getItem("PokemonsData"));
+            this.pokemonList = JSON.parse(localStorage.getItem("PokemonsData"));
         } else {
             console.log('Get new pokemon data and save localy');
             await this.dataBuilder.getPokemonData();
         }
+
+            // FAKE DB {"blastoise":{"id":9,"name":"Blastoise","type":["water"],"generation":"generation-i"},"caterpie":{"id":10,"name":"Caterpie","type":["bug"],"generation":"generation-i"},"mareep":{"id":179,"name":"Mareep","type":["electric"],"generation":"generation-ii"},"flaaffy":{"id":180,"name":"Flaaffy","type":["electric"],"generation":"generation-ii"},"aron":{"id":304,"name":"Aron","type":["steel","rock"],"generation":"generation-iii"},"lairon":{"id":305,"name":"Lairon","type":["steel","rock"],"generation":"generation-iii"},"drifloon":{"id":425,"name":"Drifloon","type":["ghost","flying"],"generation":"generation-iv"},"drifblim":{"id":426,"name":"Drifblim","type":["ghost","flying"],"generation":"generation-iv"},"buneary":{"id":427,"name":"Buneary","type":["normal"],"generation":"generation-iv"},"lopunny":{"id":428,"name":"Lopunny","type":["normal"],"generation":"generation-iv"},"mismagius":{"id":429,"name":"Mismagius","type":["ghost"],"generation":"generation-iv"}}
     }
 
     localStorageSize() {

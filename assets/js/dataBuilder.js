@@ -10,18 +10,18 @@ export class DataBuilder {
         await this.getPokemonTypes();
         await this.getPokemonGenerations();
 
-        localStorage.setItem("PokemonsData", JSON.stringify(this.app.pokemons));
+        localStorage.setItem("PokemonsData", JSON.stringify(this.app.pokemonList));
     }
 
     async getPokemonCodeNames() {
         const incorrectNames = [];
-        const res = await this.app.fetchAPI(this.app.linksAPI['pokemon-species'] + '?' + this.app.options.limit + this.app.speciesNumber)
+        const res = await this.app.fetchAPI(this.app.linksAPI['pokemon-species'] + '?' + this.app.options.limit + this.app.speciesNumber);
 
         res.results.forEach((pokemon,i) => {
             if (/\-/.test(pokemon.name)) incorrectNames.push(pokemon.name);
-            this.app.pokemons[pokemon.name] = {
+            this.app.pokemonList[pokemon.name] = {
                 id: i+1,
-                name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
+                // name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
             };
         });
 
@@ -38,7 +38,7 @@ export class DataBuilder {
         const pokemons = await Promise.all(responses);
 
         pokemons.forEach(pokemon => {
-            this.app.pokemons[pokemon.name].name = pokemon.names.find((object) => object.language.name === "en").name;
+            this.app.pokemonList[pokemon.name].name = pokemon.names.find((object) => object.language.name === "en").name;
         })
     }
 
@@ -56,13 +56,13 @@ export class DataBuilder {
 
         types.forEach(type => {
             type.pokemon.forEach(elem => {
-                if (!this.app.pokemons[elem.pokemon.name]) return;
-                if (!this.app.pokemons[elem.pokemon.name].type) this.app.pokemons[elem.pokemon.name].type = [];
-                this.app.pokemons[elem.pokemon.name].type[elem.slot-1] = type.name;
+                if (!this.app.pokemonList[elem.pokemon.name]) return;
+                if (!this.app.pokemonList[elem.pokemon.name].type) this.app.pokemonList[elem.pokemon.name].type = [];
+                this.app.pokemonList[elem.pokemon.name].type[elem.slot-1] = type.name;
             })
         })
 
-        for (const [i, pokemon] of Object.entries(this.app.pokemons)) {
+        for (const [i, pokemon] of Object.entries(this.app.pokemonList)) {
             if (!pokemon.type) missingType.push(pokemon)
         }
 
@@ -100,7 +100,7 @@ export class DataBuilder {
 
         generations.forEach(generation => {
             generation.pokemon_species.forEach(pokemon => {
-                this.app.pokemons[pokemon.name].generation = generation.name;
+                this.app.pokemonList[pokemon.name].g = generation.name.replace('generation-', '');
             })
         })
     }
