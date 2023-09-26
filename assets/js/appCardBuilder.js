@@ -20,7 +20,9 @@ export class AppCardBuilder {
 
         const data = `
             <div class="pokemonCard__id">${pokemon.id}</div>
-            <div class='pokemonCard__name'>${codeName.charAt(0).toUpperCase() + codeName.slice(1)}</div>
+            <div class='pokemonCard__name'>
+                ${pokemon.name ? pokemon.name : codeName.charAt(0).toUpperCase() + codeName.slice(1)}
+            </div>
             <div class='pokemonCard__types'>${types}</div>
             <div class='pokemonCard__image'><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" alt="${pokemon.name}" class="item__img" loading="lazy"></div>
             
