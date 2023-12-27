@@ -1,3 +1,4 @@
+import {numRomanToArabic} from './numConverter.js';
 export class DataBuilder {
     constructor(app) {
         this.app = app;
@@ -19,10 +20,7 @@ export class DataBuilder {
 
         res.results.forEach((pokemon,i) => {
             if (/\-/.test(pokemon.name)) incorrectNames.push(pokemon.name);
-            this.app.pokemonList[pokemon.name] = {
-                id: i+1,
-                // name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
-            };
+            this.app.pokemonList[pokemon.name] = { id: i+1 };
         });
 
         return incorrectNames;
@@ -43,7 +41,7 @@ export class DataBuilder {
     }
 
     async getPokemonTypes() {
-        const res = await this.app.fetchAPI(this.app.linksAPI['type']);
+        const res = await this.app.fetchAPI(this.app.linksAPI['type'] + '?' + this.app.options.limit);
         const responses = [];
         const missingType = [];
 
@@ -88,7 +86,7 @@ export class DataBuilder {
     }
 
     async getPokemonGenerations() {
-        const res = await this.app.fetchAPI(this.app.linksAPI['generation']);
+        const res = await this.app.fetchAPI(this.app.linksAPI['generation'] + '?' + this.app.options.limit);
         const responses = [];
 
         res.results.forEach(generation => {
@@ -99,9 +97,10 @@ export class DataBuilder {
         const generations = await Promise.all(responses);
 
         generations.forEach(generation => {
+            generation.name = (typeof generation.name === 'string') && numRomanToArabic(generation.name.replace('generation-', ''));
             generation.pokemon_species.forEach(pokemon => {
-                this.app.pokemonList[pokemon.name].g = generation.name.replace('generation-', '');
-            })
+                this.app.pokemonList[pokemon.name].g = generation.name;
+            });
         })
     }
 }

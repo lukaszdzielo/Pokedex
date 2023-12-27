@@ -54,7 +54,7 @@ export class Pokedex {
     }
 
     async getPokemonsSpeciesNumber() {
-        this.speciesNumber = await this.fetchAPI(this.linksAPI['pokemon-species'] + '?' + this.options.limit + 1).then(res => res.count);
+        this.speciesNumber = await this.fetchAPI(this.linksAPI['pokemon-species'] + '?' + this.options.limit).then(res => res.count);
     }
     async getPokemons() {
         if (localStorage.getItem("PokemonsData")) this.pokemonList = JSON.parse(localStorage.getItem("PokemonsData"));

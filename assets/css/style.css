@@ -24,14 +24,8 @@ body {
   gap: 16px;
   padding: 16px 24px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
   grid-gap: 12px;
-}
-@media (width >= 480px) {
-  .list {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    grid-gap: 16px;
-  }
 }
 .list .pokemonCard {
   position: relative;
@@ -74,8 +68,8 @@ body {
   transition: 0.3s;
 }
 .list .pokemonCard.loading:before, .list .pokemonCard.loading:after {
-  opacity: 1;
-  pointer-events: auto;
+  opacity: 0.5;
+  pointer-events: none;
 }
 @keyframes lds-dual-ring {
   0% {
@@ -114,70 +108,6 @@ body {
 }
 .list .pokemonCard .pokemonCard__types .type {
   border-radius: 99px;
-  width: 6px;
-  height: 6px;
-  background: var(--type, #000);
-  font-size: 0;
-}
-@media (width >= 480px) {
-  .list .pokemonCard .pokemonCard__types .type {
-    width: 8px;
-    height: 8px;
-  }
-}
-.list .pokemonCard .pokemonCard__types .type.normal {
-  --type: #A8A77A;
-}
-.list .pokemonCard .pokemonCard__types .type.fire {
-  --type: #EE8130;
-}
-.list .pokemonCard .pokemonCard__types .type.water {
-  --type: #6390F0;
-}
-.list .pokemonCard .pokemonCard__types .type.electric {
-  --type: #F7D02C;
-}
-.list .pokemonCard .pokemonCard__types .type.grass {
-  --type: #7AC74C;
-}
-.list .pokemonCard .pokemonCard__types .type.ice {
-  --type: #96D9D6;
-}
-.list .pokemonCard .pokemonCard__types .type.fighting {
-  --type: #C22E28;
-}
-.list .pokemonCard .pokemonCard__types .type.poison {
-  --type: #A33EA1;
-}
-.list .pokemonCard .pokemonCard__types .type.ground {
-  --type: #E2BF65;
-}
-.list .pokemonCard .pokemonCard__types .type.flying {
-  --type: #A98FF3;
-}
-.list .pokemonCard .pokemonCard__types .type.psychic {
-  --type: #F95587;
-}
-.list .pokemonCard .pokemonCard__types .type.bug {
-  --type: #A6B91A;
-}
-.list .pokemonCard .pokemonCard__types .type.rock {
-  --type: #B6A136;
-}
-.list .pokemonCard .pokemonCard__types .type.ghost {
-  --type: #735797;
-}
-.list .pokemonCard .pokemonCard__types .type.dragon {
-  --type: #6F35FC;
-}
-.list .pokemonCard .pokemonCard__types .type.dark {
-  --type: #705746;
-}
-.list .pokemonCard .pokemonCard__types .type.steel {
-  --type: #B7B7CE;
-}
-.list .pokemonCard .pokemonCard__types .type.fairy {
-  --type: #D685AD;
 }
 .list .pokemonCard .pokemonCard__image {
   max-width: 60%;
