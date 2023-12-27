@@ -1,0 +1,38 @@
+.loader  {
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    pointer-events: none;
+
+    .scrollDisabled & {
+        overflow-y: scroll;
+    }
+    
+    .loader--top,
+    .loader--bottom {
+        position: absolute;
+        width: 100%;
+        height: 50dvh;
+        background: gray;
+        pointer-events: auto;
+        transition: .3s;
+    }
+
+    .loader--top {
+        inset: -50% 0 auto 0;
+    }
+    
+    .loader--bottom {
+        inset: auto 0 -50% 0;
+    }
+
+    &.loading {
+
+        .loader--top {
+            inset: 0 0 auto 0;
+        }
+        .loader--bottom {
+            inset: auto 0 0 0;
+        }
+    }
+}
