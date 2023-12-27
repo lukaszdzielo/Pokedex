@@ -1,0 +1,123 @@
+.card {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1/1;
+    border-radius: 8px;
+    background: var(--item__card__bg, #ffffff);
+    box-sizing: border-box;
+    font: 0.75rem sans-serif;
+    transition: 0.2s;
+
+    container-type: inline-size;
+    container-name: card;
+
+    &:before {
+        content: ""; 
+        position: absolute;
+        inset: 0;
+        border-radius: 4px;
+        background: #BDBDBD;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0;
+        transition: .3s;
+    }
+
+    &:after {
+        content: " ";
+        position: absolute;
+        z-index: 2;
+        display: block;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 6px solid #fff;
+        border-color: #fff transparent #fff transparent;
+        animation: lds-dual-ring 1.2s linear infinite;
+        pointer-events: none;
+        opacity: 0;
+        transition: .3s;
+    }
+
+    &.loading {
+        &:before,
+        &:after {
+            opacity: .5;
+            pointer-events: none;
+        }
+    }
+
+    @keyframes lds-dual-ring {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    
+    .card__id {
+        position: absolute;
+        inset: 8px 8px auto auto;
+    }
+
+    .card__name {
+        position: absolute;
+        inset: 8px auto auto 8px;
+        text-align: center;
+        font: 0.75rem sans-serif;
+        @container card (width >= 180px) {
+            font: 1rem sans-serif;
+        }
+    }
+
+    .card__types {
+        position: absolute;
+        inset: auto auto 4px auto;
+        display: flex;
+        gap: 4px;
+        text-align: center;
+        @media (width >= 480px) {
+            inset: auto auto 8px auto;
+        }
+        .type {
+            border-radius: 99px;
+            // width: 6px;
+            // height: 6px;
+            // background: var(--type, #000);
+            // font-size: 0;
+            @media (width >= 480px) {
+                // width: 8px;
+                // height: 8px;
+            }
+            // &.normal { --type: #A8A77A; }
+            // &.fire { --type: #EE8130; }
+            // &.water { --type: #6390F0; }
+            // &.electric { --type: #F7D02C; }
+            // &.grass { --type: #7AC74C; }
+            // &.ice { --type: #96D9D6; }
+            // &.fighting { --type: #C22E28; }
+            // &.poison { --type: #A33EA1; }
+            // &.ground { --type: #E2BF65; }
+            // &.flying { --type: #A98FF3; }
+            // &.psychic { --type: #F95587; }
+            // &.bug { --type: #A6B91A; }
+            // &.rock { --type: #B6A136; }
+            // &.ghost { --type: #735797; }
+            // &.dragon { --type: #6F35FC; }
+            // &.dark { --type: #705746; }
+            // &.steel { --type: #B7B7CE; }
+            // &.fairy { --type: #D685AD; }
+        }
+    }
+
+    .card__image {
+        max-width: 60%;
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+}

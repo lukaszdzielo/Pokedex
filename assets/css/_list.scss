@@ -1,0 +1,21 @@
+.list__wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.list {
+    gap: 16px;
+    padding: 16px 24px;
+
+    display: grid;
+    // grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
+    grid-gap: 12px;
+
+    // @media (width >= 480px) {
+    //     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    //     grid-gap: 16px;
+    // }
+
+    
+}

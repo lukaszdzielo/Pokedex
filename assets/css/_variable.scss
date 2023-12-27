@@ -1,0 +1,16 @@
+:root {
+    --app__bg: #EEEEEE;
+    --item__card__bg: #ffffff;
+}
+
+#app {
+    position: relative;
+    min-height: 100dvh;
+    background: var(--app__bg);
+}
+
+body {
+    margin: 0;
+    font: 16px sans-serif;
+	line-height: 1.15;
+}
