@@ -11,7 +11,9 @@ export class DataBuilder {
         await this.getPokemonTypes();
         await this.getPokemonGenerations();
 
-        localStorage.setItem("PokemonsData", JSON.stringify(this.app.pokemonList));
+        localStorage.setItem("PokemonList", JSON.stringify(this.app.pokemonList));
+        localStorage.setItem("PokemonTypes", JSON.stringify(this.app.pokemonTypes));
+        localStorage.setItem("PokemonGen", this.app.pokemonGenerations);
     }
 
     async getPokemonCodeNames() {
@@ -53,10 +55,11 @@ export class DataBuilder {
         const types = await Promise.all(responses);
 
         types.forEach(type => {
+            this.app.pokemonTypes[type.id] = type.name;
             type.pokemon.forEach(elem => {
                 if (!this.app.pokemonList[elem.pokemon.name]) return;
                 if (!this.app.pokemonList[elem.pokemon.name].type) this.app.pokemonList[elem.pokemon.name].type = [];
-                this.app.pokemonList[elem.pokemon.name].type[elem.slot-1] = type.name;
+                this.app.pokemonList[elem.pokemon.name].type[elem.slot-1] = type.id;
             })
         })
 
@@ -80,7 +83,7 @@ export class DataBuilder {
         missingType.forEach((obj, i) => {
             if (!obj.type) obj.type = []; 
             pokemons[i].types.forEach(elem => {
-                obj.type[elem.slot-1] = elem.type.name;
+                obj.type[elem.slot-1] = Object.keys(this.app.pokemonTypes).find(key => this.app.pokemonTypes[key] === elem.type.name);
             })
         })
     }
@@ -97,7 +100,7 @@ export class DataBuilder {
         const generations = await Promise.all(responses);
 
         generations.forEach(generation => {
-            generation.name = (typeof generation.name === 'string') && numRomanToArabic(generation.name.replace('generation-', ''));
+            this.app.pokemonGenerations = generation.name = (typeof generation.name === 'string') && numRomanToArabic(generation.name.replace('generation-', ''));
             generation.pokemon_species.forEach(pokemon => {
                 this.app.pokemonList[pokemon.name].g = generation.name;
             });

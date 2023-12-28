@@ -15,8 +15,8 @@ export class Pokedex {
         this.linksAPI = {};
         this.speciesNumber = ''; // '' for all
         this.pokemonList = {};
-        this.pokemonTypes = [];
-        this.pokemonGenerations = [];
+        this.pokemonTypes = {};
+        this.pokemonGenerations;
         this.pokemon = {};
         this.appBuilder = new AppBuilder(this);
         this.dataBuilder = new DataBuilder(this);
