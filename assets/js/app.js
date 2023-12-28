@@ -58,7 +58,11 @@ export class Pokedex {
     }
     async getPokemonList() {
         const isLocalList = !!localStorage.getItem("PokemonList") && !!localStorage.getItem("PokemonTypes") && !!localStorage.getItem("PokemonGen")
-        if (isLocalList) this.pokemonList = JSON.parse(localStorage.getItem("PokemonList"));
+        if (isLocalList) {
+            this.pokemonList = JSON.parse(localStorage.getItem("PokemonList"))
+            this.pokemonTypes = JSON.parse(localStorage.getItem("PokemonTypes"))
+            this.pokemonGenerations = JSON.parse(localStorage.getItem("PokemonGen"))
+        };
         if (isLocalList && Object.keys(this.pokemonList).length === this.speciesNumber) {
             console.log('Use local storage');
         } else {
