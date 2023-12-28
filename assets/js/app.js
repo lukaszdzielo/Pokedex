@@ -3,7 +3,7 @@ import { DataBuilder } from './dataBuilder.js';
 
 const config = {
     baseUrl: 'https://pokeapi.co/api/v2/',
-    limit: 'limit=',
+    limit: 'limit=999999999999999',
     offset: 'offset=',
     version: 0.1,
 }

@@ -18,7 +18,7 @@ export class DataBuilder {
 
     async getPokemonCodeNames() {
         const incorrectNames = [];
-        const res = await this.app.fetchAPI(this.app.linksAPI['pokemon-species'] + '?' + this.app.options.limit + this.app.speciesNumber);
+        const res = await this.app.fetchAPI(`${this.app.linksAPI['pokemon-species']}?${this.app.options.limit}`);
 
         res.results.forEach((pokemon,i) => {
             if (/\-/.test(pokemon.name)) incorrectNames.push(pokemon.name);
@@ -43,7 +43,7 @@ export class DataBuilder {
     }
 
     async getPokemonTypes() {
-        const res = await this.app.fetchAPI(this.app.linksAPI['type'] + '?' + this.app.options.limit);
+        const res = await this.app.fetchAPI(`${this.app.linksAPI['type']}?${this.app.options.limit}`);
         const responses = [];
         const missingType = [];
 
@@ -89,7 +89,7 @@ export class DataBuilder {
     }
 
     async getPokemonGenerations() {
-        const res = await this.app.fetchAPI(this.app.linksAPI['generation'] + '?' + this.app.options.limit);
+        const res = await this.app.fetchAPI(`${this.app.linksAPI['generation']}?${this.app.options.limit}`);
         const responses = [];
 
         res.results.forEach(generation => {
