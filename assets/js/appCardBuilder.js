@@ -8,7 +8,7 @@ export class AppCardBuilder {
         const item = document.createElement("div");
         item.classList.add('card', 'loading');
 
-        this.pattern(item, codeName, pokemon);
+        // this.pattern(item, codeName, pokemon);
         this.eventLoading(item);
 
         return item;
@@ -18,7 +18,7 @@ export class AppCardBuilder {
         let types = '';
         pokemon.type.forEach(type => {
             type = this.app.pokemonTypes[type];
-            types += `<div class="type ${type}" title="${type}">${type}</div>`
+            types += `<div class="${type}">${type}</div>`
         });
 
         const data = `

@@ -26,8 +26,8 @@ export class Pokedex {
     async init() {
         await this.appBuilder.init();
         await this.getAppUrls();
-        await this.getPokemonsSpeciesNumber();
-        await this.getPokemons();
+        await this.getPokemonsSpeciesNum();
+        await this.getPokemonList();
         await this.appBuilder.insertList();
         this.appBuilder.hideLoader();
         this.localStorageSize();
@@ -53,14 +53,14 @@ export class Pokedex {
         this.linksAPI = await this.fetchAPI(this.options.baseUrl).then(res => res);
     }
 
-    async getPokemonsSpeciesNumber() {
+    async getPokemonsSpeciesNum() {
         this.speciesNumber = await this.fetchAPI(this.linksAPI['pokemon-species'] + '?' + this.options.limit).then(res => res.count);
     }
-    async getPokemons() {
-        if (localStorage.getItem("PokemonsData")) this.pokemonList = JSON.parse(localStorage.getItem("PokemonsData"));
-        if (localStorage.getItem("PokemonsData") && Object.keys(this.pokemonList).length === this.speciesNumber) {
+    async getPokemonList() {
+        const isLocalList = !!localStorage.getItem("PokemonList") && !!localStorage.getItem("PokemonTypes") && !!localStorage.getItem("PokemonGen")
+        if (isLocalList) this.pokemonList = JSON.parse(localStorage.getItem("PokemonList"));
+        if (isLocalList && Object.keys(this.pokemonList).length === this.speciesNumber) {
             console.log('Use local storage');
-            this.pokemonList = JSON.parse(localStorage.getItem("PokemonsData"));
         } else {
             console.log('Get new pokemon data and save localy');
             await this.dataBuilder.getPokemonData();
