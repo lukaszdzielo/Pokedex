@@ -65,8 +65,6 @@ export class Pokedex {
             console.log('Get new pokemon data and save localy');
             await this.dataBuilder.getPokemonData();
         }
-
-            // FAKE DB {"blastoise":{"id":9,"name":"Blastoise","type":["water"],"generation":"generation-i"},"caterpie":{"id":10,"name":"Caterpie","type":["bug"],"generation":"generation-i"},"mareep":{"id":179,"name":"Mareep","type":["electric"],"generation":"generation-ii"},"flaaffy":{"id":180,"name":"Flaaffy","type":["electric"],"generation":"generation-ii"},"aron":{"id":304,"name":"Aron","type":["steel","rock"],"generation":"generation-iii"},"lairon":{"id":305,"name":"Lairon","type":["steel","rock"],"generation":"generation-iii"},"drifloon":{"id":425,"name":"Drifloon","type":["ghost","flying"],"generation":"generation-iv"},"drifblim":{"id":426,"name":"Drifblim","type":["ghost","flying"],"generation":"generation-iv"},"buneary":{"id":427,"name":"Buneary","type":["normal"],"generation":"generation-iv"},"lopunny":{"id":428,"name":"Lopunny","type":["normal"],"generation":"generation-iv"},"mismagius":{"id":429,"name":"Mismagius","type":["ghost"],"generation":"generation-iv"}}
     }
 
     localStorageSize() {
