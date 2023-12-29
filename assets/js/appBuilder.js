@@ -25,12 +25,6 @@ export class AppBuilder {
         let list = '';
         for (const [codeName, pokemon] of Object.entries(this.app.pokemonList)) {
             list += this.appCardBuilder.pattern(codeName, pokemon);
-            // list.insertAdjacentHTML('afterbegin', card);
-            //     console.log(this.appCardBuilder.init(codeName, pokemon));
-            //     // card.addEventListener('click', (e)=>{
-            //     //     this.appModalBuilder.init(codeName, pokemon);
-            //     // });
-            //     this.appList.appendChild(card);
 
             if (window.location.href.startsWith("http://localhost") || window.location.href.startsWith("https://localhost")) {
                 if (this.app.options.devlimit > 0 && Object.entries(this.app.pokemonList)[this.app.options.devlimit - 1][0] === codeName) break;
