@@ -139,27 +139,7 @@ nav {
 .scrollDisabled {
   overflow-y: hidden;
 }
-.scrollDisabled > body {
-  overflow: scroll;
-}
 
-footer {
-  padding: 5em 16px 6em;
-  text-align: center;
-  font: 0.875rem sans-serif;
-}
-footer p:first-of-type {
-  margin-top: 0;
-}
-footer p:last-of-type {
-  margin-bottom: 0;
-}
-footer a {
-  text-decoration: none;
-}
-footer .copyright {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+body {
+  overflow-y: scroll;
 }/*# sourceMappingURL=style.css.map */
