@@ -17,14 +17,18 @@ const storageNames = {
 export class Pokedex {
     constructor() {
         this.app = document.querySelector('#app');
+
         this.options = {...config};
         this.storageNames = {...storageNames};
+
         this.linksAPI = {};
         this.speciesNumber = ''; // '' for all
+
         this.pokemonList = {};
         this.pokemonTypes = {};
         this.pokemonGenerations;
         this.pokemon = {};
+
         this.appBuilder = new AppBuilder(this);
         this.dataBuilder = new DataBuilder(this);
         this.init();
@@ -74,7 +78,7 @@ export class Pokedex {
             console.log('Use local storage');
         } else {
             console.log('Get new pokemon data and save localy');
-            await this.dataBuilder.getPokemonData();
+            await this.dataBuilder.getPokemonListData();
         }
     }
 

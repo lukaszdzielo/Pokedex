@@ -4,19 +4,19 @@ export class DataBuilder {
         this.app = app;
     };
 
-    async getPokemonData() {
-        const incorrectNames = await this.getPokemonCodeNames();
+    async getPokemonListData() {
+        const incorrectNames = await this.getPokemonListCodeNames();
 
-        await this.getPokemonCorrectNames(incorrectNames);
-        await this.getPokemonTypes();
-        await this.getPokemonGenerations();
+        await this.getPokemonListCorrectNames(incorrectNames);
+        await this.getPokemonListTypes();
+        await this.getPokemonListGenerations();
 
         localStorage.setItem(this.app.storageNames.list, JSON.stringify(this.app.pokemonList));
         localStorage.setItem(this.app.storageNames.types, JSON.stringify(this.app.pokemonTypes));
         localStorage.setItem(this.app.storageNames.genNum, this.app.pokemonGenerations);
     }
 
-    async getPokemonCodeNames() {
+    async getPokemonListCodeNames() {
         const incorrectNames = [];
         const res = await this.app.fetchAPI(`${this.app.linksAPI['pokemon-species']}?${this.app.options.limit}`);
 
@@ -28,7 +28,7 @@ export class DataBuilder {
         return incorrectNames;
     }
 
-    async getPokemonCorrectNames(incorrectNames) {
+    async getPokemonListCorrectNames(incorrectNames) {
         const responses = [];
         incorrectNames.forEach(codeNames => {
             const response = this.app.fetchAPI(this.app.linksAPI['pokemon-species'] + codeNames);
@@ -42,7 +42,7 @@ export class DataBuilder {
         })
     }
 
-    async getPokemonTypes() {
+    async getPokemonListTypes() {
         const res = await this.app.fetchAPI(`${this.app.linksAPI['type']}?${this.app.options.limit}`);
         const responses = [];
         const missingType = [];
@@ -67,10 +67,10 @@ export class DataBuilder {
             if (!pokemon.type) missingType.push(pokemon)
         }
 
-        if (!!missingType.length) await this.getPokemonMissingTypes(missingType);
+        if (!!missingType.length) await this.getPokemonListMissingTypes(missingType);
     }
 
-    async getPokemonMissingTypes(missingType) {
+    async getPokemonListMissingTypes(missingType) {
         const responses = [];
 
         missingType.forEach(pokemon => {
@@ -88,7 +88,7 @@ export class DataBuilder {
         })
     }
 
-    async getPokemonGenerations() {
+    async getPokemonListGenerations() {
         const res = await this.app.fetchAPI(`${this.app.linksAPI['generation']}?${this.app.options.limit}`);
         const responses = [];
 
