@@ -1,4 +1,4 @@
-.loader  {
+.loader {
     position: fixed;
     inset: 0;
     z-index: 99;
@@ -7,7 +7,7 @@
     .scrollDisabled & {
         overflow-y: scroll;
     }
-    
+
     .loader--top,
     .loader--bottom {
         position: absolute;
@@ -21,7 +21,7 @@
     .loader--top {
         inset: -50% 0 auto 0;
     }
-    
+
     .loader--bottom {
         inset: auto 0 -50% 0;
     }
@@ -31,6 +31,7 @@
         .loader--top {
             inset: 0 0 auto 0;
         }
+
         .loader--bottom {
             inset: auto 0 0 0;
         }

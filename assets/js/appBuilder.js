@@ -10,7 +10,7 @@ export class AppBuilder {
         this.appCardBuilder = new AppCardBuilder(this.app);
         this.appModalBuilder = new AppModalBuilder(this.app);
     }
-    
+
     init() {
         this.buildLoader();
         this.buildNav();
@@ -38,7 +38,7 @@ export class AppBuilder {
             // card.addEventListener('click', (e)=>{
             //     this.appModalBuilder.init(codeName, pokemon);
             // });
-            this.appList.appendChild(card)
+            this.appList.appendChild(card);
         }
     }
 

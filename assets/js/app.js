@@ -7,19 +7,19 @@ const config = {
     limit: 'limit=999999999999999',
     offset: 'offset=',
     version: 0.1,
-}
+};
 
 const storageNames = {
     list: 'PokemonList',
     types: 'PokemonTypes',
     genNum: 'PokemonGen',
-}
+};
 
 export class Pokedex {
     constructor() {
         this.app = document.querySelector('#app');
 
-        this.options = {...config};
+        this.options = { ...config };
 
         this.linksAPI = {};
         this.speciesNumber = ''; // '' for all
@@ -78,7 +78,7 @@ export class Pokedex {
             this.pokemonTypes = this.storage.localGet(this.storage.names.types, true);
             this.pokemonGenerations = this.storage.localGet(this.storage.names.genNum);
         };
-        
+
         if (isLocalList && Object.keys(this.pokemonList).length === this.speciesNumber) {
             console.log('Use local storage');
         } else {
@@ -90,7 +90,7 @@ export class Pokedex {
     localStorageSize() {
         const keys = Object.keys(localStorage);
         let size = 0;
-        keys.forEach(key => size += key.length + localStorage.getItem(key).length )
+        keys.forEach(key => size += key.length + localStorage.getItem(key).length);
         console.log(`localStorage: ${(size / 1024).toFixed(2)} kb`);
     };
 }

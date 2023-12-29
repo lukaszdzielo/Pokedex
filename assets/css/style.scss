@@ -6,7 +6,8 @@
 
 .scrollDisabled {
     overflow-y: hidden;
-    > body {
+
+    >body {
         overflow: scroll;
     }
 }
@@ -15,15 +16,19 @@ footer {
     padding: 5em 16px 6em;
     text-align: center;
     font: 0.875rem sans-serif;
+
     p:first-of-type {
         margin-top: 0;
     }
+
     p:last-of-type {
         margin-bottom: 0;
     }
+
     a {
         text-decoration: none;
     }
+
     .copyright {
         display: flex;
         align-items: center;
