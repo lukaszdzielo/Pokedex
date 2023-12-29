@@ -41,24 +41,24 @@
         transition: .3s;
     }
 
-    &.loading {
+    // &.loading {
 
-        &:before,
-        &:after {
-            opacity: .5;
-            pointer-events: none;
-        }
-    }
+    //     &:before,
+    //     &:after {
+    //         opacity: .5;
+    //         pointer-events: none;
+    //     }
+    // }
 
-    @keyframes lds-dual-ring {
-        0% {
-            transform: rotate(0deg);
-        }
+    // @keyframes lds-dual-ring {
+    //     0% {
+    //         transform: rotate(0deg);
+    //     }
 
-        100% {
-            transform: rotate(360deg);
-        }
-    }
+    //     100% {
+    //         transform: rotate(360deg);
+    //     }
+    // }
 
     .card__id {
         position: absolute;

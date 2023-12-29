@@ -19,14 +19,9 @@ nav {
   display: flex;
 }
 
-.list__wrapper {
-  display: flex;
-  justify-content: center;
-}
-
-.list {
+#pokemonList {
   gap: 16px;
-  padding: 16px 24px;
+  padding: 16px 24px 120px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
   grid-gap: 12px;
@@ -72,18 +67,6 @@ nav {
   opacity: 0;
   transition: 0.3s;
 }
-.card.loading:before, .card.loading:after {
-  opacity: 0.5;
-  pointer-events: none;
-}
-@keyframes lds-dual-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
 .card .card__id {
   position: absolute;
   inset: 8px 8px auto auto;
@@ -94,7 +77,7 @@ nav {
   text-align: center;
   font: 0.75rem sans-serif;
 }
-@container card (width >= 180px) {
+@container card (width >=180px) {
   .card .card__name {
     font: 1rem sans-serif;
   }

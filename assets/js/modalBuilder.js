@@ -1,4 +1,4 @@
-export class AppModalBuilder {
+export class ModalBuilder {
     constructor(app) {
         this.app = app;
         this.pokemonModal = document.querySelector('#pokemonModal');
