@@ -8,10 +8,17 @@ const config = {
     version: 0.1,
 }
 
+const storageNames = {
+    list: 'PokemonList',
+    types: 'PokemonTypes',
+    genNum: 'PokemonGen',
+}
+
 export class Pokedex {
     constructor() {
         this.app = document.querySelector('#app');
-        this.options = {... config};
+        this.options = {...config};
+        this.storageNames = {...storageNames};
         this.linksAPI = {};
         this.speciesNumber = ''; // '' for all
         this.pokemonList = {};
@@ -57,11 +64,11 @@ export class Pokedex {
         this.speciesNumber = await this.fetchAPI(this.linksAPI['pokemon-species'] + '?' + this.options.limit).then(res => res.count);
     }
     async getPokemonList() {
-        const isLocalList = !!localStorage.getItem("PokemonList") && !!localStorage.getItem("PokemonTypes") && !!localStorage.getItem("PokemonGen")
+        const isLocalList = !!localStorage.getItem(this.storageNames.list) && !!localStorage.getItem(this.storageNames.types) && !!localStorage.getItem(this.storageNames.genNum)
         if (isLocalList) {
-            this.pokemonList = JSON.parse(localStorage.getItem("PokemonList"))
-            this.pokemonTypes = JSON.parse(localStorage.getItem("PokemonTypes"))
-            this.pokemonGenerations = JSON.parse(localStorage.getItem("PokemonGen"))
+            this.pokemonList = JSON.parse(localStorage.getItem(this.storageNames.list))
+            this.pokemonTypes = JSON.parse(localStorage.getItem(this.storageNames.types))
+            this.pokemonGenerations = JSON.parse(localStorage.getItem(this.storageNames.genNum))
         };
         if (isLocalList && Object.keys(this.pokemonList).length === this.speciesNumber) {
             console.log('Use local storage');
