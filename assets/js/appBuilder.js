@@ -31,6 +31,10 @@ export class AppBuilder {
             //     //     this.appModalBuilder.init(codeName, pokemon);
             //     // });
             //     this.appList.appendChild(card);
+
+            if (window.location.href.startsWith("http://localhost") || window.location.href.startsWith("https://localhost")) {
+                if (this.app.options.devlimit > 0 && Object.entries(this.app.pokemonList)[this.app.options.devlimit - 1][0] === codeName) break;
+            }
         }
         this.appList.insertAdjacentHTML('afterbegin', list);
     }
