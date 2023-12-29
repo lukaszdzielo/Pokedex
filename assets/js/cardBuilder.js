@@ -8,8 +8,6 @@ export class CardBuilder {
         const name = pokemon.name ? pokemon.name : `${codeName.charAt(0).toUpperCase()}${codeName.slice(1)}`;
         const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
-        console.log(name);
-
         return `<div class="card loading">
         ${(typeof id && typeof id !== 'undefined') ? `<div class='card__id'>${id}</div>` : ''}
         ${(typeof name && typeof name !== 'undefined') ? `<div class='card__name'>${name}</div>` : ''}
