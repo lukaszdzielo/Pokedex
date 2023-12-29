@@ -5,8 +5,7 @@ export class CardBuilder {
 
     pattern(codeName, pokemon) {
         const { id } = pokemon;
-        let name = pokemon.name;
-        if (!name) name = `${codeName.charAt(0).toUpperCase()}${codeName.slice(1)}`;
+        const name = pokemon.name ? `${codeName.charAt(0).toUpperCase()}${codeName.slice(1)}` : pokemon.name;
         const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
         return `<div class="card loading">
