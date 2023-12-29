@@ -11,9 +11,9 @@ export class DataBuilder {
         await this.getPokemonListTypes();
         await this.getPokemonListGenerations();
 
-        localStorage.setItem(this.app.storageNames.list, JSON.stringify(this.app.pokemonList));
-        localStorage.setItem(this.app.storageNames.types, JSON.stringify(this.app.pokemonTypes));
-        localStorage.setItem(this.app.storageNames.genNum, this.app.pokemonGenerations);
+        this.app.storage.localSet(this.app.storage.names.list, this.app.pokemonList, true)
+        this.app.storage.localSet(this.app.storage.names.types, this.app.pokemonTypes, true)
+        this.app.storage.localSet(this.app.storage.names.genNum, this.app.pokemonGenerations)
     }
 
     async getPokemonListCodeNames() {

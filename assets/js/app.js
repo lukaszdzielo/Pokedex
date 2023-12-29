@@ -1,5 +1,6 @@
 import { AppBuilder } from './appBuilder.js';
 import { DataBuilder } from './dataBuilder.js';
+import { StorageBuilder } from './storageBuilder.js';
 
 const config = {
     baseUrl: 'https://pokeapi.co/api/v2/',
@@ -19,7 +20,6 @@ export class Pokedex {
         this.app = document.querySelector('#app');
 
         this.options = {...config};
-        this.storageNames = {...storageNames};
 
         this.linksAPI = {};
         this.speciesNumber = ''; // '' for all
@@ -29,8 +29,10 @@ export class Pokedex {
         this.pokemonGenerations;
         this.pokemon = {};
 
+        this.storage = new StorageBuilder(this);
         this.appBuilder = new AppBuilder(this);
         this.dataBuilder = new DataBuilder(this);
+
         this.init();
     };
 
@@ -68,12 +70,15 @@ export class Pokedex {
         this.speciesNumber = await this.fetchAPI(this.linksAPI['pokemon-species'] + '?' + this.options.limit).then(res => res.count);
     }
     async getPokemonList() {
-        const isLocalList = !!localStorage.getItem(this.storageNames.list) && !!localStorage.getItem(this.storageNames.types) && !!localStorage.getItem(this.storageNames.genNum)
+
+        const isLocalList = !!this.storage.localGet(this.storage.names.list) && !!this.storage.localGet(this.storage.names.types) && !!this.storage.localGet(this.storage.names.genNum);
+
         if (isLocalList) {
-            this.pokemonList = JSON.parse(localStorage.getItem(this.storageNames.list))
-            this.pokemonTypes = JSON.parse(localStorage.getItem(this.storageNames.types))
-            this.pokemonGenerations = JSON.parse(localStorage.getItem(this.storageNames.genNum))
+            this.pokemonList = this.storage.localGet(this.storage.names.list, true);
+            this.pokemonTypes = this.storage.localGet(this.storage.names.types, true);
+            this.pokemonGenerations = this.storage.localGet(this.storage.names.genNum);
         };
+        
         if (isLocalList && Object.keys(this.pokemonList).length === this.speciesNumber) {
             console.log('Use local storage');
         } else {
