@@ -1,6 +1,15 @@
-dialog::backdrop {
-    position: fixed;
-    inset: 0;
-    background: var(--backdrop--color);
-    opacity: 0.75;
+#pokemonDialog {
+    border: 0;
+    border-radius: 16px;
+    padding: 24px;
+    width: 800px;
+    max-width: calc(100% - 48px);
+    box-sizing: border-box;
+
+    &::backdrop {
+        position: fixed;
+        inset: 0;
+        background: var(--backdrop--bg, #212121);
+        opacity: 0.75;
+    }
 }

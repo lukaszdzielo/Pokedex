@@ -1,11 +1,7 @@
 :root {
-  --app__bg: #EEEEEE;
-  --item__card__bg: #ffffff;
-  --backdrop: #212121;
-}
-
-::backdrop {
-  --backdrop--color: var(--backdrop, #212121);
+  --app--bg: #EEEEEE;
+  --item__card--bg: #ffffff;
+  --backdrop--bg: #212121;
 }
 
 #app {
@@ -16,7 +12,7 @@ body {
   margin: 0;
   padding-block-end: 120px;
   min-height: 100dvh;
-  background: var(--app__bg);
+  background: var(--app--bg);
   font: 16px sans-serif;
   line-height: 1.15;
   box-sizing: border-box;
@@ -46,7 +42,7 @@ nav {
   align-items: center;
   aspect-ratio: 1/1;
   border-radius: 8px;
-  background: var(--item__card__bg, #ffffff);
+  background: var(--item__card--bg, #ffffff);
   box-sizing: border-box;
   font: 0.75rem sans-serif;
   transition: 0.2s;
@@ -148,9 +144,17 @@ nav {
   inset: auto 0 0 0;
 }
 
-dialog::backdrop {
+#pokemonDialog {
+  border: 0;
+  border-radius: 16px;
+  padding: 24px;
+  width: 800px;
+  max-width: calc(100% - 48px);
+  box-sizing: border-box;
+}
+#pokemonDialog::backdrop {
   position: fixed;
   inset: 0;
-  background: var(--backdrop--color);
+  background: var(--backdrop--bg, #212121);
   opacity: 0.75;
 }/*# sourceMappingURL=style.css.map */

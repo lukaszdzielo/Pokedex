@@ -1,11 +1,7 @@
 :root {
-    --app__bg: #EEEEEE;
-    --item__card__bg: #ffffff;
-    --backdrop: #212121;
-}
-
-::backdrop {
-    --backdrop--color: var(--backdrop, #212121);
+    --app--bg: #EEEEEE;
+    --item__card--bg: #ffffff;
+    --backdrop--bg: #212121;
 }
 
 #app {
@@ -16,7 +12,7 @@ body {
     margin: 0;
     padding-block-end: 120px;
     min-height: 100dvh;
-    background: var(--app__bg);
+    background: var(--app--bg);
     font: 16px sans-serif;
     line-height: 1.15;
     box-sizing: border-box;
