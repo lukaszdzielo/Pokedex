@@ -28,7 +28,7 @@ body {
 }
 
 nav {
-  display: flex;
+  display: none;
 }
 
 #pokemonList {
