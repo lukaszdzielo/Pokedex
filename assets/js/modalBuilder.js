@@ -11,7 +11,6 @@ export class ModalBuilder {
 
         const pokemonData = await this.getPokemonData(pokemonCodeName);
 
-
         this.removePokemonDialogContent();
         this.insertPokemonDialogContent(pokemonData);
 
@@ -51,7 +50,6 @@ export class ModalBuilder {
     patternPokemonDialogContent(pokemonData) {
         const { id, height } = pokemonData;
         const name = this.app.pokemonList[pokemonData.name].name ? this.app.pokemonList[pokemonData.name].name : `${pokemonData.name.charAt(0).toUpperCase()}${pokemonData.name.slice(1)}`;
-        // console.log(this.app.pokemonList[name].name);
         console.log('?', pokemonData);
         return `<div class="pokemonName">${name}</div>
         <div>Id: ${id}</div>
