@@ -6,7 +6,7 @@ const config = {
     baseUrl: 'https://pokeapi.co/api/v2/',
     limit: 'limit=999999999999999',
     devlimit: 9,
-    version: 0.1,
+    version: 0.2,
 };
 
 const storageNames = {
