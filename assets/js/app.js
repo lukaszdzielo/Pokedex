@@ -5,7 +5,7 @@ import { StorageBuilder } from './storageBuilder.js';
 const config = {
     baseUrl: 'https://pokeapi.co/api/v2/',
     limit: 'limit=999999999999999',
-    devlimit: 5,
+    devlimit: 9,
     version: 0.1,
 };
 
