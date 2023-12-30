@@ -50,9 +50,14 @@ export class ModalBuilder {
     patternPokemonDialogContent(pokemonData) {
         const { id, height } = pokemonData;
         const name = this.app.pokemonList[pokemonData.name].name ? this.app.pokemonList[pokemonData.name].name : `${pokemonData.name.charAt(0).toUpperCase()}${pokemonData.name.slice(1)}`;
+
+        const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+
         console.log('?', pokemonData);
-        return `<div class="pokemonName">${name}</div>
-        <div>Id: ${id}</div>
+
+        return `${(typeof id && typeof id !== 'undefined') ? `<img class='dialog__image'><img src="${imageUrl}" class="item__img" alt="${name}" loading="lazy" onerror="this.onerror=null;this.src='./assets/0.png';"></div>` : ''}
+        <div class="dialog__name">${name}</div>
+        <div class="dialog__id">Id: ${id}</div>
         <div>Height: ${height}</div>`;
     }
 }
