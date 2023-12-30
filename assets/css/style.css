@@ -1,18 +1,30 @@
 :root {
   --app__bg: #EEEEEE;
   --item__card__bg: #ffffff;
+  --backdrop: #212121;
+}
+
+::backdrop {
+  --backdrop--color: var(--backdrop, #212121);
 }
 
 #app {
   position: relative;
-  min-height: 100dvh;
-  background: var(--app__bg);
 }
 
 body {
   margin: 0;
+  padding-block-end: 120px;
+  min-height: 100dvh;
+  background: var(--app__bg);
   font: 16px sans-serif;
   line-height: 1.15;
+  box-sizing: border-box;
+  overflow-y: scroll;
+}
+
+.scrollDisabled {
+  overflow-y: hidden;
 }
 
 nav {
@@ -21,7 +33,7 @@ nav {
 
 #pokemonList {
   gap: 16px;
-  padding: 16px 24px 120px;
+  padding: 24px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
   grid-gap: 12px;
@@ -136,10 +148,9 @@ nav {
   inset: auto 0 0 0;
 }
 
-.scrollDisabled {
-  overflow-y: hidden;
-}
-
-body {
-  overflow-y: scroll;
+dialog::backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--backdrop--color);
+  opacity: 0.75;
 }/*# sourceMappingURL=style.css.map */

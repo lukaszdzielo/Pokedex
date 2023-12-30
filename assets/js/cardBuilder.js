@@ -8,7 +8,7 @@ export class CardBuilder {
         const name = pokemon.name ? pokemon.name : `${codeName.charAt(0).toUpperCase()}${codeName.slice(1)}`;
         const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
-        return `<div class="card loading">
+        return `<div class="card loading" ${(typeof name && typeof name !== 'undefined') ? `data-code-name='${codeName}'` : ''}>
         ${(typeof id && typeof id !== 'undefined') ? `<div class='card__id'>${id}</div>` : ''}
         ${(typeof name && typeof name !== 'undefined') ? `<div class='card__name'>${name}</div>` : ''}
         ${(typeof id && typeof id !== 'undefined') ? `<img class='card__image'><img src="${imageUrl}" class="item__img" alt="${name}" loading="lazy" onerror="this.onerror=null;this.src='./assets/0.png';"></div>` : ''}

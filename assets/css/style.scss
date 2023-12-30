@@ -3,11 +3,4 @@
 @import 'list';
 @import 'card';
 @import 'loader';
-
-.scrollDisabled {
-    overflow-y: hidden;
-}
-
-body {
-    overflow-y: scroll;
-}
+@import 'dialog';
