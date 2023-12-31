@@ -20,6 +20,11 @@ export class ModalBuilder {
         // console.log('2', this.pokemonDialog.open);
     }
 
+    closePokemonDialog() {
+        this.pokemonDialog.close();
+        this.removePokemonContent();
+    }
+
     getPokemonData(pokemonCodeName) {
         return this.app.fetchAPI(this.app.linksAPI['pokemon'] + pokemonCodeName);
     }
@@ -30,7 +35,7 @@ export class ModalBuilder {
         this.pokemonDialog = document.querySelector('#pokemonDialog');
         this.pokemonDialogWrapper = document.querySelector('#pokemonDialogWrapper');
 
-        this.pokemonDialog.querySelector('#dialog__close').addEventListener("click", () => this.pokemonDialog.close());
+        this.pokemonDialog.querySelector('#dialog__close').addEventListener("click", () => this.closePokemonDialog());
     }
 
     patternPokemonDialog() {
@@ -55,27 +60,25 @@ export class ModalBuilder {
 
     patternPokemonInfo(pokemonCodeName) {
         const name = this.app.pokemonList[pokemonCodeName].name ? this.app.pokemonList[pokemonCodeName].name : `${pokemonCodeName.charAt(0).toUpperCase()}${pokemonCodeName.slice(1)}`;
-        const { id, type, g: gen } = this.app.pokemonList[pokemonCodeName];
-        console.log('basic', type, gen);
+        const { id, types, g: genNum } = this.app.pokemonList[pokemonCodeName];
         const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
-        // ${type.array.forEach(elem => {
-
-        // })}
 
         return `<div class="info">
         ${(typeof id && typeof id !== 'undefined') ? `<div class='dialog__image'><img src="${imageUrl}" class="item__img" alt="${name}" loading="lazy" onerror="this.onerror=null;this.src='./assets/0.png';"></div>` : ''}
         <div class="dialog__name">${name}</div>
-        
+        ${(typeof types && typeof types !== 'undefined' && types.length > 0) ? `<div class="dialog__types">${types.map(type => `<span>${this.app.pokemonTypes[type]}</span>`).join('')}</div>` : ''}
+        ${(typeof genNum && typeof genNum !== 'undefined') ? `<div class='dialog__gen'>Gen: ${genNum}</div>` : ''}
         </div>`;
     }
 
     patternPokemonDetails(pokemonData) {
-        const { height } = pokemonData;
+        const { height, weight } = pokemonData;
 
         console.log('pokemonData', pokemonData);
 
         return `<div class="details">
         <div>Height: ${height}</div>
+        <div>Weight: ${weight}</div>
         </div>`;
     }
 }

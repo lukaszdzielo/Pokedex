@@ -5,6 +5,19 @@
     width: 800px;
     max-width: calc(100% - 48px);
     box-sizing: border-box;
+    text-align: center;
+
+    .dialog__types {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        span {
+            border: 1px solid var(--text--color);
+            padding: 4px 8px;
+            border-radius: 16px;
+        }
+    }
 
     &::backdrop {
         position: fixed;

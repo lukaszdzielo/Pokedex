@@ -2,6 +2,7 @@
   --app--bg: #EEEEEE;
   --item__card--bg: #ffffff;
   --backdrop--bg: #212121;
+  --text--color: #212121;
 }
 
 #app {
@@ -151,6 +152,17 @@ nav {
   width: 800px;
   max-width: calc(100% - 48px);
   box-sizing: border-box;
+  text-align: center;
+}
+#pokemonDialog .dialog__types {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+#pokemonDialog .dialog__types span {
+  border: 1px solid var(--text--color);
+  padding: 4px 8px;
+  border-radius: 16px;
 }
 #pokemonDialog::backdrop {
   position: fixed;
