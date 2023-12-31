@@ -45,7 +45,7 @@ export class DataBuilder {
     async getPokemonListTypes() {
         const res = await this.app.fetchAPI(`${this.app.linksAPI['type']}?${this.app.options.limit}`);
         const responses = [];
-        const missingType = [];
+        const missingTypes = [];
 
         res.results.forEach(type => {
             const response = this.app.fetchAPI(type.url);
@@ -58,32 +58,32 @@ export class DataBuilder {
             this.app.pokemonTypes[type.id] = type.name;
             type.pokemon.forEach(elem => {
                 if (!this.app.pokemonList[elem.pokemon.name]) return;
-                if (!this.app.pokemonList[elem.pokemon.name].type) this.app.pokemonList[elem.pokemon.name].type = [];
-                this.app.pokemonList[elem.pokemon.name].type[elem.slot - 1] = type.id;
+                if (!this.app.pokemonList[elem.pokemon.name].types) this.app.pokemonList[elem.pokemon.name].types = [];
+                this.app.pokemonList[elem.pokemon.name].types[elem.slot - 1] = type.id;
             });
         });
 
         for (const [i, pokemon] of Object.entries(this.app.pokemonList)) {
-            if (!pokemon.type) missingType.push(pokemon);
+            if (!pokemon.types) missingTypes.push(pokemon);
         }
 
-        if (!!missingType.length) await this.getPokemonListMissingTypes(missingType);
+        if (!!missingTypes.length) await this.getPokemonListMissingTypes(missingTypes);
     }
 
-    async getPokemonListMissingTypes(missingType) {
+    async getPokemonListMissingTypes(missingTypes) {
         const responses = [];
 
-        missingType.forEach(pokemon => {
+        missingTypes.forEach(pokemon => {
             const response = this.app.fetchAPI(this.app.linksAPI['pokemon'] + pokemon.id);
             responses.push(response);
         });
 
         const pokemons = await Promise.all(responses);
 
-        missingType.forEach((obj, i) => {
-            if (!obj.type) obj.type = [];
+        missingTypes.forEach((obj, i) => {
+            if (!obj.type) obj.types = [];
             pokemons[i].types.forEach(elem => {
-                obj.type[elem.slot - 1] = Object.keys(this.app.pokemonTypes).find(key => this.app.pokemonTypes[key] === elem.type.name);
+                obj.types[elem.slot - 1] = Object.keys(this.app.pokemonTypes).find(key => this.app.pokemonTypes[key] === elem.type.name);
             });
         });
     }

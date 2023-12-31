@@ -71,20 +71,20 @@ export class Pokedex {
     }
     async getPokemonList() {
 
-        const isLocalList = !!this.storage.localGet(this.storage.names.list) && !!this.storage.localGet(this.storage.names.types) && !!this.storage.localGet(this.storage.names.genNum);
+        // const isLocalList = !!this.storage.localGet(this.storage.names.list) && !!this.storage.localGet(this.storage.names.types) && !!this.storage.localGet(this.storage.names.genNum);
 
-        if (isLocalList) {
-            this.pokemonList = this.storage.localGet(this.storage.names.list, true);
-            this.pokemonTypes = this.storage.localGet(this.storage.names.types, true);
-            this.pokemonGenerations = this.storage.localGet(this.storage.names.genNum);
-        };
+        // if (isLocalList) {
+        //     this.pokemonList = this.storage.localGet(this.storage.names.list, true);
+        //     this.pokemonTypes = this.storage.localGet(this.storage.names.types, true);
+        //     this.pokemonGenerations = this.storage.localGet(this.storage.names.genNum);
+        // };
 
-        if (isLocalList && Object.keys(this.pokemonList).length === this.speciesNumber) {
-            console.log('Use local storage');
-        } else {
-            console.log('Get new pokemon data and save localy');
-            await this.dataBuilder.getPokemonListData();
-        }
+        // if (isLocalList && Object.keys(this.pokemonList).length === this.speciesNumber) {
+        //     console.log('Use local storage');
+        // } else {
+        console.log('Get new pokemon data and save localy');
+        await this.dataBuilder.getPokemonListData();
+        // }
     }
 
     localStorageSize() {

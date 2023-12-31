@@ -7,12 +7,14 @@ export class ModalBuilder {
 
     async openPokemonDialog(pokemonCodeName) {
         if (!this.pokemonDialog) this.buildPokemonDialog();
+
+        this.removePokemonContent();
+
+        this.insertPokemonBasic(pokemonCodeName);
         this.pokemonDialog.showModal();
 
         const pokemonData = await this.getPokemonData(pokemonCodeName);
-
-        this.removePokemonDialogContent();
-        this.insertPokemonDialogContent(pokemonData);
+        this.insertPokemonDetails(pokemonData);
 
         // console.log('1', this.pokemonDialog.open);
         // console.log('2', this.pokemonDialog.open);
@@ -39,25 +41,41 @@ export class ModalBuilder {
     </dialog>`;
     }
 
-    removePokemonDialogContent() {
+    removePokemonContent() {
         this.pokemonDialogWrapper.replaceChildren();
     }
 
-    insertPokemonDialogContent(pokemonData) {
-        this.pokemonDialogWrapper.insertAdjacentHTML('afterbegin', this.patternPokemonDialogContent(pokemonData));
+    insertPokemonBasic(pokemonCodeName) {
+        this.pokemonDialogWrapper.insertAdjacentHTML('afterbegin', this.patternPokemonInfo(pokemonCodeName));
     }
 
-    patternPokemonDialogContent(pokemonData) {
-        const { id, height } = pokemonData;
-        const name = this.app.pokemonList[pokemonData.name].name ? this.app.pokemonList[pokemonData.name].name : `${pokemonData.name.charAt(0).toUpperCase()}${pokemonData.name.slice(1)}`;
+    insertPokemonDetails(pokemonData) {
+        this.pokemonDialogWrapper.insertAdjacentHTML('beforeend', this.patternPokemonDetails(pokemonData));
+    }
 
+    patternPokemonInfo(pokemonCodeName) {
+        const name = this.app.pokemonList[pokemonCodeName].name ? this.app.pokemonList[pokemonCodeName].name : `${pokemonCodeName.charAt(0).toUpperCase()}${pokemonCodeName.slice(1)}`;
+        const { id, type, g: gen } = this.app.pokemonList[pokemonCodeName];
+        console.log('basic', type, gen);
         const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+        // ${type.array.forEach(elem => {
 
-        console.log('?', pokemonData);
+        // })}
 
-        return `${(typeof id && typeof id !== 'undefined') ? `<img class='dialog__image'><img src="${imageUrl}" class="item__img" alt="${name}" loading="lazy" onerror="this.onerror=null;this.src='./assets/0.png';"></div>` : ''}
+        return `<div class="info">
+        ${(typeof id && typeof id !== 'undefined') ? `<div class='dialog__image'><img src="${imageUrl}" class="item__img" alt="${name}" loading="lazy" onerror="this.onerror=null;this.src='./assets/0.png';"></div>` : ''}
         <div class="dialog__name">${name}</div>
-        <div class="dialog__id">Id: ${id}</div>
-        <div>Height: ${height}</div>`;
+        
+        </div>`;
+    }
+
+    patternPokemonDetails(pokemonData) {
+        const { height } = pokemonData;
+
+        console.log('pokemonData', pokemonData);
+
+        return `<div class="details">
+        <div>Height: ${height}</div>
+        </div>`;
     }
 }
