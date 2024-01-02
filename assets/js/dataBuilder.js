@@ -11,6 +11,19 @@ export class DataBuilder {
         await this.getPokemonListTypes();
         await this.getPokemonListGenerations();
 
+        // const codeNameToIdOrder = {};
+        // for (const pokemonCodeName in this.app.pokemonList) {
+        //     const { id, name, types, g } = this.app.pokemonList[pokemonCodeName];
+        //     codeNameToIdOrder[id] = {
+        //         n: name ? name : `${pokemonCodeName.charAt(0).toUpperCase()}${pokemonCodeName.slice(1)}`,
+        //         t: types,
+        //         g: g,
+        //     };
+        // }
+        // this.app.pokemonList = codeNameToIdOrder;
+
+        console.log(this.app.pokemonList['basculegion']);
+
         this.app.storage.set(this.app.storage.names.list, this.app.pokemonList, localStorage);
         this.app.storage.set(this.app.storage.names.types, this.app.pokemonTypes, localStorage);
         this.app.storage.set(this.app.storage.names.genNum, this.app.pokemonGenerations, localStorage);
@@ -58,13 +71,13 @@ export class DataBuilder {
             this.app.pokemonTypes[type.id] = type.name;
             type.pokemon.forEach(elem => {
                 if (!this.app.pokemonList[elem.pokemon.name]) return;
-                if (!this.app.pokemonList[elem.pokemon.name].types) this.app.pokemonList[elem.pokemon.name].types = [];
-                this.app.pokemonList[elem.pokemon.name].types[elem.slot - 1] = type.id;
+                if (!this.app.pokemonList[elem.pokemon.name].t) this.app.pokemonList[elem.pokemon.name].t = [];
+                this.app.pokemonList[elem.pokemon.name].t[elem.slot - 1] = type.id;
             });
         });
 
         for (const [i, pokemon] of Object.entries(this.app.pokemonList)) {
-            if (!pokemon.types) missingTypes.push(pokemon);
+            if (!pokemon.t) missingTypes.push(pokemon);
         }
 
         if (!!missingTypes.length) await this.getPokemonListMissingTypes(missingTypes);
@@ -81,9 +94,10 @@ export class DataBuilder {
         const pokemons = await Promise.all(responses);
 
         missingTypes.forEach((obj, i) => {
-            if (!obj.type) obj.types = [];
+            console.log(obj.type);
+            if (!obj.t) obj.t = [];
             pokemons[i].types.forEach(elem => {
-                obj.types[elem.slot - 1] = Object.keys(this.app.pokemonTypes).find(key => this.app.pokemonTypes[key] === elem.type.name);
+                obj.t[elem.slot - 1] = Object.keys(this.app.pokemonTypes).find(key => this.app.pokemonTypes[key] === elem.type.name);
             });
         });
     }

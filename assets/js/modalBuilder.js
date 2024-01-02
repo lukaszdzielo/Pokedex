@@ -68,14 +68,15 @@ export class ModalBuilder {
 
     patternPokemonInfo(pokemonCodeName) {
         const name = this.app.pokemonList[pokemonCodeName].name ? this.app.pokemonList[pokemonCodeName].name : `${pokemonCodeName.charAt(0).toUpperCase()}${pokemonCodeName.slice(1)}`;
-        const { id, types, g: genNum } = this.app.pokemonList[pokemonCodeName];
+        const { id, t, g } = this.app.pokemonList[pokemonCodeName];
         const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
         return `<div class="info">
         ${(typeof id && typeof id !== 'undefined') ? `<div class='dialog__image'><img src="${imageUrl}" class="item__img" alt="${name}" loading="lazy" onerror="this.onerror=null;this.src='./assets/0.png';"></div>` : ''}
         <div class="dialog__name">${name}</div>
-        ${(typeof types && typeof types !== 'undefined' && types.length > 0) ? `<div class="dialog__types">${types.map(type => `<span>${this.app.pokemonTypes[type]}</span>`).join('')}</div>` : ''}
-        ${(typeof genNum && typeof genNum !== 'undefined') ? `<div class='dialog__gen'>Gen: ${genNum}</div>` : ''}
+        ${(typeof id && typeof id !== 'undefined') ? `<div class="dialog__name">Id: ${id}</div>` : ''}
+        ${(typeof t && typeof t !== 'undefined' && t.length > 0) ? `<div class="dialog__types">${t.map(type => `<span>${this.app.pokemonTypes[type]}</span>`).join('')}</div>` : ''}
+        ${(typeof g && typeof g !== 'undefined') ? `<div class='dialog__gen'>Gen: ${g}</div>` : ''}
         </div>`;
     }
 

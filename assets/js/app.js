@@ -7,7 +7,7 @@ const config = {
     limit: 'limit=999999999999999',
     dev: {
         urls: ['http://localhost', 'https://localhost', 'http://192.168', 'http://127.0.0.1'],
-        list: [1, 4, 5, 6, 7, 8, 9, 123, 710, 1020, 1024, 1025],
+        list: [1, 4, 5, 6, 7, 8, 9, 123, 710, 902, 1020, 1024, 1025],
     },
     version: 0.2,
 };
