@@ -6,7 +6,6 @@ export class ModalBuilder {
     }
 
     async openPokemonDialog(pokemonCodeName, pokemonId) {
-        console.log(pokemonCodeName, '?', pokemonId);
         if (!this.pokemonDialog) this.buildPokemonDialog();
 
         this.removePokemonContent();
