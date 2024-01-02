@@ -5,7 +5,8 @@ import { StorageBuilder } from './storageBuilder.js';
 const config = {
     baseUrl: 'https://pokeapi.co/api/v2/',
     limit: 'limit=999999999999999',
-    // devlimit: 9,
+    devUrls: ['http://localhost', 'https://localhost', 'http://192.168'],
+    devList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 123, 1020],
     version: 0.2,
 };
 
@@ -41,6 +42,9 @@ export class Pokedex {
         await this.getAppUrls();
         await this.getPokemonsSpeciesNum();
         await this.getPokemonList();
+
+        if (this.isDev()) await this.devLimiter();
+
         await this.appBuilder.insertList();
         this.appBuilder.hideLoader();
         this.localStorageSize();
@@ -71,20 +75,31 @@ export class Pokedex {
     }
     async getPokemonList() {
 
-        // const isLocalList = !!this.storage.localGet(this.storage.names.list) && !!this.storage.localGet(this.storage.names.types) && !!this.storage.localGet(this.storage.names.genNum);
+        const isLocalList = !!this.storage.localGet(this.storage.names.list) && !!this.storage.localGet(this.storage.names.types) && !!this.storage.localGet(this.storage.names.genNum);
 
-        // if (isLocalList) {
-        //     this.pokemonList = this.storage.localGet(this.storage.names.list, true);
-        //     this.pokemonTypes = this.storage.localGet(this.storage.names.types, true);
-        //     this.pokemonGenerations = this.storage.localGet(this.storage.names.genNum);
-        // };
+        if (isLocalList) {
+            this.pokemonList = this.storage.localGet(this.storage.names.list, true);
+            this.pokemonTypes = this.storage.localGet(this.storage.names.types, true);
+            this.pokemonGenerations = this.storage.localGet(this.storage.names.genNum);
+        };
 
-        // if (isLocalList && Object.keys(this.pokemonList).length === this.speciesNumber) {
-        //     console.log('Use local storage');
-        // } else {
-        console.log('Get new pokemon data and save localy');
-        await this.dataBuilder.getPokemonListData();
-        // }
+        if (isLocalList && Object.keys(this.pokemonList).length === this.speciesNumber) {
+            console.log('Use local storage');
+        } else {
+            console.log('Get new pokemon data and save localy');
+            await this.dataBuilder.getPokemonListData();
+        }
+    }
+
+    isDev() {
+        return (this.options.devUrls.some((url) => window.location.href.startsWith(url)));
+    }
+
+    devLimiter() {
+        this.pokemonList = Object.entries(this.pokemonList).reduce((acc, [codeName, pokemon]) => {
+            if (this.options.devList.includes(pokemon.id)) acc[codeName] = pokemon;
+            return acc;
+        }, {});
     }
 
     localStorageSize() {
