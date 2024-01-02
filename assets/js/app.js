@@ -25,9 +25,9 @@ export class Pokedex {
         this.appBuilder = new AppBuilder(this);
         this.dataBuilder = new DataBuilder(this);
 
-        this.pokemonList = this.storage.localGet(this.storage.names.list) || {};
-        this.pokemonTypes = this.storage.localGet(this.storage.names.types) || {};
-        this.pokemonGenerations = this.storage.localGet(this.storage.names.genNum) || 0;
+        this.pokemonList = this.storage.get(this.storage.names.list, localStorage) || {};
+        this.pokemonTypes = this.storage.get(this.storage.names.types, localStorage) || {};
+        this.pokemonGenerations = this.storage.get(this.storage.names.genNum, localStorage) || 0;
         this.pokemonDetails = this.storage.get(this.storage.names.details, sessionStorage) || {};
 
         this.init();
