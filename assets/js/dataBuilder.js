@@ -11,15 +11,15 @@ export class DataBuilder {
         await this.getPokemonListTypes();
         await this.getPokemonListGenerations();
 
-        // const codeNameToIdOrder = {};
-        // for (const pokemonCodeName in this.app.pokemonList) {
-        //     const { id, name, types, g } = this.app.pokemonList[pokemonCodeName];
-        //     codeNameToIdOrder[id] = {
-        //         n: name ? name : `${pokemonCodeName.charAt(0).toUpperCase()}${pokemonCodeName.slice(1)}`,
-        //         t: types,
-        //         g: g,
-        //     };
-        // }
+        const codeNameToIdOrder = {};
+        for (const pokemonCodeName in this.app.pokemonList) {
+            const { id, name, t, g } = this.app.pokemonList[pokemonCodeName];
+            codeNameToIdOrder[id] = {
+                n: name ? name : `${pokemonCodeName.charAt(0).toUpperCase()}${pokemonCodeName.slice(1)}`,
+                t,
+                g,
+            };
+        }
         // this.app.pokemonList = codeNameToIdOrder;
 
         console.log(this.app.pokemonList['basculegion']);
