@@ -42,9 +42,7 @@ export class Pokedex {
         await this.getAppUrls();
         await this.getPokemonsSpeciesNum();
         await this.getPokemonList();
-
         if (this.isDev()) await this.devLimiter();
-
         await this.appBuilder.insertList();
         this.appBuilder.hideLoader();
         this.localStorageSize();
