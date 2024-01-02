@@ -5,7 +5,8 @@ export class ModalBuilder {
         this.pokemonDialogWrapper;
     }
 
-    async openPokemonDialog(pokemonCodeName) {
+    async openPokemonDialog(pokemonCodeName, pokemonId) {
+        console.log(pokemonCodeName, '?', pokemonId);
         if (!this.pokemonDialog) this.buildPokemonDialog();
 
         this.removePokemonContent();
@@ -13,7 +14,7 @@ export class ModalBuilder {
         this.insertPokemonBasic(pokemonCodeName);
         this.pokemonDialog.showModal();
 
-        const pokemonData = await this.getPokemonData(pokemonCodeName);
+        const pokemonData = await this.getPokemonData(pokemonId);
         this.insertPokemonDetails(pokemonData);
 
         // console.log('1', this.pokemonDialog.open);
