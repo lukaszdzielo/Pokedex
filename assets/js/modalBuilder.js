@@ -13,8 +13,16 @@ export class ModalBuilder {
         this.insertPokemonBasic(pokemonCodeName);
         this.pokemonDialog.showModal();
 
-        const pokemonData = await this.getPokemonData(pokemonId);
-        this.insertPokemonDetails(pokemonData);
+        if (!this.app.pokemonDetails[pokemonCodeName]) {
+            console.log('download data', pokemonCodeName);
+            this.app.pokemonDetails[pokemonCodeName] = await this.getPokemonData(pokemonId);
+        } else {
+            console.log('use sessionStorage');
+        }
+
+        this.app.storage.set(this.app.storage.names.details, this.app.pokemonDetails, sessionStorage);
+
+        this.insertPokemonDetails(this.app.pokemonDetails[pokemonCodeName]);
 
         // console.log('1', this.pokemonDialog.open);
         // console.log('2', this.pokemonDialog.open);

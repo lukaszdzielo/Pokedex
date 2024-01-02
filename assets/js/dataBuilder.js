@@ -11,8 +11,8 @@ export class DataBuilder {
         await this.getPokemonListTypes();
         await this.getPokemonListGenerations();
 
-        this.app.storage.localSet(this.app.storage.names.list, this.app.pokemonList, true);
-        this.app.storage.localSet(this.app.storage.names.types, this.app.pokemonTypes, true);
+        this.app.storage.localSet(this.app.storage.names.list, this.app.pokemonList);
+        this.app.storage.localSet(this.app.storage.names.types, this.app.pokemonTypes);
         this.app.storage.localSet(this.app.storage.names.genNum, this.app.pokemonGenerations);
     }
 

@@ -2,6 +2,7 @@ const names = {
     list: 'PokemonList',
     types: 'PokemonTypes',
     genNum: 'PokemonGen',
+    details: 'PokemonDetails',
 };
 
 export class StorageBuilder {
@@ -10,11 +11,27 @@ export class StorageBuilder {
         this.names = { ...names };
     };
 
-    localSet(name, elem, toString = false) {
-        localStorage.setItem(name, (toString ? JSON.stringify(elem) : elem));
+    set(name, elem, placement) {
+        placement.setItem(name, JSON.stringify(elem));
     }
 
-    localGet(name, parse = false) {
-        return parse ? JSON.parse(localStorage.getItem(name)) : localStorage.getItem(name);
+    get(name, placement) {
+        return JSON.parse(placement.getItem(name));
+    }
+
+    localSet(name, elem) {
+        localStorage.setItem(name, JSON.stringify(elem));
+    }
+
+    localGet(name) {
+        return JSON.parse(localStorage.getItem(name));
+    }
+
+    sessionSet(name, elem) {
+        sessionStorage.setItem(name, JSON.stringify(elem));
+    }
+
+    sessionGet(name) {
+        return JSON.parse(sessionStorage.getItem(name));
     }
 }

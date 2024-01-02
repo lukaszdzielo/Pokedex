@@ -5,34 +5,30 @@ import { StorageBuilder } from './storageBuilder.js';
 const config = {
     baseUrl: 'https://pokeapi.co/api/v2/',
     limit: 'limit=999999999999999',
-    devUrls: ['http://localhost', 'https://localhost', 'http://192.168', 'http://127.0.0.1'],
-    devList: [1, 4, 5, 6, 7, 8, 9, 123, 710, 1020],
+    dev: {
+        urls: ['http://localhost', 'https://localhost', 'http://192.168', 'http://127.0.0.1'],
+        list: [1, 4, 5, 6, 7, 8, 9, 123, 710, 1020, 1024, 1025],
+    },
     version: 0.2,
-};
-
-const storageNames = {
-    list: 'PokemonList',
-    types: 'PokemonTypes',
-    genNum: 'PokemonGen',
 };
 
 export class Pokedex {
     constructor() {
         this.app = document.querySelector('#app');
-
         this.options = { ...config };
+        this.isDev = this.isDev();
 
         this.linksAPI = {};
-        this.speciesNumber = ''; // '' for all
-
-        this.pokemonList = {};
-        this.pokemonTypes = {};
-        this.pokemonGenerations;
-        this.pokemon = {};
+        this.speciesNumber;
 
         this.storage = new StorageBuilder(this);
         this.appBuilder = new AppBuilder(this);
         this.dataBuilder = new DataBuilder(this);
+
+        this.pokemonList = this.storage.localGet(this.storage.names.list) || {};
+        this.pokemonTypes = this.storage.localGet(this.storage.names.types) || {};
+        this.pokemonGenerations = this.storage.localGet(this.storage.names.genNum) || 0;
+        this.pokemonDetails = this.storage.get(this.storage.names.details, sessionStorage) || {};
 
         this.init();
     };
@@ -42,7 +38,7 @@ export class Pokedex {
         await this.getAppUrls();
         await this.getPokemonsSpeciesNum();
         await this.getPokemonList();
-        if (this.isDev()) await this.devLimiter();
+        if (this.isDev) await this.devLimiter();
         await this.appBuilder.insertList();
         this.appBuilder.hideLoader();
         this.localStorageSize();
@@ -73,13 +69,7 @@ export class Pokedex {
     }
     async getPokemonList() {
 
-        const isLocalList = !!this.storage.localGet(this.storage.names.list) && !!this.storage.localGet(this.storage.names.types) && !!this.storage.localGet(this.storage.names.genNum);
-
-        if (isLocalList) {
-            this.pokemonList = this.storage.localGet(this.storage.names.list, true);
-            this.pokemonTypes = this.storage.localGet(this.storage.names.types, true);
-            this.pokemonGenerations = this.storage.localGet(this.storage.names.genNum);
-        };
+        const isLocalList = !!this.pokemonList && !!this.pokemonTypes && !!this.pokemonGenerations;
 
         if (isLocalList && Object.keys(this.pokemonList).length === this.speciesNumber) {
             console.log('Use local storage');
@@ -90,12 +80,12 @@ export class Pokedex {
     }
 
     isDev() {
-        return (this.options.devUrls.some((url) => window.location.href.startsWith(url)));
+        return (this.options.dev.urls.some((url) => window.location.href.startsWith(url)));
     }
 
     devLimiter() {
         this.pokemonList = Object.entries(this.pokemonList).reduce((acc, [codeName, pokemon]) => {
-            if (this.options.devList.includes(pokemon.id)) acc[codeName] = pokemon;
+            if (this.options.dev.list.includes(pokemon.id)) acc[codeName] = pokemon;
             return acc;
         }, {});
     }
