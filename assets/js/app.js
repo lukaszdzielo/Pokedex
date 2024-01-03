@@ -47,9 +47,7 @@ export class Pokedex {
     async fetchAPI(fetchUrl) {
         try {
             const res = await fetch(fetchUrl);
-            if (!res.ok) {
-                throw new Error(`Http error: ${res.status}`);
-            }
+            if (!res.ok) throw new Error(`Http error: ${res.status}`);
             const json = await res.json();
             return json;
 
@@ -60,7 +58,6 @@ export class Pokedex {
 
     async getAppUrls() {
         this.linksAPI = await this.fetchAPI(this.options.baseUrl).then(res => res);
-        if (!this.linksAPI) this.linksAPI = await this.fetchAPI('./apiLocal/links.json').then(res => res);
     }
 
     async getPokemonsSpeciesNum() {
@@ -68,14 +65,14 @@ export class Pokedex {
     }
     async getPokemonList() {
 
-        const isLocalList = !!this.pokemonList && !!this.pokemonTypes && !!this.pokemonGenerations;
+        // const isLocalList = !!this.pokemonList && !!this.pokemonTypes && !!this.pokemonGenerations;
 
-        if (isLocalList && Object.keys(this.pokemonList).length === this.speciesNumber) {
-            console.log('Use local storage');
-        } else {
-            console.log('Get new pokemon data and save localy');
-            await this.dataBuilder.getPokemonListData();
-        }
+        // if (isLocalList && Object.keys(this.pokemonList).length === this.speciesNumber) {
+        //     console.log('Use local storage');
+        // } else {
+        console.log('Get new pokemon data and save localy');
+        await this.dataBuilder.getPokemonListData();
+        // }
     }
 
     isDev() {

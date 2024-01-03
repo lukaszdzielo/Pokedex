@@ -1,9 +1,0 @@
-{
-    "count": 9,
-    "results": [
-        {
-            "name": "bulbasaur",
-            "url": "./apiLocal/pokemon/1.json"
-        }
-    ]
-}

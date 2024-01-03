@@ -1,9 +1,0 @@
-{
-    "name": "generation-i",
-    "pokemon_species": [
-        {
-            "name": "bulbasaur",
-            "url": "./apiLocal/pokemon-species/1/"
-        }
-    ]
-}
