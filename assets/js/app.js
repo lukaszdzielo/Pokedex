@@ -84,8 +84,8 @@ export class Pokedex {
     }
 
     devLimiter() {
-        this.pokemonList = Object.entries(this.pokemonList).reduce((acc, [codeName, pokemon]) => {
-            if (this.options.dev.list.includes(pokemon.id)) acc[codeName] = pokemon;
+        this.pokemonList = Object.keys(this.pokemonList).reduce((acc, id) => {
+            if (this.options.dev.list.includes(+id)) acc[id] = this.pokemonList[+id];
             return acc;
         }, {});
     }

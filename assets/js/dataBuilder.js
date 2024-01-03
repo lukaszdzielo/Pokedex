@@ -11,19 +11,6 @@ export class DataBuilder {
         await this.getPokemonListTypes();
         await this.getPokemonListGenerations();
 
-        const codeNameToIdOrder = {};
-        for (const pokemonCodeName in this.app.pokemonList) {
-            const { id, name, t, g } = this.app.pokemonList[pokemonCodeName];
-            codeNameToIdOrder[id] = {
-                n: name ? name : `${pokemonCodeName.charAt(0).toUpperCase()}${pokemonCodeName.slice(1)}`,
-                t,
-                g,
-            };
-        }
-        // this.app.pokemonList = codeNameToIdOrder;
-
-        console.log(this.app.pokemonList['basculegion']);
-
         this.app.storage.set(this.app.storage.names.list, this.app.pokemonList, localStorage);
         this.app.storage.set(this.app.storage.names.types, this.app.pokemonTypes, localStorage);
         this.app.storage.set(this.app.storage.names.genNum, this.app.pokemonGenerations, localStorage);
@@ -34,8 +21,8 @@ export class DataBuilder {
         const res = await this.app.fetchAPI(`${this.app.linksAPI['pokemon-species']}?${this.app.options.limit}`);
 
         res.results.forEach((pokemon, i) => {
-            if (/\-/.test(pokemon.name)) incorrectNames.push(pokemon.name);
-            this.app.pokemonList[pokemon.name] = { id: i + 1 };
+            if (/\-/.test(pokemon.name)) incorrectNames.push(i + 1);
+            this.app.pokemonList[i + 1] = { n: `${pokemon.name.charAt(0).toUpperCase()}${pokemon.name.slice(1)}` };
         });
 
         return incorrectNames;
@@ -43,15 +30,16 @@ export class DataBuilder {
 
     async getPokemonListCorrectNames(incorrectNames) {
         const responses = [];
-        incorrectNames.forEach(codeNames => {
-            const response = this.app.fetchAPI(this.app.linksAPI['pokemon-species'] + codeNames);
+        incorrectNames.forEach(id => {
+            const response = this.app.fetchAPI(this.app.linksAPI['pokemon-species'] + id);
             responses.push(response);
         });
 
         const pokemons = await Promise.all(responses);
 
         pokemons.forEach(pokemon => {
-            this.app.pokemonList[pokemon.name].name = pokemon.names.find((object) => object.language.name === "en").name;
+            const { id, names } = pokemon;
+            this.app.pokemonList[id].n = names.find((object) => object.language.name === "en").name;
         });
     }
 
@@ -70,34 +58,10 @@ export class DataBuilder {
         types.forEach(type => {
             this.app.pokemonTypes[type.id] = type.name;
             type.pokemon.forEach(elem => {
-                if (!this.app.pokemonList[elem.pokemon.name]) return;
-                if (!this.app.pokemonList[elem.pokemon.name].t) this.app.pokemonList[elem.pokemon.name].t = [];
-                this.app.pokemonList[elem.pokemon.name].t[elem.slot - 1] = type.id;
-            });
-        });
-
-        for (const [i, pokemon] of Object.entries(this.app.pokemonList)) {
-            if (!pokemon.t) missingTypes.push(pokemon);
-        }
-
-        if (!!missingTypes.length) await this.getPokemonListMissingTypes(missingTypes);
-    }
-
-    async getPokemonListMissingTypes(missingTypes) {
-        const responses = [];
-
-        missingTypes.forEach(pokemon => {
-            const response = this.app.fetchAPI(this.app.linksAPI['pokemon'] + pokemon.id);
-            responses.push(response);
-        });
-
-        const pokemons = await Promise.all(responses);
-
-        missingTypes.forEach((obj, i) => {
-            console.log(obj.type);
-            if (!obj.t) obj.t = [];
-            pokemons[i].types.forEach(elem => {
-                obj.t[elem.slot - 1] = Object.keys(this.app.pokemonTypes).find(key => this.app.pokemonTypes[key] === elem.type.name);
+                const id = this.getIdFromUrl(elem.pokemon.url);
+                if (!this.app.pokemonList[id]) return;
+                if (!this.app.pokemonList[id].t) this.app.pokemonList[id].t = [];
+                this.app.pokemonList[id].t[elem.slot - 1] = type.id;
             });
         });
     }
@@ -116,8 +80,13 @@ export class DataBuilder {
         generations.forEach(generation => {
             this.app.pokemonGenerations = generation.name = (typeof generation.name === 'string') && numRomanToArabic(generation.name.replace('generation-', ''));
             generation.pokemon_species.forEach(pokemon => {
-                this.app.pokemonList[pokemon.name].g = generation.name;
+                const id = this.getIdFromUrl(pokemon.url);
+                this.app.pokemonList[id].g = generation.name;
             });
         });
+    }
+
+    getIdFromUrl(url) {
+        return /\d+/.exec(url.replace(this.app.options.baseUrl, ''))[0];
     }
 }

@@ -34,7 +34,7 @@ export class AppBuilder {
         this.appList.addEventListener('click', (e) => {
             const elem = e.target.closest('.card');
             if (elem) {
-                this.modalBuilder.openPokemonDialog(elem.dataset.codeName, elem.dataset.id);
+                this.modalBuilder.openPokemonDialog(elem.dataset.id);
             }
         });
     }

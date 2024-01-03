@@ -3,26 +3,17 @@ export class CardBuilder {
         this.app = app;
     }
 
-    pattern(codeName, pokemon) {
-        const { id } = pokemon;
-        const name = pokemon.name ? pokemon.name : `${codeName.charAt(0).toUpperCase()}${codeName.slice(1)}`;
+    pattern(id, pokemon) {
+        const { n } = pokemon;
         const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
         return `<div class="card loading"
-        ${(typeof name && typeof name !== 'undefined') ? `data-code-name='${codeName}'` : ''}
         ${(typeof id && typeof id !== 'undefined') ? `data-id='${id}'` : ''}
+        ${(typeof n && typeof n !== 'undefined') ? `data-name='${n}'` : ''}
         >
         ${(typeof id && typeof id !== 'undefined') ? `<div class='card__id'>${id}</div>` : ''}
-        ${(typeof name && typeof name !== 'undefined') ? `<div class='card__name'>${name}</div>` : ''}
-        ${(typeof id && typeof id !== 'undefined') ? `<img class='card__image'><img src="${imageUrl}" class="item__img" alt="${name}" loading="lazy" onerror="this.onerror=null;this.src='./assets/0.png';"></div>` : ''}
+        ${(typeof n && typeof n !== 'undefined') ? `<div class='card__name'>${n}</div>` : ''}
+        ${(typeof id && typeof id !== 'undefined') ? `<img class='card__image'><img src="${imageUrl}" class="item__img" alt="${n}" loading="lazy" onerror="this.onerror=null;this.src='./assets/0.png';"></div>` : ''}
 </div>`;
-    }
-
-    eventLoading(item) {
-        // item.querySelector('.card__image img').addEventListener("load", () => {
-        //     setTimeout(() => {
-        //         item.classList.remove("loading");
-        //     }, 400);
-        // });
     }
 }

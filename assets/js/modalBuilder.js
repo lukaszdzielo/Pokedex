@@ -5,27 +5,26 @@ export class ModalBuilder {
         this.pokemonDialogWrapper;
     }
 
-    async openPokemonDialog(pokemonCodeName, pokemonId) {
-        if (!this.pokemonDialog) this.buildPokemonDialog();
+    async openPokemonDialog(id) {
 
+        if (!this.pokemonDialog) this.buildPokemonDialog();
         this.removePokemonContent();
 
-        this.insertPokemonBasic(pokemonCodeName);
+        this.insertPokemonBasic(id);
         this.pokemonDialog.showModal();
 
-        if (!this.app.pokemonDetails[pokemonCodeName]) {
-            console.log('download data', pokemonCodeName);
-            this.app.pokemonDetails[pokemonCodeName] = await this.getPokemonData(pokemonId);
+        if (!this.app.pokemonDetails[id]) {
+            console.log('download', id);
+            this.app.pokemonDetails[id] = await this.getPokemonData(id);
         } else {
-            console.log('use sessionStorage');
+            console.log('sessionStorage', id);
         }
 
         this.app.storage.set(this.app.storage.names.details, this.app.pokemonDetails, sessionStorage);
 
-        this.insertPokemonDetails(this.app.pokemonDetails[pokemonCodeName]);
+        this.insertPokemonDetails(this.app.pokemonDetails[id]);
 
         // console.log('1', this.pokemonDialog.open);
-        // console.log('2', this.pokemonDialog.open);
     }
 
     closePokemonDialog() {
@@ -33,8 +32,8 @@ export class ModalBuilder {
         this.removePokemonContent();
     }
 
-    getPokemonData(pokemonCodeName) {
-        return this.app.fetchAPI(this.app.linksAPI['pokemon'] + pokemonCodeName);
+    getPokemonData(id) {
+        return this.app.fetchAPI(this.app.linksAPI['pokemon'] + id);
     }
 
     buildPokemonDialog() {
@@ -58,22 +57,21 @@ export class ModalBuilder {
         this.pokemonDialogWrapper.replaceChildren();
     }
 
-    insertPokemonBasic(pokemonCodeName) {
-        this.pokemonDialogWrapper.insertAdjacentHTML('afterbegin', this.patternPokemonInfo(pokemonCodeName));
+    insertPokemonBasic(id) {
+        this.pokemonDialogWrapper.insertAdjacentHTML('afterbegin', this.patternPokemonInfo(id));
     }
 
     insertPokemonDetails(pokemonData) {
         this.pokemonDialogWrapper.insertAdjacentHTML('beforeend', this.patternPokemonDetails(pokemonData));
     }
 
-    patternPokemonInfo(pokemonCodeName) {
-        const name = this.app.pokemonList[pokemonCodeName].name ? this.app.pokemonList[pokemonCodeName].name : `${pokemonCodeName.charAt(0).toUpperCase()}${pokemonCodeName.slice(1)}`;
-        const { id, t, g } = this.app.pokemonList[pokemonCodeName];
+    patternPokemonInfo(id) {
+        const { n, t, g } = this.app.pokemonList[id];
         const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
         return `<div class="info">
-        ${(typeof id && typeof id !== 'undefined') ? `<div class='dialog__image'><img src="${imageUrl}" class="item__img" alt="${name}" loading="lazy" onerror="this.onerror=null;this.src='./assets/0.png';"></div>` : ''}
-        <div class="dialog__name">${name}</div>
+        ${(typeof id && typeof id !== 'undefined') ? `<div class='dialog__image'><img src="${imageUrl}" class="item__img" alt="${n}" loading="lazy" onerror="this.onerror=null;this.src='./assets/0.png';"></div>` : ''}
+        <div class="dialog__name">${n}</div>
         ${(typeof id && typeof id !== 'undefined') ? `<div class="dialog__name">Id: ${id}</div>` : ''}
         ${(typeof t && typeof t !== 'undefined' && t.length > 0) ? `<div class="dialog__types">${t.map(type => `<span>${this.app.pokemonTypes[type]}</span>`).join('')}</div>` : ''}
         ${(typeof g && typeof g !== 'undefined') ? `<div class='dialog__gen'>Gen: ${g}</div>` : ''}
