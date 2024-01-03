@@ -1,0 +1,6 @@
+{
+    "generation": "./apiLocal/generation/generation.json",
+    "pokemon": "./apiLocal/pokemon.json",
+    "pokemon-species": "./apiLocal/pokemon-species.json",
+    "type": "./apiLocal/type/type.json"
+}

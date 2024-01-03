@@ -48,24 +48,23 @@ export class Pokedex {
         try {
             const res = await fetch(fetchUrl);
             if (!res.ok) {
-                console.error('Res not ok :(');
                 throw new Error(`Http error: ${res.status}`);
             }
             const json = await res.json();
             return json;
 
         } catch (error) {
-            console.error('Catch error');
             console.error(error);
         }
     }
 
     async getAppUrls() {
         this.linksAPI = await this.fetchAPI(this.options.baseUrl).then(res => res);
+        if (!this.linksAPI) this.linksAPI = await this.fetchAPI('./apiLocal/links.json').then(res => res);
     }
 
     async getPokemonsSpeciesNum() {
-        this.speciesNumber = await this.fetchAPI(this.linksAPI['pokemon-species'] + '?' + this.options.limit).then(res => res.count);
+        this.speciesNumber = await this.fetchAPI(this.linksAPI['pokemon-species']).then(res => res.count);
     }
     async getPokemonList() {
 

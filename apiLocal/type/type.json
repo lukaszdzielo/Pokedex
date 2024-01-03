@@ -1,0 +1,12 @@
+{
+    "results": [
+        {
+            "name": "poison",
+            "url": "./apiLocal/type/type-4.json"
+        },
+        {
+            "name": "grass",
+            "url": "./apiLocal/type/type-12.json"
+        }
+    ]
+}

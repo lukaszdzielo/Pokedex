@@ -1,0 +1,13 @@
+{
+    "id": 12,
+    "name": "grass",
+    "pokemon": [
+        {
+            "pokemon": {
+                "name": "bulbasaur",
+                "url": "./apiLocal/pokemon/1/"
+            },
+            "slot": 1
+        }
+    ]
+}
