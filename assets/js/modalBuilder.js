@@ -46,7 +46,7 @@ export class ModalBuilder {
     }
 
     patternPokemonDialog() {
-        return `<dialog id="pokemonDialog" class="loading">
+        return `<dialog id="pokemonDialog" class="loading" data-id="">
         <div class="loader"></div>
         <button id="dialog__close">Close</button>
         <div id="pokemonDialogWrapper"></div>
@@ -59,6 +59,7 @@ export class ModalBuilder {
 
     insertPokemonBasic(id) {
         this.pokemonDialogWrapper.insertAdjacentHTML('afterbegin', this.patternPokemonInfo(id));
+        this.pokemonDialog.dataset.id = id;
     }
 
     insertPokemonDetails(pokemonData) {
