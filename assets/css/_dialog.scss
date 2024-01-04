@@ -1,8 +1,29 @@
+dialog {
+    --border-radius: 16px;
+}
+
+#dialogSettings {
+    border: 0;
+    border-radius: 16px;
+    padding: 24px;
+    width: 400px;
+    max-width: calc(100% - 48px);
+    box-sizing: border-box;
+    text-align: center;
+
+    &::backdrop {
+        position: fixed;
+        inset: 0;
+        background: var(--backdrop--bg, #212121);
+        opacity: 0.75;
+    }
+}
+
 #pokemonDialog {
     border: 0;
     border-radius: 16px;
     padding: 24px;
-    width: 800px;
+    width: 600px;
     max-width: calc(100% - 48px);
     box-sizing: border-box;
     text-align: center;
@@ -13,7 +34,7 @@
         gap: 8px;
 
         span {
-            border: 1px solid var(--text--color);
+            border: 1px solid var(--app--color);
             padding: 4px 8px;
             border-radius: 16px;
         }

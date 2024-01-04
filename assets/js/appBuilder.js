@@ -4,8 +4,11 @@ export class AppBuilder {
     constructor(app) {
         this.app = app;
 
+        this.theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
         this.appLoader = document.querySelector('.loader');
-        this.appNav = document.querySelector('nav');
+        this.nav = document.querySelector('nav');
+        this.navDialog = this.nav.querySelector('#dialogSettings');
         this.appList = document.querySelector('#pokemonList');
         this.pokemonModal = document.querySelector('#pokemonModal');
 
@@ -14,11 +17,33 @@ export class AppBuilder {
     }
 
     init() {
+        const switcher = document.querySelector('#theme-switcher');
+
+        switcher.addEventListener('input', e => setTheme(e.target.value));
+
+        const setTheme = theme => document.firstElementChild.setAttribute('color-scheme', theme);
+
+
+
+
+
+
+        console.log('theme:', this.theme);
         this.buildLoader();
+        this.buildNav();
     }
 
     buildLoader() {
         this.showLoader();
+    }
+
+    buildNav() {
+        this.navDialog.showModal();
+        const closeBtn = this.navDialog.querySelector('#closeSettings');
+
+        closeBtn.addEventListener('click', () => {
+            this.navDialog.close();
+        });
     }
 
     insertList() {

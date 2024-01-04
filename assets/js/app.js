@@ -29,6 +29,7 @@ export class Pokedex {
         this.pokemonTypes = this.storage.get(this.storage.names.types, localStorage) || {};
         this.pokemonGenerations = this.storage.get(this.storage.names.genNum, localStorage) || 0;
         this.pokemonDetails = this.storage.get(this.storage.names.details, sessionStorage) || {};
+        this.pokemonCatched = false || [1, 7, 8, 99, 123, 11, 4].sort((a, b) => a - b);
 
         this.init();
     };

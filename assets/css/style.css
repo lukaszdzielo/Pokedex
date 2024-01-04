@@ -1,8 +1,47 @@
 :root {
+  color-scheme: light;
   --app--bg: #EEEEEE;
-  --item__card--bg: #ffffff;
+  --app--color: #212121;
+  --nav--bg: #FFFFFF;
+  --card--bg: #FFFFFF;
   --backdrop--bg: #212121;
-  --text--color: #212121;
+}
+
+[color-scheme=light] {
+  color-scheme: light;
+  --app--bg: #EEEEEE;
+  --app--color: #212121;
+  --nav--bg: #FFFFFF;
+  --card--bg: #ffffff;
+  --backdrop--bg: #212121;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --app--bg: #212121;
+    --app--color: #EEEEEE;
+    --nav--bg: #424242;
+    --card--bg: #424242;
+    --backdrop--bg: #212121;
+  }
+}
+[color-scheme=dark] {
+  color-scheme: dark;
+  --app--bg: #212121;
+  --app--color: #EEEEEE;
+  --nav--bg: #424242;
+  --card--bg: #424242;
+  --backdrop--bg: #212121;
+}
+
+[color-scheme=dim] {
+  color-scheme: dark;
+  --app--bg: #263238;
+  --app--color: #EEEEEE;
+  --nav--bg: #37474F;
+  --card--bg: #37474F;
+  --backdrop--bg: #212121;
 }
 
 #app {
@@ -14,6 +53,7 @@ body {
   padding-block-end: 120px;
   min-height: 100dvh;
   background: var(--app--bg);
+  color: var(--text--color);
   font: 16px sans-serif;
   line-height: 1.15;
   box-sizing: border-box;
@@ -25,7 +65,9 @@ body {
 }
 
 nav {
-  display: none;
+  display: flex;
+  padding: 12px 24px;
+  background: var(--nav--bg);
 }
 
 #pokemonList {
@@ -43,7 +85,7 @@ nav {
   align-items: center;
   aspect-ratio: 1/1;
   border-radius: 8px;
-  background: var(--item__card--bg, #ffffff);
+  background: var(--card--bg);
   box-sizing: border-box;
   font: 0.75rem sans-serif;
   transition: 0.2s;
@@ -145,11 +187,31 @@ nav {
   inset: auto 0 0 0;
 }
 
+dialog {
+  --border-radius: 16px;
+}
+
+#dialogSettings {
+  border: 0;
+  border-radius: 16px;
+  padding: 24px;
+  width: 400px;
+  max-width: calc(100% - 48px);
+  box-sizing: border-box;
+  text-align: center;
+}
+#dialogSettings::backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--backdrop--bg, #212121);
+  opacity: 0.75;
+}
+
 #pokemonDialog {
   border: 0;
   border-radius: 16px;
   padding: 24px;
-  width: 800px;
+  width: 600px;
   max-width: calc(100% - 48px);
   box-sizing: border-box;
   text-align: center;
@@ -160,7 +222,7 @@ nav {
   gap: 8px;
 }
 #pokemonDialog .dialog__types span {
-  border: 1px solid var(--text--color);
+  border: 1px solid var(--app--color);
   padding: 4px 8px;
   border-radius: 16px;
 }

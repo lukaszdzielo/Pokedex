@@ -1,9 +1,4 @@
-:root {
-    --app--bg: #EEEEEE;
-    --item__card--bg: #ffffff;
-    --backdrop--bg: #212121;
-    --text--color: #212121;
-}
+
 
 #app {
     position: relative;
@@ -14,6 +9,7 @@ body {
     padding-block-end: 120px;
     min-height: 100dvh;
     background: var(--app--bg);
+    color: var(--text--color);
     font: 16px sans-serif;
     line-height: 1.15;
     box-sizing: border-box;
