@@ -1,6 +1,6 @@
 import { AppBuilder } from './appBuilder.js';
 import { DataBuilder } from './dataBuilder.js';
-import { StorageBuilder } from './storageBuilder.js';
+import { StorageManager } from './StorageManager.js';
 
 const config = {
     baseUrl: 'https://pokeapi.co/api/v2/',
@@ -21,7 +21,7 @@ export class Pokedex {
         this.linksAPI = {};
         this.speciesNumber;
 
-        this.storage = new StorageBuilder(this);
+        this.storage = new StorageManager(this);
         this.appBuilder = new AppBuilder(this);
         this.dataBuilder = new DataBuilder(this);
 

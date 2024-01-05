@@ -5,7 +5,7 @@ const names = {
     details: 'PokemonDetails',
 };
 
-export class StorageBuilder {
+export class StorageManager {
     constructor(app) {
         this.app = app;
         this.names = { ...names };

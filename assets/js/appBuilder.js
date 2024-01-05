@@ -1,4 +1,4 @@
-import { SchemeManager } from './schemeManager.js';
+import { SchemeManager } from './SchemeManager.js';
 import { CardBuilder } from './cardBuilder.js';
 import { ModalBuilder } from './modalBuilder.js';
 export class AppBuilder {
