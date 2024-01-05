@@ -1,7 +1,11 @@
+import { SchemeManager } from './schemeManager.js';
 import { CardBuilder } from './cardBuilder.js';
 import { ModalBuilder } from './modalBuilder.js';
 export class AppBuilder {
     constructor(app) {
+
+        this.schemeManager = new SchemeManager(this.app);
+
         this.app = app;
 
         this.theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
@@ -17,18 +21,6 @@ export class AppBuilder {
     }
 
     init() {
-        const switcher = document.querySelector('#theme-switcher');
-
-        switcher.addEventListener('input', e => setTheme(e.target.value));
-
-        const setTheme = theme => document.firstElementChild.setAttribute('color-scheme', theme);
-
-
-
-
-
-
-        console.log('theme:', this.theme);
         this.buildLoader();
         this.buildNav();
     }
