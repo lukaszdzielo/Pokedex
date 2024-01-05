@@ -11,19 +11,6 @@
     --backdrop--bg: #212121;
 }
 
-[color-scheme="light"] {
-    color-scheme: light;
-
-    --app--bg: #EEEEEE;
-    --app--color: #212121;
-
-    --nav--bg: #FFFFFF;
-
-    --card--bg: #ffffff;
-
-    --backdrop--bg: #212121;
-}
-
 @media (prefers-color-scheme: dark) {
     :root {
         color-scheme: dark;
@@ -37,6 +24,19 @@
 
         --backdrop--bg: #212121;
     }
+}
+
+[color-scheme="light"] {
+    color-scheme: light;
+
+    --app--bg: #EEEEEE;
+    --app--color: #212121;
+
+    --nav--bg: #FFFFFF;
+
+    --card--bg: #ffffff;
+
+    --backdrop--bg: #212121;
 }
 
 [color-scheme="dark"] {
