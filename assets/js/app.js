@@ -66,14 +66,14 @@ export class Pokedex {
     }
     async getPokemonList() {
 
-        // const isLocalList = !!this.pokemonList && !!this.pokemonTypes && !!this.pokemonGenerations;
+        const isLocalList = !!this.pokemonList && !!this.pokemonTypes && !!this.pokemonGenerations;
 
-        // if (isLocalList && Object.keys(this.pokemonList).length === this.speciesNumber) {
-        //     console.log('Use local storage');
-        // } else {
-        console.log('Get new pokemon data and save localy');
-        await this.dataBuilder.getPokemonListData();
-        // }
+        if (isLocalList && Object.keys(this.pokemonList).length === this.speciesNumber) {
+            console.log('Use local storage');
+        } else {
+            console.log('Get new pokemon data and save localy');
+            await this.dataBuilder.getPokemonListData();
+        }
     }
 
     isDev() {
