@@ -79,19 +79,6 @@ nav {
   padding: 12px 24px;
   background: var(--nav--bg);
 }
-nav button {
-  padding: 8px;
-  border: 0;
-  border-radius: 4px;
-  background: var(--nav__btn--bg);
-  cursor: pointer;
-}
-nav button svg {
-  display: block;
-  aspect-ratio: 1/1;
-  width: 24px;
-  height: 24px;
-}
 
 #pokemonList {
   gap: 16px;
@@ -219,6 +206,9 @@ dialog header {
   justify-content: space-between;
   align-items: center;
 }
+dialog button.close {
+  margin-inline-start: auto;
+}
 
 #dialogSettings {
   border: 0;
@@ -283,4 +273,19 @@ dialog header {
   inset: 0;
   background: var(--backdrop--bg, #212121);
   opacity: 0.75;
+}
+
+button {
+  padding: 8px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--nav__btn--bg);
+  color: var(--app--color);
+  cursor: pointer;
+}
+button svg {
+  display: block;
+  aspect-ratio: 1/1;
+  width: 24px;
+  height: 24px;
 }/*# sourceMappingURL=style.css.map */

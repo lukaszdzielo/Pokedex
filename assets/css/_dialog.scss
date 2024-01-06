@@ -7,6 +7,10 @@ dialog {
         justify-content: space-between;
         align-items: center;
     }
+
+    button.close {
+        margin-inline-start: auto;
+    }
 }
 
 #dialogSettings {

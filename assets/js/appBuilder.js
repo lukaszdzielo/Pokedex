@@ -1,4 +1,5 @@
 import { SchemeManager } from './SchemeManager.js';
+import { NavBuilder } from './NavBuilder.js';
 import { CardBuilder } from './cardBuilder.js';
 import { ModalBuilder } from './modalBuilder.js';
 export class AppBuilder {
@@ -7,9 +8,11 @@ export class AppBuilder {
         this.schemeManager = new SchemeManager(this.app);
 
         this.appLoader = document.querySelector('.loader');
-        this.nav = document.querySelector('nav');
-        this.navDialog = this.nav.querySelector('#dialogSettings');
+
+        this.navBuilder = new NavBuilder(this.app);
+
         this.appList = document.querySelector('#pokemonList');
+
         this.pokemonModal = document.querySelector('#pokemonModal');
 
         this.cardBuilder = new CardBuilder(this.app);
@@ -18,23 +21,10 @@ export class AppBuilder {
 
     init() {
         this.buildLoader();
-        this.buildNav();
     }
 
     buildLoader() {
         this.showLoader();
-    }
-
-    buildNav() {
-        const settingsBtn = this.nav.querySelector('#settingsBtn');
-        const closeBtn = this.navDialog.querySelector('#closeSettings');
-        // this.navDialog.showModal();
-        settingsBtn.addEventListener('click', () => {
-            this.navDialog.showModal();
-        });
-        closeBtn.addEventListener('click', () => {
-            this.navDialog.close();
-        });
     }
 
     insertList() {
