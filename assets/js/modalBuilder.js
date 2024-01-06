@@ -48,7 +48,9 @@ export class ModalBuilder {
     patternPokemonDialog() {
         return `<dialog id="pokemonDialog" class="loading" data-id="">
         <div class="loader"></div>
-        <button id="dialog__close">Close</button>
+        <header>
+            <button id="dialog__close">Close</button>
+        </header>
         <div id="pokemonDialogWrapper"></div>
     </dialog>`;
     }

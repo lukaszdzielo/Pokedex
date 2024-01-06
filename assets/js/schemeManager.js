@@ -27,7 +27,6 @@ export class SchemeManager {
     }
 
     setScheme(scheme) {
-        console.log('asd');
         this.html.setAttribute('color-scheme', scheme);
     }
 }

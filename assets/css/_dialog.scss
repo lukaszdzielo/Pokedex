@@ -1,7 +1,12 @@
 dialog {
-    // --dialog--bg: red;
     --border-radius: 16px;
     background: var(--dialog--bg);
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 }
 
 #dialogSettings {

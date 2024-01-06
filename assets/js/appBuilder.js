@@ -26,9 +26,12 @@ export class AppBuilder {
     }
 
     buildNav() {
-        this.navDialog.showModal();
+        const settingsBtn = this.nav.querySelector('#settingsBtn');
         const closeBtn = this.navDialog.querySelector('#closeSettings');
-
+        // this.navDialog.showModal();
+        settingsBtn.addEventListener('click', () => {
+            this.navDialog.showModal();
+        });
         closeBtn.addEventListener('click', () => {
             this.navDialog.close();
         });
