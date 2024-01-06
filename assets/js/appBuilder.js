@@ -3,12 +3,8 @@ import { CardBuilder } from './cardBuilder.js';
 import { ModalBuilder } from './modalBuilder.js';
 export class AppBuilder {
     constructor(app) {
-
-        this.schemeManager = new SchemeManager(this.app);
-
         this.app = app;
-
-        this.theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        this.schemeManager = new SchemeManager(this.app);
 
         this.appLoader = document.querySelector('.loader');
         this.nav = document.querySelector('nav');

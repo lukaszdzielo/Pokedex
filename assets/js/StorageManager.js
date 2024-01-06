@@ -11,11 +11,19 @@ export class StorageManager {
         this.names = { ...names };
     };
 
-    set(name, elem, placement) {
-        placement.setItem(name, JSON.stringify(elem));
+    setLocal(name, elem) {
+        localStorage.setItem(name, JSON.stringify(elem));
     }
 
-    get(name, placement) {
-        return JSON.parse(placement.getItem(name));
+    getLocal(name) {
+        return JSON.parse(localStorage.getItem(name));
+    }
+
+    setSession(name, elem) {
+        sessionStorage.setItem(name, JSON.stringify(elem));
+    }
+
+    getSession(name) {
+        return JSON.parse(sessionStorage.getItem(name));
     }
 }

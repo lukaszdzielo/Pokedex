@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" color-scheme="auto">
 
 <head>
     <meta charset="UTF-8">
@@ -9,49 +9,79 @@
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
-<body id="app">
-    <!-- <div> -->
+<body>
+    <div id="app">
 
-    <div class="loader loading">
-        <div class="loader--top"></div>
-        <div class="loader--bottom"></div>
+        <div class="loader loading">
+            <div class="loader--top"></div>
+            <div class="loader--bottom"></div>
+        </div>
+
+        <nav>
+            <button id="settingsBtn">Settings</button>
+            <dialog id="dialogSettings">
+                <header>
+                    <div>Settings</div>
+                    <button id="closeSettings">Close</button>
+                </header>
+                <main>
+                    <section>
+                        <div class="option">
+                            <label for="y">Theme</label>
+                            <select name="x" id="themeSwitcher">
+                                <option value="auto" selected="selected">auto</option>
+                                <option value="light">light</option>
+                                <option value="dark">dark</option>
+                                <option value="dim">dim</option>
+                            </select>
+                        </div>
+                    </section>
+
+                    <section>
+                        <header>App cleaner</header>
+                        <div class="option">
+                            <label for="y">Clear LocalStorage and download pokemon list</label>
+                            <button>Clear</button>
+                        </div>
+                        <div class="option">
+                            <label for="y">Clear catched Pokemons</label>
+                            <button>Clear</button>
+                        </div>
+                    </section>
+                </main>
+
+                <!-- <form id="theme-switcher">
+                    <div>
+                        <input checked type="radio" id="auto" name="theme" value="auto">
+                        <label for="auto">Auto</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="light" name="theme" value="light">
+                        <label for="light">Light</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="dark" name="theme" value="dark">
+                        <label for="dark">Dark</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="dim" name="theme" value="dim">
+                        <label for="dim">Dim</label>
+                    </div>
+                </form> -->
+                <!-- <footer>
+                    <p class="copyright">Data delivered by <a href="https://pokeapi.co/"><img src="https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi.svg" alt="Pokémon API" height="40"></a></p>
+                    <p class="copyright">Made by <a href="https://lukaszdzielo.github.io/"><svg height="40" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200"><defs><linearGradient id="a" x1="201.42" y1="229.25" x2="351.8" y2="379.62" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2962ff"></stop><stop offset="1" stop-color="#2962ff"></stop></linearGradient></defs><path d="M2e2 295v95h95a95 95 0 000-190H237.74v85.35l37.75-10.08v38.6L237.74 324v28.31h56.19a57.26 57.26.0 100-114.52H275.49" transform="translate(-195 -195)" style="fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:10px;stroke:url(#a)"></path></svg></a></p>
+                </footer> -->
+            </dialog>
+
+
+        </nav>
+
+        <div id="pokemonList" class="list"></div>
+
+
+
     </div>
-
-    <nav>
-        <button id="settingsBtn">test</button>
-        <dialog id="dialogSettings">
-            <button id="closeSettings">test</button>
-            test
-        </dialog>
-
-        <form id="theme-switcher">
-            <div>
-                <input checked type="radio" id="auto" name="theme" value="auto">
-                <label for="auto">Auto</label>
-            </div>
-            <div>
-                <input type="radio" id="light" name="theme" value="light">
-                <label for="light">Light</label>
-            </div>
-            <div>
-                <input type="radio" id="dark" name="theme" value="dark">
-                <label for="dark">Dark</label>
-            </div>
-            <div>
-                <input type="radio" id="dim" name="theme" value="dim">
-                <label for="dim">Dim</label>
-            </div>
-        </form>
-    </nav>
-
-    <div id="pokemonList" class="list"></div>
-
-    <!-- <footer>
-            <p class="copyright">Data delivered by <a href="https://pokeapi.co/"><img src="https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi.svg" alt="Pokémon API" height="40"></a></p>
-            <p class="copyright">Made by <a href="https://lukaszdzielo.github.io/"><svg height="40" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200"><defs><linearGradient id="a" x1="201.42" y1="229.25" x2="351.8" y2="379.62" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2962ff"></stop><stop offset="1" stop-color="#2962ff"></stop></linearGradient></defs><path d="M2e2 295v95h95a95 95 0 000-190H237.74v85.35l37.75-10.08v38.6L237.74 324v28.31h56.19a57.26 57.26.0 100-114.52H275.49" transform="translate(-195 -195)" style="fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:10px;stroke:url(#a)"></path></svg></a></p>
-        </footer> -->
-
-    <!-- </div> -->
     <script src="./assets/js/app.js" type="module"></script>
 
     <script>

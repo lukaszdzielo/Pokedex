@@ -25,10 +25,10 @@ export class Pokedex {
         this.appBuilder = new AppBuilder(this);
         this.dataBuilder = new DataBuilder(this);
 
-        this.pokemonList = this.storage.get(this.storage.names.list, localStorage) || {};
-        this.pokemonTypes = this.storage.get(this.storage.names.types, localStorage) || {};
-        this.pokemonGenerations = this.storage.get(this.storage.names.genNum, localStorage) || 0;
-        this.pokemonDetails = this.storage.get(this.storage.names.details, sessionStorage) || {};
+        this.pokemonList = this.storage.getLocal(this.storage.names.list) || {};
+        this.pokemonTypes = this.storage.getLocal(this.storage.names.types) || {};
+        this.pokemonGenerations = this.storage.getLocal(this.storage.names.genNum) || 0;
+        this.pokemonDetails = this.storage.getSession(this.storage.names.details) || {};
         this.pokemonCatched = false || [1, 7, 8, 99, 123, 11, 4].sort((a, b) => a - b);
 
         this.init();

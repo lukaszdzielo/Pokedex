@@ -20,7 +20,7 @@ export class ModalBuilder {
             console.log('sessionStorage', id);
         }
 
-        this.app.storage.set(this.app.storage.names.details, this.app.pokemonDetails, sessionStorage);
+        this.app.storage.setSession(this.app.storage.names.details, this.app.pokemonDetails);
 
         this.insertPokemonDetails(this.app.pokemonDetails[id]);
 
