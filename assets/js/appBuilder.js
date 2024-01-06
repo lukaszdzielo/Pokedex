@@ -1,4 +1,4 @@
-import { SchemeManager } from './ShemeManager.js';
+import { SchemeManager } from './SchemeManager.js';
 import { NavBuilder } from './NavBuilder.js';
 import { CardBuilder } from './cardBuilder.js';
 import { ModalBuilder } from './modalBuilder.js';
