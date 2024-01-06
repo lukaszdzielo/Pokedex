@@ -2,6 +2,7 @@ const names = {
     list: 'PokemonList',
     types: 'PokemonTypes',
     genNum: 'PokemonGen',
+    catched: 'PokemonCatched',
     details: 'PokemonDetails',
 };
 

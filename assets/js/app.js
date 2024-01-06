@@ -1,6 +1,7 @@
 import { AppBuilder } from './appBuilder.js';
 import { DataBuilder } from './dataBuilder.js';
 import { StorageManager } from './StorageManager.js';
+import { PokemonCatchedManager } from './PokemonCatchedManager.js';
 
 const config = {
     baseUrl: 'https://pokeapi.co/api/v2/',
@@ -24,12 +25,15 @@ export class Pokedex {
         this.storage = new StorageManager(this);
         this.appBuilder = new AppBuilder(this);
         this.dataBuilder = new DataBuilder(this);
+        this.catchedManager = new PokemonCatchedManager(this);
 
         this.pokemonList = this.storage.getLocal(this.storage.names.list) || {};
         this.pokemonTypes = this.storage.getLocal(this.storage.names.types) || {};
         this.pokemonGenerations = this.storage.getLocal(this.storage.names.genNum) || 0;
+
+        this.pokemonCatched = this.storage.getSession(this.storage.names.catched) || [1];
+
         this.pokemonDetails = this.storage.getSession(this.storage.names.details) || {};
-        this.pokemonCatched = false || [1, 7, 8, 99, 123, 11, 4].sort((a, b) => a - b);
 
         this.init();
     };
@@ -64,6 +68,7 @@ export class Pokedex {
     async getPokemonsSpeciesNum() {
         this.speciesNumber = await this.fetchAPI(this.linksAPI['pokemon-species']).then(res => res.count);
     }
+
     async getPokemonList() {
 
         const isLocalList = !!this.pokemonList && !!this.pokemonTypes && !!this.pokemonGenerations;
