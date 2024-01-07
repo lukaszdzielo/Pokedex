@@ -7,7 +7,7 @@ export class AppBuilder {
         this.app = app;
         this.schemeManager = new SchemeManager(this.app);
 
-        this.appLoader = document.querySelector('.loader');
+        // this.appLoader = document.querySelector('.loader');
 
         this.navBuilder = new NavBuilder(this.app);
 
@@ -19,13 +19,13 @@ export class AppBuilder {
         this.modalBuilder = new ModalBuilder(this.app);
     }
 
-    init() {
-        this.buildLoader();
-    }
+    // init() {
+    //     this.buildLoader();
+    // }
 
-    buildLoader() {
-        this.showLoader();
-    }
+    // buildLoader() {
+    //     this.showLoader();
+    // }
 
     insertList() {
         let list = '';

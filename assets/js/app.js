@@ -38,7 +38,7 @@ export class Pokedex {
     };
 
     async init() {
-        await this.appBuilder.init();
+        // await this.appBuilder.init();
         await this.getAppUrls();
         await this.getPokemonsSpeciesNum();
         await this.getPokemonList();
