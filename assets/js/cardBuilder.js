@@ -4,12 +4,13 @@ export class CardBuilder {
     }
 
     pattern(id, pokemon) {
-        const { n } = pokemon;
+        const { n, c } = pokemon;
         const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
         return `<div class="card loading"
         ${(typeof id && typeof id !== 'undefined') ? `data-id='${id}'` : ''}
         ${(typeof n && typeof n !== 'undefined') ? `data-name='${n}'` : ''}
+        ${(typeof c && typeof c !== 'undefined') ? `data-catched='${c}'` : ''}
         >
         ${(typeof id && typeof id !== 'undefined') ? `<div class='card__id'>${id}</div>` : ''}
         ${(typeof n && typeof n !== 'undefined') ? `<div class='card__name'>${n}</div>` : ''}

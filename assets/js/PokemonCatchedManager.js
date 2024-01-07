@@ -4,6 +4,13 @@ export class PokemonCatchedManager {
         this.setStorage();
     }
 
+    mergeWithList() {
+        this.app.pokemonCatched.forEach(id => {
+            if (!this.app.pokemonList[id]) return;
+            this.addToList(id);
+        });
+    }
+
     add(id) {
         this.app.pokemonCatched.push(id);
         this.sort();

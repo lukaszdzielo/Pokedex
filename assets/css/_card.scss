@@ -4,11 +4,13 @@
     justify-content: center;
     align-items: center;
     aspect-ratio: 1/1;
+    border: 2px solid var(--card--bg);
     border-radius: 8px;
     background: var(--card--bg);
     box-sizing: border-box;
     font: 0.75rem sans-serif;
     transition: 0.2s;
+    cursor: pointer;
 
     container-type: inline-size;
     container-name: card;
@@ -127,5 +129,10 @@
             max-width: 100%;
             height: auto;
         }
+    }
+
+    &[data-catched="1"] {
+        background: var(--card__catched--bg);
+        border-color: var(--card__catched__border--color)
     }
 }
