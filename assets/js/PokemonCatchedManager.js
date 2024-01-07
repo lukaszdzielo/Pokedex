@@ -34,13 +34,17 @@ export class PokemonCatchedManager {
         this.app.storage.setLocal(this.app.storage.names.catched, this.app.pokemonCatched);
     }
 
+    removeStorage() {
+        this.app.storage.removeLocal(this.app.storage.names.catched);
+    }
+
     clearStorage() {
         this.app.pokemonCatched.forEach(id => {
             this.removeFromList(id);
             this.removeFromCard(id);
         });
         this.app.pokemonCatched = [];
-        this.updateStorage();
+        this.removeStorage();
     }
 
     addToList(id) {

@@ -20,6 +20,10 @@ export class StorageManager {
         return JSON.parse(localStorage.getItem(name));
     }
 
+    removeLocal(name) {
+        localStorage.removeItem(name);
+    }
+
     setSession(name, elem) {
         sessionStorage.setItem(name, JSON.stringify(elem));
     }
