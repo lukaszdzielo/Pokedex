@@ -1,12 +1,14 @@
-export class PokemonCatchedManager {
+export class CatchedManager {
     constructor(app) {
         this.app = app;
     }
 
-    mergeWithList() {
+    mergeCatched() {
+        console.log('?', this.app.pokemonCatched);
         this.app.pokemonCatched.forEach(id => {
             if (!this.app.pokemonList[id]) return;
             this.addToList(id);
+            this.addToCard(id);
         });
     }
 
@@ -47,21 +49,41 @@ export class PokemonCatchedManager {
         this.removeStorage();
     }
 
+    clear() {
+        this.app.pokemonCatched.forEach(id => {
+            if (!this.app.pokemonList[id]) return;
+            this.removeFromList(id);
+            this.removeFromCard(id);
+        });
+    }
+
     addToList(id) {
         this.app.pokemonList[id].c = 1;
     }
 
     removeFromList(id) {
-        delete this.app.pokemonList[id].c;
+        if (this.app.pokemonList[id]) delete this.app.pokemonList[id].c;
     }
 
     addToCard(id, card) {
         const elem = card ? card : this.app.appBuilder.appList.querySelector(`.card[data-id='${id}']`);
-        elem.setAttribute("data-catched", 1);
+        if (elem) elem.setAttribute("data-catched", 1);
     }
 
     removeFromCard(id, card) {
         const elem = card ? card : this.app.appBuilder.appList.querySelector(`.card[data-id='${id}']`);
-        elem.removeAttribute("data-catched");
+        if (elem) elem.removeAttribute("data-catched");
+    }
+
+    import(value) {
+        this.clear();
+        this.app.pokemonCatched = value.split(',').map(num => +num);
+        this.sort();
+        this.updateStorage();
+        this.mergeCatched();
+        return this.app.pokemonCatched;
+    }
+
+    export() {
     }
 }

@@ -1,7 +1,8 @@
+import { StatusManager } from './StatusManager.js';
 import { AppBuilder } from './appBuilder.js';
 import { DataBuilder } from './dataBuilder.js';
 import { StorageManager } from './StorageManager.js';
-import { PokemonCatchedManager } from './PokemonCatchedManager.js';
+import { CatchedManager } from './CatchedManager.js';
 
 const config = {
     baseUrl: 'https://pokeapi.co/api/v2/',
@@ -22,16 +23,18 @@ export class Pokedex {
         this.linksAPI = {};
         this.speciesNumber;
 
+        this.status = new StatusManager(this);
         this.storage = new StorageManager(this);
         this.appBuilder = new AppBuilder(this);
         this.dataBuilder = new DataBuilder(this);
-        this.catchedManager = new PokemonCatchedManager(this);
+        this.catchedManager = new CatchedManager(this);
 
         this.pokemonList = this.storage.getLocal(this.storage.names.list) || {};
         this.pokemonTypes = this.storage.getLocal(this.storage.names.types) || {};
         this.pokemonGenerations = this.storage.getLocal(this.storage.names.genNum) || 0;
         this.pokemonDetails = this.storage.getSession(this.storage.names.details) || {};
         this.pokemonCatched = this.storage.getLocal(this.storage.names.catched) || [];
+        this.currentShown;
 
         this.init();
     };
@@ -41,7 +44,7 @@ export class Pokedex {
         await this.getAppUrls();
         await this.getPokemonsSpeciesNum();
         await this.getPokemonList();
-        await this.catchedManager.mergeWithList();
+        await this.catchedManager.mergeCatched();
         if (this.isDev) await this.devLimiter();
         await this.appBuilder.insertList();
         // this.appBuilder.hideLoader();
