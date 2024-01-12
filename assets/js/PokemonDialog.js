@@ -1,5 +1,8 @@
-export class ModalBuilder {
+import { DialogBuilder } from "./dialogBuilder.js";
+
+export class PokemonDialog extends DialogBuilder {
     constructor(app) {
+        super(app);
         this.app = app;
         this.pokemonDialog;
         this.pokemonDialogWrapper;

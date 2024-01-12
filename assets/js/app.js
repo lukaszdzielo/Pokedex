@@ -1,4 +1,3 @@
-import { StatusManager } from './StatusManager.js';
 import { AppBuilder } from './appBuilder.js';
 import { DataBuilder } from './dataBuilder.js';
 import { StorageManager } from './StorageManager.js';
@@ -23,7 +22,6 @@ export class Pokedex {
         this.linksAPI = {};
         this.speciesNumber;
 
-        this.status = new StatusManager(this);
         this.storage = new StorageManager(this);
         this.appBuilder = new AppBuilder(this);
         this.dataBuilder = new DataBuilder(this);
@@ -45,7 +43,7 @@ export class Pokedex {
         await this.getPokemonsSpeciesNum();
         await this.getPokemonList();
         await this.catchedManager.mergeCatched();
-        if (this.isDev) await this.devLimiter();
+        // if (this.isDev) await this.devLimiter();
         await this.appBuilder.insertList();
         // this.appBuilder.hideLoader();
         this.localStorageSize();
@@ -79,7 +77,7 @@ export class Pokedex {
             console.log('Use local storage');
         } else {
             console.log('Get new pokemon data and save localy');
-            await this.dataBuilder.getPokemonListData();
+            await this.dataBuilder.updateData();
         }
     }
 

@@ -1,3 +1,5 @@
+import { DialogBuilder } from './dialogBuilder.js';
+
 export class NavBuilder {
     constructor(app) {
         this.app = app;
@@ -29,9 +31,7 @@ export class NavBuilder {
     }
 
     clearCatched() {
-        this.navDialog.querySelector('#clearCatched').addEventListener('click', () => {
-            this.app.catchedManager.clearStorage();
-        });
+        this.navDialog.querySelector('#clearCatched').addEventListener('click', () => this.app.catchedManager.clearStorage());
     }
 
     import() {

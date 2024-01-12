@@ -4,7 +4,7 @@ export class DataBuilder {
         this.app = app;
     };
 
-    async getPokemonListData() {
+    async updateData() {
         const incorrectNames = await this.getPokemonListCodeNames();
 
         await this.getPokemonListCorrectNames(incorrectNames);

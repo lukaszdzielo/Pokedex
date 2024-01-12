@@ -4,7 +4,6 @@ export class CatchedManager {
     }
 
     mergeCatched() {
-        console.log('?', this.app.pokemonCatched);
         this.app.pokemonCatched.forEach(id => {
             if (!this.app.pokemonList[id]) return;
             this.addToList(id);
