@@ -75,8 +75,15 @@ export class CatchedManager {
     }
 
     import(value) {
+        const set = new Set(value.split(',').map(num => +num));
+        if (set.has(null) || set.has(undefined) || set.has(NaN) || set.has(0)) {
+            set.delete(null);
+            set.delete(undefined);
+            set.delete(NaN);
+            set.delete(0);
+        }
         this.clear();
-        this.app.pokemonCatched = value.split(',').map(num => +num);
+        this.app.pokemonCatched = [...set];
         this.sort();
         this.updateStorage();
         this.mergeCatched();

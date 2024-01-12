@@ -15,7 +15,8 @@ export class NavBuilder {
 
     eventHolder() {
         this.settingsModalEvents();
-        this.clearCatched();
+        this.resetCatched();
+        this.resetApp();
         this.import();
         this.export();
     }
@@ -30,8 +31,23 @@ export class NavBuilder {
         this.navDialog.showModal();
     }
 
-    clearCatched() {
-        this.navDialog.querySelector('#clearCatched').addEventListener('click', () => this.app.catchedManager.clearStorage());
+    resetCatched() {
+        this.navDialog.querySelector('#clearCatched').addEventListener('click', () => {
+            this.app.catchedManager.clearStorage();
+            this.resetExportInput;
+        });
+    }
+
+    resetApp() {
+        this.navDialog.querySelector('#clearApp').addEventListener('click', () => {
+            this.app.catchedManager.clearStorage();
+            this.resetExportInput;
+        });
+    }
+
+    resetExportInput() {
+        this.navDialog.querySelector('#exportExport').value = '';
+
     }
 
     import() {
