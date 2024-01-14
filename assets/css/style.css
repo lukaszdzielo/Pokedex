@@ -1,13 +1,12 @@
 :root {
   color-scheme: light;
-  --app--bg: #EEEEEE;
+  --app--bg: #E0E0E0;
   --app--color: #212121;
   --nav--bg: #FFFFFF;
-  --nav__btn--bg: #EEEEEE;
-  --card--bg: #FFFFFF;
+  --nav__btn--bg: #E0E0E0;
+  --card--bg: #ffffff;
   --card__catched--bg: #EEEEEE;
-  --card__catched__border--color: #FFFFFF;
-  --dialog--bg: #FFFFFF;
+  --dialog--bg: #ffffff;
   --backdrop--bg: #212121;
 }
 
@@ -19,21 +18,19 @@
     --nav--bg: #424242;
     --nav__btn--bg: #212121;
     --card--bg: #424242;
-    --card__catched--bg: #212121;
-    --card__catched__border--color: #424242;
+    --card__catched--bg: #2f2f2f;
     --dialog--bg: #424242;
     --backdrop--bg: #212121;
   }
 }
 [color-scheme=light] {
   color-scheme: light;
-  --app--bg: #EEEEEE;
+  --app--bg: #E0E0E0;
   --app--color: #212121;
   --nav--bg: #FFFFFF;
-  --nav__btn--bg: #EEEEEE;
+  --nav__btn--bg: #E0E0E0;
   --card--bg: #ffffff;
   --card__catched--bg: #EEEEEE;
-  --card__catched__border--color: #FFFFFF;
   --dialog--bg: #ffffff;
   --backdrop--bg: #212121;
 }
@@ -45,8 +42,7 @@
   --nav--bg: #424242;
   --nav__btn--bg: #212121;
   --card--bg: #424242;
-  --card__catched--bg: #212121;
-  --card__catched__border--color: #424242;
+  --card__catched--bg: #2f2f2f;
   --dialog--bg: #424242;
   --backdrop--bg: #212121;
 }
@@ -58,8 +54,7 @@
   --nav--bg: #37474F;
   --nav__btn--bg: #263238;
   --card--bg: #37474F;
-  --card__catched--bg: #263238;
-  --card__catched__border--color: #37474F;
+  --card__catched--bg: #2c3a42;
   --dialog--bg: #37474F;
   --backdrop--bg: #263238;
 }
@@ -104,7 +99,7 @@ nav {
   justify-content: center;
   align-items: center;
   aspect-ratio: 1/1;
-  border: 2px solid var(--card--bg);
+  border: 0;
   border-radius: 8px;
   background: var(--card--bg);
   box-sizing: border-box;
@@ -177,9 +172,8 @@ nav {
   max-width: 100%;
   height: auto;
 }
-.card[data-catched="1"] {
+.card[data-catched] {
   background: var(--card__catched--bg);
-  border-color: var(--card__catched__border--color);
 }
 
 .loader {

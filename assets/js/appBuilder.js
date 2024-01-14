@@ -18,7 +18,7 @@ export class AppBuilder {
 
     insertList() {
         let list = '';
-        for (const [codeName, pokemon] of Object.entries(this.app.pokemonList)) {
+        for (const [codeName, pokemon] of Object.entries(this.app.currentShown)) {
             list += this.cardBuilder.pattern(codeName, pokemon);
         }
         this.appList.insertAdjacentHTML('afterbegin', list);

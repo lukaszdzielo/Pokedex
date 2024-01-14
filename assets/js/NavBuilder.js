@@ -27,20 +27,20 @@ export class NavBuilder {
     }
 
     open() {
-        this.updateExport(this.app.pokemonCatched);
+        this.updateExport(this.app.dataManager.catched);
         this.navDialog.showModal();
     }
 
     resetCatched() {
         this.navDialog.querySelector('#clearCatched').addEventListener('click', () => {
-            this.app.catchedManager.clearStorage();
+            this.app.dataManager.catchedManager.clearStorage();
             this.resetExportInput;
         });
     }
 
     resetApp() {
         this.navDialog.querySelector('#clearApp').addEventListener('click', () => {
-            this.app.catchedManager.clearStorage();
+            this.app.dataManager.catchedManager.clearStorage();
             this.resetExportInput;
         });
     }
@@ -53,14 +53,14 @@ export class NavBuilder {
     import() {
         const input = this.navDialog.querySelector('#importInput');
         this.navDialog.querySelector('#importBtn').addEventListener('click', () => {
-            this.updateExport(this.app.catchedManager.import(input.value.trim()));
+            this.updateExport(this.app.dataManager.catchedManager.import(input.value.trim()));
             input.value = '';
         });
     }
 
     export() {
         const input = this.navDialog.querySelector('#exportExport');
-        // input.value = this.app.pokemonCatched.toString();
+        // input.value = this.app.dataManager.catched.toString();
         // navigator.clipboard.writeText(text)
     }
 

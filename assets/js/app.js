@@ -1,7 +1,6 @@
 import { AppBuilder } from './appBuilder.js';
-import { DataBuilder } from './dataBuilder.js';
+import { DataManager } from './DataManager.js';
 import { StorageManager } from './StorageManager.js';
-import { CatchedManager } from './CatchedManager.js';
 
 const config = {
     baseUrl: 'https://pokeapi.co/api/v2/',
@@ -20,18 +19,11 @@ export class Pokedex {
         this.isDev = this.isDev();
 
         this.linksAPI = {};
-        this.speciesNumber;
 
         this.storage = new StorageManager(this);
         this.appBuilder = new AppBuilder(this);
-        this.dataBuilder = new DataBuilder(this);
-        this.catchedManager = new CatchedManager(this);
+        this.dataManager = new DataManager(this);
 
-        this.pokemonList = this.storage.getLocal(this.storage.names.list) || {};
-        this.pokemonTypes = this.storage.getLocal(this.storage.names.types) || {};
-        this.pokemonGenerations = this.storage.getLocal(this.storage.names.genNum) || 0;
-        this.pokemonDetails = this.storage.getSession(this.storage.names.details) || {};
-        this.pokemonCatched = this.storage.getLocal(this.storage.names.catched) || [];
         this.currentShown;
 
         this.init();
@@ -40,10 +32,10 @@ export class Pokedex {
     async init() {
         // await this.appBuilder.init();
         await this.getAppUrls();
-        await this.getPokemonsSpeciesNum();
-        await this.getPokemonList();
-        await this.catchedManager.mergeCatched();
-        if (this.isDev) await this.devLimiter();
+        await this.dataManager.init();
+
+        this.currentShown = this.isDev ? await this.devLimiter() : this.dataManager.list;
+
         await this.appBuilder.insertList();
         // this.appBuilder.hideLoader();
         this.localStorageSize();
@@ -65,20 +57,16 @@ export class Pokedex {
         this.linksAPI = await this.fetchAPI(this.options.baseUrl).then(res => res);
     }
 
-    async getPokemonsSpeciesNum() {
-        this.speciesNumber = await this.fetchAPI(this.linksAPI['pokemon-species']).then(res => res.count);
-    }
-
     async getPokemonList() {
 
-        const isLocalList = !!this.pokemonList && !!this.pokemonTypes && !!this.pokemonGenerations;
+        // const isLocalList = !!this.pokemonList && !!this.pokemonTypes && !!this.pokemonGenerations;
 
-        if (isLocalList && Object.keys(this.pokemonList).length === this.speciesNumber) {
-            console.log('Use local storage');
-        } else {
-            console.log('Get new pokemon data and save localy');
-            await this.dataBuilder.updateData();
-        }
+        // if (isLocalList && Object.keys(this.pokemonList).length === this.speciesNumber) {
+        //     console.log('Use local storage');
+        // } else {
+        console.log('Get new pokemon data and save localy');
+        await this.dataManager.update();
+        // }
     }
 
     isDev() {
@@ -86,8 +74,8 @@ export class Pokedex {
     }
 
     devLimiter() {
-        this.pokemonList = Object.keys(this.pokemonList).reduce((acc, id) => {
-            if (this.options.dev.list.includes(+id)) acc[id] = this.pokemonList[+id];
+        return Object.keys(this.dataManager.list).reduce((acc, id) => {
+            if (this.options.dev.list.includes(+id)) acc[id] = this.dataManager.list[+id];
             return acc;
         }, {});
     }

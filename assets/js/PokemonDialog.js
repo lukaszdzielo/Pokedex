@@ -16,16 +16,16 @@ export class PokemonDialog extends DialogBuilder {
         this.insertPokemonBasic(id);
         this.pokemonDialog.showModal();
 
-        if (!this.app.pokemonDetails[id]) {
+        if (!this.app.dataManager.details[id]) {
             console.log('download', id);
-            this.app.pokemonDetails[id] = await this.getPokemonData(id);
+            this.app.dataManager.details[id] = await this.getPokemonData(id);
         } else {
             console.log('sessionStorage', id);
         }
 
-        this.app.storage.setSession(this.app.storage.names.details, this.app.pokemonDetails);
+        this.app.storage.setSession(this.app.storage.names.details, this.app.dataManager.details);
 
-        this.insertPokemonDetails(this.app.pokemonDetails[id]);
+        this.insertPokemonDetails(this.app.dataManager.details[id]);
 
         // console.log('1', this.pokemonDialog.open);
     }
@@ -46,10 +46,10 @@ export class PokemonDialog extends DialogBuilder {
 
         const asd = this.pokemonDialog.querySelector('#catchBtn');
         asd.addEventListener('click', e => {
-            if (!this.app.pokemonCatched.includes(+this.pokemonDialog.dataset.id)) {
-                this.app.catchedManager.add(+this.pokemonDialog.dataset.id);
+            if (!this.app.dataManager.catched.includes(+this.pokemonDialog.dataset.id)) {
+                this.app.dataManager.catchedManager.add(+this.pokemonDialog.dataset.id);
             } else {
-                this.app.catchedManager.remove(+this.pokemonDialog.dataset.id);
+                this.app.dataManager.catchedManager.remove(+this.pokemonDialog.dataset.id);
             }
         });
 
@@ -85,14 +85,14 @@ export class PokemonDialog extends DialogBuilder {
     }
 
     patternPokemonInfo(id) {
-        const { n, t, g } = this.app.pokemonList[id];
+        const { n, t, g } = this.app.dataManager.list[id];
         const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
         return `<div class="info">
         ${(typeof id && typeof id !== 'undefined') ? `<div class='dialog__image'><img src="${imageUrl}" class="item__img" alt="${n}" loading="lazy" onerror="this.onerror=null;this.src='./assets/0.png';"></div>` : ''}
         <div class="dialog__name">${n}</div>
         ${(typeof id && typeof id !== 'undefined') ? `<div class="dialog__name">Id: ${id}</div>` : ''}
-        ${(typeof t && typeof t !== 'undefined' && t.length > 0) ? `<div class="dialog__types">${t.map(type => `<span>${this.app.pokemonTypes[type]}</span>`).join('')}</div>` : ''}
+        ${(typeof t && typeof t !== 'undefined' && t.length > 0) ? `<div class="dialog__types">${t.map(type => `<span>${this.app.dataManager.types[type]}</span>`).join('')}</div>` : ''}
         ${(typeof g && typeof g !== 'undefined') ? `<div class='dialog__gen'>Gen: ${g}</div>` : ''}
         </div>`;
     }
