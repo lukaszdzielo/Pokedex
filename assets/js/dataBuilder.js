@@ -16,8 +16,8 @@ export class DataBuilder {
     async getList() {
         const incorrectNames = await this.getCodeNameList();
         await this.getCorrectNameList(incorrectNames);
-        await this.getPokemonListTypes();
-        await this.getPokemonListGenerations();
+        await this.getTypes();
+        await this.getGenerations();
         this.saveLocal();
     }
 
@@ -54,7 +54,7 @@ export class DataBuilder {
         });
     }
 
-    async getPokemonListTypes() {
+    async getTypes() {
         const res = await this.app.fetchAPI(`${this.app.linksAPI['type']}?${this.app.options.limit}`);
         const responses = [];
         const missingTypes = [];
@@ -77,7 +77,7 @@ export class DataBuilder {
         });
     }
 
-    async getPokemonListGenerations() {
+    async getGenerations() {
         const res = await this.app.fetchAPI(`${this.app.linksAPI['generation']}?${this.app.options.limit}`);
         const responses = [];
 
