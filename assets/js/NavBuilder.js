@@ -34,20 +34,21 @@ export class NavBuilder {
     resetCatched() {
         this.navDialog.querySelector('#clearCatched').addEventListener('click', () => {
             this.app.dataManager.catchedManager.clearStorage();
-            this.resetExportInput;
+            this.resetExportInput();
         });
     }
 
     resetApp() {
         this.navDialog.querySelector('#clearApp').addEventListener('click', () => {
-            this.app.dataManager.catchedManager.clearStorage();
-            this.resetExportInput;
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.reload();
         });
     }
 
     resetExportInput() {
+        console.log(this.navDialog.querySelector('#exportExport'));
         this.navDialog.querySelector('#exportExport').value = '';
-
     }
 
     import() {
