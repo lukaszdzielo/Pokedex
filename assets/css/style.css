@@ -299,14 +299,20 @@ dialog button.close {
 }
 #dialogSettings input {
   padding: 7px 8px;
-  border: 1px solid var(--backdrop--bg, #212121);
+  border: 1px solid var(--backdrop--bg);
   border-radius: 4px;
   font-size: 0.875rem;
   box-sizing: border-box;
 }
 #dialogSettings select {
+  border: 1px solid var(--backdrop--bg);
+  border-radius: 4px;
   padding: 6px 8px;
+  color: var(--app--color);
   font-size: 0.875rem;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
 }
 #dialogSettings .input-group {
   display: flex;
