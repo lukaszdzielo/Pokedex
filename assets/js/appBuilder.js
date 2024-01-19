@@ -39,7 +39,6 @@ export class AppBuilder {
     }
 
     // showLoader() {
-    //     document.documentElement.classList.add('scrollDisabled');
     //     this.appLoader.classList.add('loading');
     // }
 
@@ -49,4 +48,12 @@ export class AppBuilder {
     //         this.appLoader.classList.remove('loading');
     //     }, 800);
     // }
+    
+    enableBodyScroll() {
+        document.documentElement.classList.remove('scrollDisabled');
+    }
+
+    disableBodyScroll() {
+        document.documentElement.classList.add('scrollDisabled');
+    }
 }

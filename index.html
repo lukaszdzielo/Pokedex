@@ -3,95 +3,118 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Pokedex</title>
     <link rel="icon" href="#">
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
-<body>
-    <div id="app">
+<body id="app">
 
-        <!-- <div class="loader loading">
+    <!-- <div class="loader loading">
             <div class="loader--top"></div>
             <div class="loader--bottom"></div>
         </div> -->
 
-        <nav>
-            <button id="settingsBtn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear"
-                    viewBox="0 0 16 16">
-                    <path
-                        d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
-                    <path
-                        d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
-                </svg>
-            </button>
-            <dialog id="dialogSettings">
-                <header>
-                    <div>Settings</div>
-                    <button id="closeSettings" class="close">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-x-lg" viewBox="0 0 16 16">
-                            <path
-                                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-                        </svg>
-                    </button>
-                </header>
-                <main>
-                    <section>
-                        <div class="option">
-                            <label for="y">Theme</label>
-                            <select name="x" id="themeSwitcher">
+    <nav>
+        <button id="settingsBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear"
+                viewBox="0 0 16 16">
+                <path
+                    d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
+                <path
+                    d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
+            </svg>
+        </button>
+        <dialog id="dialogSettings">
+            <header>
+                <div>Settings</div>
+                <button id="closeSettings" class="close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path
+                            d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                    </svg>
+                </button>
+            </header>
+            <main>
+                <section>
+                    <ul>
+                        <li class="inline">
+                            <div>Theme</div>
+                            <select id="themeSwitcher">
                                 <option value="auto" selected="selected">auto</option>
                                 <option value="light">light</option>
                                 <option value="dark">dark</option>
                                 <option value="dim">dim</option>
                             </select>
-                        </div>
-                    </section>
+                        </li>
+                    </ul>
+                </section>
 
-                    <section>
-                        <header>Import / Export catched</header>
-                        <div class="option">
-                            <input id="importInput" type="text">
-                            <button id="importBtn">Import</button>
-                        </div>
-                        <div class="option">
-                            <input id="exportExport" type="text" disabled>
-                            <button id="exportBtn">Export</button>
-                        </div>
-                    </section>
-                    <section>
-                        <header>App reset</header>
-                        <div class="option">
-                            <div>
-                                <div>Reset catched</div>
-                                <p>asd</p>
+                <section>
+                    <span class="section__heading">Import / Export catched</span>
+                    <ul>
+                        <li>
+                            <span class="heading">Import</span>
+                            <p>Paste or enter the caught Pokemon
+                                in the field, separating them with a comma, e.g. <code>1,2,5,88</code>.</p>
+                            <div class="input-group">
+                                <input id="importInput" type="text">
+                                <button id="importBtn" type="button">Import to Pokedex</button>
                             </div>
-                            <button id="clearCatched">Reset</button>
-                        </div>
-                        <div class="option">
-                            <label for="y">Reset app</label>
-                            <button id="clearApp">Reset</button>
-                        </div>
-                    </section>
-                </main>
+                        </li>
+                        <li><span class="heading">Export</span>
+                            <p>Copy the list below to paste it on another device.</p>
+                            <div class="input-group">
+                                <input id="exportInput" type="text" readonly>
+                                <button id="exportBtn">Copy to clipboard</button>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
 
-                <!-- <footer>
+                <section class="danger">
+                    <span class="section__heading">Danger Zone</span>
+                    <ul>
+                        <li class="inline">
+                            <div class="content">
+                                <span class="heading">Reset local database</span>
+                                <p>Reset your local pokemon database and reload the page to download and build again.
+                                </p>
+                            </div>
+                            <button id="clearDatabase">Reset database</button>
+                        </li>
+                        <li class="inline">
+                            <div class="content">
+                                <span class="heading">Reset catched</span>
+                                <p>Clear the list of caught pokemon.</p>
+                            </div>
+                            <button id="clearCatched">Reset catched</button>
+                        </li>
+                        <li class="inline">
+                            <div class="content">
+                                <span class="heading">Reset app</span>
+                                <p>Reset the application, this will clear the memory where data is stored and reload the
+                                    application to rebuild the list from scratch.</p>
+                            </div>
+                            <button id="clearApp">Reset app</button>
+                        </li>
+                    </ul>
+                </section>
+            </main>
+
+            <!-- <footer>
                     <p class="copyright">Data delivered by <a href="https://pokeapi.co/"><img src="https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi.svg" alt="Pokémon API" height="40"></a></p>
                     <p class="copyright">Made by <a href="https://lukaszdzielo.github.io/"><svg height="40" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200"><defs><linearGradient id="a" x1="201.42" y1="229.25" x2="351.8" y2="379.62" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2962ff"></stop><stop offset="1" stop-color="#2962ff"></stop></linearGradient></defs><path d="M2e2 295v95h95a95 95 0 000-190H237.74v85.35l37.75-10.08v38.6L237.74 324v28.31h56.19a57.26 57.26.0 100-114.52H275.49" transform="translate(-195 -195)" style="fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:10px;stroke:url(#a)"></path></svg></a></p>
                 </footer> -->
-            </dialog>
+        </dialog>
 
 
-        </nav>
+    </nav>
 
-        <div id="pokemonList" class="list"></div>
+    <div id="pokemonList" class="list"></div>
 
-
-
-    </div>
     <script src="./assets/js/app.js" type="module"></script>
     <script src="./assets/js/dialogBuilder.js" type="module"></script>
 </body>

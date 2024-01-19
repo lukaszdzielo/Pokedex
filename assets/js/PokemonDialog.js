@@ -98,13 +98,22 @@ export class PokemonDialog extends DialogBuilder {
     }
 
     patternPokemonDetails(pokemonData) {
-        const { height, weight } = pokemonData;
+        const { height, weight, stats } = pokemonData;
 
         console.log('pokemonData', pokemonData);
 
         return `<div class="details">
-        <div>Height: ${height}</div>
-        <div>Weight: ${weight}</div>
+            <div>Height: ${height}</div>
+            <div>Weight: ${weight}</div>
+
+            ${(typeof stats && typeof stats !== 'undefined' && stats.length > 0) ? `<div>
+                <div class="stats">Stats</div>
+                <table>
+                    <tr><th></th><th>Base stat</th><th>Effort</th><tr>
+                    ${stats.map(elem => `<tr><td>${elem.stat.name}</td> <td>${elem.base_stat}</td> <td>${elem.effort}</td></tr>`).join('')}
+                </table>
+            </div>` : ''}
+
         </div>`;
     }
 }

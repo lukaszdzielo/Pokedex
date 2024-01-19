@@ -8,7 +8,7 @@
     border-radius: 8px;
     background: var(--card--bg);
     box-sizing: border-box;
-    font: 0.75rem sans-serif;
+    font-size: 1rem;
     transition: 0.2s;
     cursor: pointer;
 
@@ -71,11 +71,11 @@
         position: absolute;
         inset: 8px auto auto 8px;
         text-align: center;
-        font: 0.75rem sans-serif;
+        font-size: 1rem;
 
-        @container card (width >=180px) {
-            font: 1rem sans-serif;
-        }
+        // @container card (width >=180px) {
+        //     font-size: 1rem;
+        // }
     }
 
     .card__types {

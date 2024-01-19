@@ -5,41 +5,51 @@ export class NavBuilder {
         this.app = app;
 
         this.nav = document.querySelector('nav');
-        this.navDialog = this.nav.querySelector('#dialogSettings');
+        this.dialog = this.nav.querySelector('#dialogSettings');
 
         this.settingsBtn = this.nav.querySelector('#settingsBtn');
-        this.closeBtn = this.navDialog.querySelector('#closeSettings');
+        this.closeBtn = this.dialog.querySelector('#closeSettings');
 
         this.eventHolder();
     }
 
     eventHolder() {
-        this.settingsModalEvents();
-        this.resetCatched();
-        this.resetApp();
+        this.settingsBtn.addEventListener('click', () => this.open());
+        this.closeBtn.addEventListener('click', () => this.close());
         this.import();
         this.export();
-    }
-
-    settingsModalEvents() {
-        this.settingsBtn.addEventListener('click', () => this.open());
-        this.closeBtn.addEventListener('click', () => this.navDialog.close());
+        this.resetDatabase();
+        this.resetCatched();
+        this.resetApp();
     }
 
     open() {
         this.updateExport(this.app.dataManager.catched);
-        this.navDialog.showModal();
+        this.app.appBuilder.disableBodyScroll();
+        this.dialog.showModal();
+    }
+
+    close() {
+        this.dialog.close();
+        this.app.appBuilder.enableBodyScroll();
+    }
+
+    resetDatabase() {
+        this.dialog.querySelector('#clearDatabase').addEventListener('click', () => {
+            this.app.dataManager.remove();
+            window.location.reload();
+        });
     }
 
     resetCatched() {
-        this.navDialog.querySelector('#clearCatched').addEventListener('click', () => {
+        this.dialog.querySelector('#clearCatched').addEventListener('click', () => {
             this.app.dataManager.catchedManager.clearStorage();
             this.resetExportInput();
         });
     }
 
     resetApp() {
-        this.navDialog.querySelector('#clearApp').addEventListener('click', () => {
+        this.dialog.querySelector('#clearApp').addEventListener('click', () => {
             localStorage.clear();
             sessionStorage.clear();
             window.location.reload();
@@ -47,25 +57,34 @@ export class NavBuilder {
     }
 
     resetExportInput() {
-        console.log(this.navDialog.querySelector('#exportExport'));
-        this.navDialog.querySelector('#exportExport').value = '';
+        this.dialog.querySelector('#exportInput').value = '';
     }
 
     import() {
-        const input = this.navDialog.querySelector('#importInput');
-        this.navDialog.querySelector('#importBtn').addEventListener('click', () => {
+        const input = this.dialog.querySelector('#importInput');
+        this.dialog.querySelector('#importBtn').addEventListener('click', () => {
             this.updateExport(this.app.dataManager.catchedManager.import(input.value.trim()));
             input.value = '';
         });
     }
 
-    export() {
-        const input = this.navDialog.querySelector('#exportExport');
-        // input.value = this.app.dataManager.catched.toString();
-        // navigator.clipboard.writeText(text)
+    async export() {
+        this.dialog.querySelector('#exportBtn').addEventListener('click', () => {
+
+            this.dialog.querySelector('#exportInput').select();
+            try {
+                var successful = document.execCommand('copy');
+                var msg = successful ? 'successful' : 'unsuccessful';
+                alert('Testing code was copied ' + msg);
+            } catch (err) {
+                alert('Oops, unable to copy');
+            }
+
+            window.getSelection().removeAllRanges();
+        });
     }
 
-    updateExport(test) {
-        this.navDialog.querySelector('#exportExport').value = test;
+    updateExport(listAsString) {
+        this.dialog.querySelector('#exportInput').value = listAsString;
     }
 }

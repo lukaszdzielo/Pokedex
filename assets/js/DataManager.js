@@ -28,10 +28,15 @@ export class DataManager {
             console.log('Use local storage');
         } else {
             console.log('Get new pokemon data and save localy');
-            // await this.dataManager.update();
             await this.dataBuilder.getList();
         }
 
         await this.catchedManager.mergeCatched();
+    }
+
+    remove() {
+        this.app.storage.removeLocal(this.app.storage.names.list);
+        this.app.storage.removeLocal(this.app.storage.names.types);
+        this.app.storage.removeLocal(this.app.storage.names.genNum);
     }
 }

@@ -8,13 +8,14 @@ body {
     min-height: 100dvh;
     background: var(--app--bg);
     color: var(--text--color);
-    font: 16px sans-serif;
-    line-height: 1.15;
+    font-size: 16px;
+    font-family: sans-serif;
+    line-height: 1.4;
     box-sizing: border-box;
     overflow-y: scroll;
 }
 
 
 .scrollDisabled {
-    overflow-y: hidden;
+    overflow: hidden;
 }
