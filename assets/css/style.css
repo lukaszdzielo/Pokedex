@@ -346,7 +346,7 @@ dialog button.close {
 
 #pokemonDialog {
   border: 0;
-  padding: 24px;
+  padding: 16px;
   width: 600px;
   max-width: calc(100% - 48px);
   box-sizing: border-box;

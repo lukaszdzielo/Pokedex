@@ -44,8 +44,8 @@ export class PokemonDialog extends DialogBuilder {
 
         this.pokemonDialog = document.querySelector('#pokemonDialog');
 
-        const asd = this.pokemonDialog.querySelector('#catchBtn');
-        asd.addEventListener('click', e => {
+        const catchBtn = this.pokemonDialog.querySelector('#catchBtn');
+        catchBtn.addEventListener('click', e => {
             if (!this.app.dataManager.catched.includes(+this.pokemonDialog.dataset.id)) {
                 this.app.dataManager.catchedManager.add(+this.pokemonDialog.dataset.id);
             } else {
@@ -109,8 +109,8 @@ export class PokemonDialog extends DialogBuilder {
             ${(typeof stats && typeof stats !== 'undefined' && stats.length > 0) ? `<div>
                 <div class="stats">Stats</div>
                 <table>
-                    <tr><th></th><th>Base stat</th><th>Effort</th><tr>
-                    ${stats.map(elem => `<tr><td>${elem.stat.name}</td> <td>${elem.base_stat}</td> <td>${elem.effort}</td></tr>`).join('')}
+                    <tr><th></th><th>Base stat</th><tr>
+                    ${stats.map(elem => `<tr><td>${elem.stat.name}</td> <td>${elem.base_stat}</td></tr>`).join('')}
                 </table>
             </div>` : ''}
 
