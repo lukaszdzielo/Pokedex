@@ -29,7 +29,7 @@ export class AppBuilder {
         this.appList.addEventListener('click', (e) => {
             const elem = e.target.closest('.card');
             if (elem) {
-                this.pokemonDialog.openPokemonDialog(elem.dataset.id);
+                this.pokemonDialog.open(elem.dataset.id);
             }
         });
     }
@@ -48,7 +48,7 @@ export class AppBuilder {
     //         this.appLoader.classList.remove('loading');
     //     }, 800);
     // }
-    
+
     enableBodyScroll() {
         document.documentElement.classList.remove('scrollDisabled');
     }

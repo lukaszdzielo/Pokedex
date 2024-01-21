@@ -208,6 +208,12 @@ dialog {
   background: var(--dialog--bg);
   border-radius: var(--border-radius);
 }
+dialog::backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--backdrop--bg, #212121);
+  opacity: 0.75;
+}
 dialog header {
   display: flex;
   justify-content: space-between;
@@ -291,12 +297,6 @@ dialog button.close {
 #dialogSettings .danger button {
   color: #f85149;
 }
-#dialogSettings::backdrop {
-  position: fixed;
-  inset: 0;
-  background: var(--backdrop--bg, #212121);
-  opacity: 0.75;
-}
 #dialogSettings input {
   padding: 7px 8px;
   border: 1px solid var(--backdrop--bg);
@@ -364,25 +364,51 @@ dialog button.close {
   padding: 4px 8px;
   border-radius: 16px;
 }
-#pokemonDialog::backdrop {
-  position: fixed;
-  inset: 0;
-  background: var(--backdrop--bg, #212121);
-  opacity: 0.75;
+#pokemonDialog .catched {
+  display: flex;
+}
+#pokemonDialog .catched input {
+  display: none;
+}
+#pokemonDialog .catched label {
+  padding: 6px;
+}
+#pokemonDialog .catched label svg {
+  width: 24px;
+  height: 24px;
+}
+#pokemonDialog .catched #isCatched + label .catched {
+  display: none;
+}
+#pokemonDialog .catched #isCatched:checked + label .notCatched {
+  display: none;
+}
+#pokemonDialog .catched #isCatched:checked + label .catched {
+  display: block;
 }
 
-button {
-  padding: 8px;
+button,
+.btn {
+  padding: 8px 12px;
   border: 0;
   border-radius: 4px;
   background: var(--nav__btn--bg);
   color: var(--app--color);
   cursor: pointer;
   font-size: 0.875rem;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
-button svg {
+button svg,
+.btn svg {
   display: block;
   aspect-ratio: 1/1;
   width: 20px;
   height: 20px;
+}
+button#settingsBtn, button.close,
+.btn#settingsBtn,
+.btn.close {
+  padding: 8px;
 }/*# sourceMappingURL=style.css.map */

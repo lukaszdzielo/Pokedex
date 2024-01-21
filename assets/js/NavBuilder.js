@@ -1,4 +1,4 @@
-import { DialogBuilder } from './dialogBuilder.js';
+// import { DialogBuilder } from './dialogBuilder.js';
 
 export class NavBuilder {
     constructor(app) {
@@ -68,7 +68,7 @@ export class NavBuilder {
         });
     }
 
-    async export() {
+    export() {
         this.dialog.querySelector('#exportBtn').addEventListener('click', () => {
 
             this.dialog.querySelector('#exportInput').select();
