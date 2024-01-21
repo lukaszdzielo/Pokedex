@@ -376,6 +376,7 @@ dialog button.close {
 #pokemonDialog .catched label svg {
   width: 24px;
   height: 24px;
+  fill: var(--app--color);
 }
 #pokemonDialog .catched #isCatched + label .catched {
   display: none;
