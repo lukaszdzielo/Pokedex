@@ -13,22 +13,26 @@ export class PaginationBuilder {
             pagination.replaceChildren();
             pagination.insertAdjacentHTML('afterbegin', this.pattern(pagesNumber));
 
-            pagination.querySelector('ul').addEventListener('click', (e) => {
-                const li = e.target.closest('li');
-                if (li) {
-                    this.app.currentPage = li.dataset.page;
-                    this.changeActiveLists(li);
-                    this.changeActiveSelects();
-                    this.app.appBuilder.updateList();
-                }
-            });
+            this.handleEvents(pagination);
+        });
+    }
 
-            pagination.querySelector('select').addEventListener('change', (e) => {
-                this.app.currentPage = e.target.value;
-                this.changeActiveLists();
-                this.changeActiveSelects(e.target);
+    handleEvents(pagination) {
+        pagination.querySelector('ul').addEventListener('click', (e) => {
+            const li = e.target.closest('li');
+            if (li) {
+                this.app.currentPage = li.dataset.page;
+                this.changeActiveLists(li);
+                this.changeActiveSelects();
                 this.app.appBuilder.updateList();
-            });
+            }
+        });
+
+        pagination.querySelector('select').addEventListener('change', (e) => {
+            this.app.currentPage = e.target.value;
+            this.changeActiveLists();
+            this.changeActiveSelects(e.target);
+            this.app.appBuilder.updateList();
         });
     }
 

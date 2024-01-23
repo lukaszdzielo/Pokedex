@@ -48,10 +48,11 @@
     select {
         border: 1px solid var(--backdrop--bg);
         border-radius: 4px;
-        padding: 6px 8px;
+        padding: 9px 11px;
         background-color: var(--pagination--bg);
         color: var(--app--color);
-        font-size: 1rem;
+        font-size: 0.875rem;
+        appearance: none;
 
         @media (width >=480px) {
             display: none;

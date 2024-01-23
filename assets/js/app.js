@@ -6,7 +6,7 @@ const config = {
     baseUrl: 'https://pokeapi.co/api/v2/',
     limit: 'limit=999999999999999',
     dev: {
-        on: true,
+        on: false,
         urls: ['http://localhost', 'https://localhost', 'http://192.168', 'http://127.0.0.1'],
         list: [1, 2, 5, 6, 7, 8, 9, 83, 123, 710, 902, 1020, 1024, 1025, 1026, 1027],
     },

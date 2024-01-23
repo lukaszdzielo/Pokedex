@@ -318,7 +318,7 @@ dialog button.close {
   color: #f85149;
 }
 #dialogSettings input {
-  padding: 7px 8px;
+  padding: 9px 11px;
   border: 1px solid var(--backdrop--bg);
   border-radius: 4px;
   font-size: 0.875rem;
@@ -327,7 +327,7 @@ dialog button.close {
 #dialogSettings select {
   border: 1px solid var(--backdrop--bg);
   border-radius: 4px;
-  padding: 6px 8px;
+  padding: 9px 11px;
   color: var(--app--color);
   font-size: 0.875rem;
   -webkit-appearance: none;
@@ -409,8 +409,8 @@ dialog button.close {
 }
 
 .btn {
-  padding: 8px 12px;
-  border: 0;
+  padding: 9px 13px;
+  border: 1px solid var(--nav__btn--bg);
   border-radius: 4px;
   background: var(--nav__btn--bg);
   color: var(--app--color);
@@ -479,10 +479,13 @@ dialog button.close {
 .pagination select {
   border: 1px solid var(--backdrop--bg);
   border-radius: 4px;
-  padding: 6px 8px;
+  padding: 9px 11px;
   background-color: var(--pagination--bg);
   color: var(--app--color);
-  font-size: 1rem;
+  font-size: 0.875rem;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
 }
 @media (width >= 480px) {
   .pagination select {
