@@ -1,5 +1,6 @@
 import { SchemeManager } from './SchemeManager.js';
 import { NavBuilder } from './NavBuilder.js';
+import { PaginationBuilder } from './paginationBuilder.js';
 import { CardBuilder } from './cardBuilder.js';
 import { PokemonDialog } from './PokemonDialog.js';
 
@@ -9,20 +10,28 @@ export class AppBuilder {
         this.schemeManager = new SchemeManager(this.app);
 
         this.navBuilder = new NavBuilder(this.app);
+        this.pagination = new PaginationBuilder(this.app);
 
         this.appList = document.querySelector('#pokemonList');
 
         this.cardBuilder = new CardBuilder(this.app);
         this.pokemonDialog = new PokemonDialog(this.app);
+        this.handleEvents();
     }
 
-    insertList() {
+    page() {
+        const start = (this.app.currentPage * this.app.showedPerPage) - this.app.showedPerPage;
+        const end = (this.app.currentPage * this.app.showedPerPage);
+        return Object.entries(this.app.currentShown).slice(start, end);
+    }
+
+    updateList() {
         let list = '';
-        for (const [codeName, pokemon] of Object.entries(this.app.currentShown)) {
-            list += this.cardBuilder.pattern(codeName, pokemon);
+        for (const [id, pokemon] of this.page()) {
+            list += this.cardBuilder.pattern(id, pokemon);
         }
+        this.removeList();
         this.appList.insertAdjacentHTML('afterbegin', list);
-        this.handleEvents();
     }
 
     handleEvents() {

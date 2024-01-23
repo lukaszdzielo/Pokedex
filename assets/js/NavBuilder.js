@@ -36,7 +36,7 @@ export class NavBuilder {
 
     resetDatabase() {
         this.dialog.querySelector('#clearDatabase').addEventListener('click', () => {
-            this.app.dataManager.remove();
+            this.app.dataManager.removeStorage();
             window.location.reload();
         });
     }

@@ -4,6 +4,10 @@
   --app--color: #212121;
   --nav--bg: #FFFFFF;
   --nav__btn--bg: #E0E0E0;
+  --pagination--bg: #EEEEEE;
+  --pagination--color: #212121;
+  --pagination__active--bg: #ffffff;
+  --pagination__active--color: #212121;
   --card--bg: #ffffff;
   --card__catched--bg: #EEEEEE;
   --dialog--bg: #ffffff;
@@ -17,6 +21,10 @@
     --app--color: #EEEEEE;
     --nav--bg: #424242;
     --nav__btn--bg: #212121;
+    --pagination--bg: #424242;
+    --pagination--color: #EEEEEE;
+    --pagination__active--bg: #757575;
+    --pagination__active--color: #EEEEEE;
     --card--bg: #424242;
     --card__catched--bg: #2f2f2f;
     --dialog--bg: #424242;
@@ -29,6 +37,10 @@
   --app--color: #212121;
   --nav--bg: #FFFFFF;
   --nav__btn--bg: #E0E0E0;
+  --pagination--bg: #EEEEEE;
+  --pagination--color: #212121;
+  --pagination__active--bg: #ffffff;
+  --pagination__active--color: #212121;
   --card--bg: #ffffff;
   --card__catched--bg: #EEEEEE;
   --dialog--bg: #ffffff;
@@ -41,6 +53,10 @@
   --app--color: #EEEEEE;
   --nav--bg: #424242;
   --nav__btn--bg: #212121;
+  --pagination--bg: #424242;
+  --pagination--color: #EEEEEE;
+  --pagination__active--bg: #757575;
+  --pagination__active--color: #EEEEEE;
   --card--bg: #424242;
   --card__catched--bg: #2f2f2f;
   --dialog--bg: #424242;
@@ -53,6 +69,10 @@
   --app--color: #EEEEEE;
   --nav--bg: #37474F;
   --nav__btn--bg: #263238;
+  --pagination--bg: #37474F;
+  --pagination--color: #EEEEEE;
+  --pagination__active--bg: #546E7A;
+  --pagination__active--color: #EEEEEE;
   --card--bg: #37474F;
   --card__catched--bg: #2c3a42;
   --dialog--bg: #37474F;
@@ -88,7 +108,7 @@ nav {
 
 #pokemonList {
   gap: 16px;
-  padding: 16px;
+  margin: 16px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
   grid-gap: 12px;
@@ -388,7 +408,6 @@ dialog button.close {
   display: block;
 }
 
-button,
 .btn {
   padding: 8px 12px;
   border: 0;
@@ -401,15 +420,72 @@ button,
      -moz-user-select: none;
           user-select: none;
 }
-button svg,
 .btn svg {
   display: block;
   aspect-ratio: 1/1;
   width: 20px;
   height: 20px;
 }
-button#settingsBtn, button.close,
-.btn#settingsBtn,
-.btn.close {
+.btn#settingsBtn, .btn.close {
   padding: 8px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 16px;
+}
+.pagination ul {
+  display: none;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (width >= 480px) {
+  .pagination ul {
+    display: flex;
+  }
+}
+.pagination li {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  border-radius: 4px;
+  padding: 0;
+  width: 36px;
+  aspect-ratio: 1/1;
+  background: var(--pagination--bg);
+  color: var(--pagination--color);
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.pagination .active {
+  display: flex;
+  background: var(--pagination__active--bg);
+  color: var(--pagination__active--color);
+}
+.pagination li:first-of-type,
+.pagination li:last-of-type,
+.pagination li:has(+ * + .active, + .active),
+.pagination .active + li,
+.pagination .active + li + li {
+  display: flex;
+}
+.pagination select {
+  border: 1px solid var(--backdrop--bg);
+  border-radius: 4px;
+  padding: 6px 8px;
+  background-color: var(--pagination--bg);
+  color: var(--app--color);
+  font-size: 1rem;
+}
+@media (width >= 480px) {
+  .pagination select {
+    display: none;
+  }
 }/*# sourceMappingURL=style.css.map */

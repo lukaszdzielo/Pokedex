@@ -1,0 +1,60 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 16px;
+
+    ul {
+        display: none;
+        justify-content: center;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        @media (width >=480px) {
+            display: flex;
+        }
+    }
+
+    li {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        border-radius: 4px;
+        padding: 0;
+        width: 36px;
+        aspect-ratio: 1/1;
+        background: var(--pagination--bg);
+        color: var(--pagination--color);
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .active {
+        display: flex;
+        background: var(--pagination__active--bg);
+        color: var(--pagination__active--color);
+    }
+
+    li:first-of-type,
+    li:last-of-type,
+    li:has(+ * + .active, + .active),
+    .active+li,
+    .active+li+li {
+        display: flex;
+    }
+
+    select {
+        border: 1px solid var(--backdrop--bg);
+        border-radius: 4px;
+        padding: 6px 8px;
+        background-color: var(--pagination--bg);
+        color: var(--app--color);
+        font-size: 1rem;
+
+        @media (width >=480px) {
+            display: none;
+        }
+    }
+}

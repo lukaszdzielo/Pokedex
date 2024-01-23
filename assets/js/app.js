@@ -6,8 +6,9 @@ const config = {
     baseUrl: 'https://pokeapi.co/api/v2/',
     limit: 'limit=999999999999999',
     dev: {
+        on: true,
         urls: ['http://localhost', 'https://localhost', 'http://192.168', 'http://127.0.0.1'],
-        list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 83, 123, 710, 902, 1020, 1024, 1025, 1026],
+        list: [1, 2, 5, 6, 7, 8, 9, 83, 123, 710, 902, 1020, 1024, 1025, 1026, 1027],
     },
     version: 0.2,
 };
@@ -24,22 +25,28 @@ export class Pokedex {
         this.appBuilder = new AppBuilder(this);
         this.dataManager = new DataManager(this);
 
+        this.currentPage = 1;
+        this.showedPerPage = 50;
+
         this.currentShown;
 
         this.init();
     };
 
     async init() {
-        // await this.appBuilder.init();
         await this.getAppUrls();
         await this.dataManager.init();
 
-        this.currentShown = this.isDev ? await this.devLimiter() : this.dataManager.list;
+        this.currentShown = (this.options.dev.on && this.isDev) ? await this.devLimiter() : this.dataManager.list;
 
         console.log(this.dataManager.list);
 
-        await this.appBuilder.insertList();
-        // this.appBuilder.hideLoader();
+        this.appBuilder.page();
+
+        await this.appBuilder.updateList();
+
+        this.appBuilder.pagination.build();
+
         this.localStorageSize();
     }
 
@@ -57,18 +64,6 @@ export class Pokedex {
 
     async getAppUrls() {
         this.linksAPI = await this.fetchAPI(this.options.baseUrl).then(res => res);
-    }
-
-    async getPokemonList() {
-
-        // const isLocalList = !!this.pokemonList && !!this.pokemonTypes && !!this.pokemonGenerations;
-
-        // if (isLocalList && Object.keys(this.pokemonList).length === this.speciesNumber) {
-        //     console.log('Use local storage');
-        // } else {
-        console.log('Get new pokemon data and save localy');
-        await this.dataManager.update();
-        // }
     }
 
     isDev() {

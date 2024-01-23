@@ -34,7 +34,7 @@ export class DataManager {
         await this.catchedManager.mergeCatched();
     }
 
-    remove() {
+    removeStorage() {
         this.app.storage.removeLocal(this.app.storage.names.list);
         this.app.storage.removeLocal(this.app.storage.names.types);
         this.app.storage.removeLocal(this.app.storage.names.genNum);
