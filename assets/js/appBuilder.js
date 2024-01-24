@@ -7,7 +7,11 @@ import { PokemonDialog } from './PokemonDialog.js';
 export class AppBuilder {
     constructor(app) {
         this.app = app;
+
         this.schemeManager = new SchemeManager(this.app);
+
+        this.currentPage = this.app.url.get(this.app.url.names.pageNum) || (this.app.url.set(this.app.url.names.pageNum, 1));
+        this.showedPerPage = 50;
 
         this.navBuilder = new NavBuilder(this.app);
         this.pagination = new PaginationBuilder(this.app);
@@ -20,8 +24,8 @@ export class AppBuilder {
     }
 
     page() {
-        const start = (this.app.currentPage * this.app.showedPerPage) - this.app.showedPerPage;
-        const end = (this.app.currentPage * this.app.showedPerPage);
+        const start = (this.currentPage * this.showedPerPage) - this.showedPerPage;
+        const end = (this.currentPage * this.showedPerPage);
         return Object.entries(this.app.currentShown).slice(start, end);
     }
 

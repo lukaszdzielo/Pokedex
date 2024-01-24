@@ -6,7 +6,7 @@ export class PaginationBuilder {
 
     build() {
 
-        const pagesNumber = Math.ceil(Object.keys(this.app.currentShown).length / this.app.showedPerPage);
+        const pagesNumber = Math.ceil(Object.keys(this.app.currentShown).length / this.app.appBuilder.showedPerPage);
 
         this.paginations.forEach(pagination => {
 
@@ -21,18 +21,22 @@ export class PaginationBuilder {
         pagination.querySelector('ul').addEventListener('click', (e) => {
             const li = e.target.closest('li');
             if (li) {
-                this.app.currentPage = li.dataset.page;
+                this.app.appBuilder.currentPage = li.dataset.page;
                 this.changeActiveLists(li);
                 this.changeActiveSelects();
                 this.app.appBuilder.updateList();
             }
+            console.log(this.app.url.names.pageNum);
+
+            this.app.url.setAndUpdate(this.app.url.names.pageNum, this.app.appBuilder.currentPage);
         });
 
         pagination.querySelector('select').addEventListener('change', (e) => {
-            this.app.currentPage = e.target.value;
+            this.app.appBuilder.currentPage = e.target.value;
             this.changeActiveLists();
             this.changeActiveSelects(e.target);
             this.app.appBuilder.updateList();
+            this.app.url.setAndUpdate(this.app.url.names.pageNum, this.app.appBuilder.currentPage);
         });
     }
 
@@ -44,14 +48,14 @@ export class PaginationBuilder {
                 return;
             };
             pagination.querySelector('.active').classList.remove('active');
-            pagination.querySelector(`[data-page="${this.app.currentPage}"]`).classList.add('active');
+            pagination.querySelector(`[data-page="${this.app.appBuilder.currentPage}"]`).classList.add('active');
         });
     }
 
     changeActiveSelects(select) {
         this.paginations.forEach(pagination => {
             if (pagination.querySelector('select') === select) return;
-            pagination.querySelector('select').value = this.app.currentPage;
+            pagination.querySelector('select').value = this.app.appBuilder.currentPage;
         });
     }
 
@@ -59,7 +63,7 @@ export class PaginationBuilder {
         let li = '';
         let option = '';
         for (let i = 1; i <= pagesNumber; i++) {
-            li += `<li class="${this.app.currentPage === i ? 'active' : ''}" data-page="${i}">${i}</li>`;
+            li += `<li class="${+this.app.appBuilder.currentPage === i ? 'active' : ''}" data-page="${i}">${i}</li>`;
             option += `<option value="${i}">${i}</option>`;
         }
         return `<ul>${li}</ul><select>${option}</select>`;

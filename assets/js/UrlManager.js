@@ -1,8 +1,12 @@
+const names = {
+    pageNum: 'page',
+};
+
 export class UrlManager {
     constructor(app) {
         this.app = app;
+        this.names = { ...names };
         this.params = new URLSearchParams(location.search);
-        console.log(this.params);
     }
 
     get(key) {

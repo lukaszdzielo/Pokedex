@@ -1,4 +1,5 @@
 import { AppBuilder } from './appBuilder.js';
+import { UrlManager } from './UrlManager.js';
 import { DataManager } from './DataManager.js';
 import { StorageManager } from './StorageManager.js';
 
@@ -22,13 +23,14 @@ export class Pokedex {
         this.linksAPI = {};
 
         this.storage = new StorageManager(this);
+        this.url = new UrlManager(this);
         this.appBuilder = new AppBuilder(this);
+
+        if (!location.search.includes('?')) this.url.setDefault();
+
         this.dataManager = new DataManager(this);
 
         this.currentPage = 1;
-        this.showedPerPage = 50;
-
-        this.currentShown;
 
         this.init();
     };
