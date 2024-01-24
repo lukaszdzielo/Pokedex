@@ -26,8 +26,6 @@ export class PaginationBuilder {
                 this.changeActiveSelects();
                 this.app.appBuilder.updateList();
             }
-            console.log(this.app.url.names.pageNum);
-
             this.app.url.setAndUpdate(this.app.url.names.pageNum, this.app.appBuilder.currentPage);
         });
 
