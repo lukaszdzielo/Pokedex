@@ -39,7 +39,6 @@ export class PaginationBuilder {
     changeActiveLists(li) {
         this.paginations.forEach(pagination => {
             if (pagination.querySelector('ul') === li?.closest('ul')) {
-                console.log('target', li);
                 pagination.querySelector('.active').classList.remove('active');
                 li.classList.add('active');
                 return;
