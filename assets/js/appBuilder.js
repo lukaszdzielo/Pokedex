@@ -24,7 +24,6 @@ export class AppBuilder {
     }
 
     getCurrentPage() {
-        console.log('...');
         const min = 1;
         const max = Math.ceil(Object.keys(this.app.currentShown).length / this.app.appBuilder.showedPerPage);
         let page = this.app.url.get(this.app.url.names.pageNum) || (this.app.url.set(this.app.url.names.pageNum, 1));
@@ -58,7 +57,8 @@ export class AppBuilder {
             this.app.url.params = new URLSearchParams(location.search);
             this.currentPage = this.app.url.get(this.app.url.names.pageNum);
             this.updateList();
-            this.app.appBuilder.pagination.changeActive();
+            // this.app.appBuilder.pagination.changeActiveLists();
+            // this.app.appBuilder.pagination.changeActiveSelects();
         };
 
         this.appList.addEventListener('click', (e) => {
