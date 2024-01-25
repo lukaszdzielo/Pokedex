@@ -10,8 +10,8 @@ export class AppBuilder {
 
         this.schemeManager = new SchemeManager(this.app);
 
-        this.currentPage = this.app.url.get(this.app.url.names.pageNum) || (this.app.url.set(this.app.url.names.pageNum, 1));
-        this.showedPerPage = 50;
+        this.currentPage;
+        this.showedPerPage = 60;
 
         this.navBuilder = new NavBuilder(this.app);
         this.pagination = new PaginationBuilder(this.app);
@@ -21,6 +21,22 @@ export class AppBuilder {
         this.cardBuilder = new CardBuilder(this.app);
         this.pokemonDialog = new PokemonDialog(this.app);
         this.handleEvents();
+    }
+
+    getCurrentPage() {
+        const min = 1;
+        const max = Math.ceil(Object.keys(this.app.currentShown).length / this.app.appBuilder.showedPerPage);
+        let page = this.app.url.get(this.app.url.names.pageNum) || (this.app.url.set(this.app.url.names.pageNum, 1));
+
+        const initPage = page;
+
+        page = isNaN(+page) ? min : (page < min) ? min : ((page > max) ? max : page);
+        this.currentPage = page;
+
+        if (initPage !== page) {
+            this.app.url.set(this.app.url.names.pageNum, page);
+            this.app.url.setDefault();
+        }
     }
 
     page() {

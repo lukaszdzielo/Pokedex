@@ -7,7 +7,7 @@ const config = {
     baseUrl: 'https://pokeapi.co/api/v2/',
     limit: 'limit=999999999999999',
     dev: {
-        on: false,
+        on: true,
         urls: ['http://localhost', 'https://localhost', 'http://192.168', 'http://127.0.0.1'],
         list: [1, 2, 5, 6, 7, 8, 9, 83, 123, 710, 902, 1020, 1024, 1025, 1026, 1027],
     },
@@ -30,8 +30,6 @@ export class Pokedex {
 
         this.dataManager = new DataManager(this);
 
-        this.currentPage = 1;
-
         this.init();
     };
 
@@ -41,9 +39,7 @@ export class Pokedex {
 
         this.currentShown = (this.options.dev.on && this.isDev) ? await this.devLimiter() : this.dataManager.list;
 
-        console.log(this.dataManager.list);
-
-        this.appBuilder.page();
+        this.appBuilder.getCurrentPage();
 
         await this.appBuilder.updateList();
 
