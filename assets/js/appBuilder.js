@@ -39,6 +39,13 @@ export class AppBuilder {
     }
 
     handleEvents() {
+        window.onpopstate = () => {
+            this.app.url.params = new URLSearchParams(location.search);
+            this.currentPage = this.app.url.get(this.app.url.names.pageNum);
+            this.updateList();
+            this.app.appBuilder.pagination.changeActive();
+        };
+
         this.appList.addEventListener('click', (e) => {
             const elem = e.target.closest('.card');
             if (elem) {

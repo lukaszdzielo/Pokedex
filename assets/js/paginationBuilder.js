@@ -5,7 +5,6 @@ export class PaginationBuilder {
     }
 
     build() {
-
         const pagesNumber = Math.ceil(Object.keys(this.app.currentShown).length / this.app.appBuilder.showedPerPage);
 
         this.paginations.forEach(pagination => {
@@ -22,8 +21,9 @@ export class PaginationBuilder {
             const li = e.target.closest('li');
             if (li) {
                 this.app.appBuilder.currentPage = li.dataset.page;
-                this.changeActiveLists(li);
-                this.changeActiveSelects();
+                this.changeActive(li);
+                // this.changeActiveLists(li);
+                // this.changeActiveSelects();
                 this.app.appBuilder.updateList();
             }
             this.app.url.setAndUpdate(this.app.url.names.pageNum, this.app.appBuilder.currentPage);
@@ -31,28 +31,46 @@ export class PaginationBuilder {
 
         pagination.querySelector('select').addEventListener('change', (e) => {
             this.app.appBuilder.currentPage = e.target.value;
-            this.changeActiveLists();
-            this.changeActiveSelects(e.target);
+            // this.changeActiveLists();
+            // this.changeActiveSelects(e.target);
+            this.changeActive(e.target);
             this.app.appBuilder.updateList();
             this.app.url.setAndUpdate(this.app.url.names.pageNum, this.app.appBuilder.currentPage);
         });
     }
 
-    changeActiveLists(li) {
+    // changeActiveLists(li) {
+    //     this.paginations.forEach(pagination => {
+    //         if (pagination.querySelector('ul') === li?.closest('ul')) {
+    //             pagination.querySelector('.active').classList.remove('active');
+    //             li.classList.add('active');
+    //             return;
+    //         };
+    //         pagination.querySelector('.active').classList.remove('active');
+    //         pagination.querySelector(`[data-page="${this.app.appBuilder.currentPage}"]`).classList.add('active');
+    //     });
+    // }
+
+    // changeActiveSelects(select) {
+    //     this.paginations.forEach(pagination => {
+    //         if (pagination.querySelector('select') === select) return;
+    //         pagination.querySelector('select').value = this.app.appBuilder.currentPage;
+    //     });
+    // }
+
+    changeActive(elem) {
         this.paginations.forEach(pagination => {
-            if (pagination.querySelector('ul') === li?.closest('ul')) {
+            if (pagination.querySelector('ul') === elem?.closest('ul')) {
                 pagination.querySelector('.active').classList.remove('active');
-                li.classList.add('active');
+                elem.classList.add('active');
                 return;
             };
+
+            if (pagination.querySelector('select') === elem) return;
+
             pagination.querySelector('.active').classList.remove('active');
             pagination.querySelector(`[data-page="${this.app.appBuilder.currentPage}"]`).classList.add('active');
-        });
-    }
 
-    changeActiveSelects(select) {
-        this.paginations.forEach(pagination => {
-            if (pagination.querySelector('select') === select) return;
             pagination.querySelector('select').value = this.app.appBuilder.currentPage;
         });
     }
