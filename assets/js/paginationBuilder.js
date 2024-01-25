@@ -54,10 +54,8 @@ export class PaginationBuilder {
     }
 
     changeActiveSelects(select) {
-        console.log('s');
         this.paginations.forEach(pagination => {
             if (pagination.querySelector('select') === select) return;
-            console.log(pagination.querySelector('select'), this.app.appBuilder.currentPage);
             pagination.querySelector('select').value = this.app.appBuilder.currentPage;
         });
     }
