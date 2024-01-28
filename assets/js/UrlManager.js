@@ -1,5 +1,5 @@
 const names = {
-    pageNum: 'page',
+    pageNum: 'p',
 };
 
 export class UrlManager {
@@ -20,16 +20,23 @@ export class UrlManager {
 
     setAndUpdate(key, value) {
         this.params.set(key, value);
-        this.updateUrl();
+        this.update();
         return value;
     }
 
     setDefault() {
+        this.removeUnknown();
         history.replaceState(null, "", location.pathname + "?" + this.params.toString());
     }
 
-    updateUrl() {
+    update() {
         history.pushState(null, "", location.pathname + "?" + this.params.toString());
+    }
+
+    removeUnknown() {
+        this.params.forEach((value, key) => {
+            if (!Object.values(this.names).includes(key)) this.params.delete(key);
+        });
     }
 
 }
