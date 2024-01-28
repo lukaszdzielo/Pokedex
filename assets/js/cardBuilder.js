@@ -14,7 +14,7 @@ export class CardBuilder {
         >
         ${(typeof id && typeof id !== 'undefined') ? `<div class='card__id'>${id}</div>` : ''}
         ${(typeof n && typeof n !== 'undefined') ? `<div class='card__name'>${n}</div>` : ''}
-        ${(typeof id && typeof id !== 'undefined') ? `<img class='card__image'><img src="${imageUrl}" class="item__img" alt="${n}" loading="lazy" onerror="this.onerror=null;this.src='./assets/0.png';"></div>` : ''}
+        ${(typeof id && typeof id !== 'undefined') ? `<div class='card__image'><img src="${imageUrl}" class="item__img" alt="${n}" loading="lazy" onerror="this.onerror=null;this.src='./assets/0.png';"></div>` : ''}
 </div>`;
     }
 }
