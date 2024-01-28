@@ -65,10 +65,18 @@ export class PaginationBuilder {
         let li = '';
         let option = '';
         for (let i = 1; i <= pagesNumber; i++) {
-            li += `<li class="${+this.app.appBuilder.currentPage === i ? 'active' : ''}" data-page="${i}">${i}</li>`;
-            option += `<option value="${i}">${i}</option>`;
+            li += this.patternListLi(i);
+            option += this.patternSelectOption(i);
         }
         return `<ul>${li}</ul><select>${option}</select>`;
+    }
+
+    patternListLi(pageNum) {
+        return `<li class="${+this.app.appBuilder.currentPage === pageNum ? 'active' : ''}" data-page="${pageNum}">${pageNum}</li>`;
+    }
+
+    patternSelectOption(pageNum) {
+        return `<option value="${pageNum}">${pageNum}</option>`;
     }
 
 }

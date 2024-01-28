@@ -1,12 +1,12 @@
 dialog {
     --border-radius: 16px;
-    background: var(--dialog--bg);
+    background-color: var(--dialog--bg);
     border-radius: var(--border-radius);
 
     &::backdrop {
         position: fixed;
         inset: 0;
-        background: var(--backdrop--bg, #212121);
+        background-color: var(--backdrop--bg, #212121);
         opacity: 0.75;
     }
 
@@ -118,7 +118,7 @@ dialog {
         border: 1px solid var(--backdrop--bg);
         border-radius: 4px;
         padding: 9px 11px;
-        // background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>') no-repeat right center ;
+        // background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>') no-repeat right center ;
         color: var(--app--color);
         font-size: 0.875rem;
         appearance: none;
@@ -152,7 +152,7 @@ dialog {
 
         code {
             padding: 2px 6px;
-            background: var(--app--bg);
+            background-color: var(--app--bg);
             border-radius: 4px;
         }
     }

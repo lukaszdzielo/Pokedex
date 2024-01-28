@@ -6,7 +6,7 @@
     aspect-ratio: 1/1;
     border: 0;
     border-radius: 8px;
-    background: var(--card--bg);
+    background-color: var(--card--bg);
     box-sizing: border-box;
     font-size: 1rem;
     transition: 0.2s;
@@ -20,7 +20,7 @@
         position: absolute;
         inset: 0;
         border-radius: 4px;
-        background: #BDBDBD;
+        background-color: #BDBDBD;
         z-index: 1;
         pointer-events: none;
         opacity: 0;
@@ -94,7 +94,7 @@
 
             // width: 6px;
             // height: 6px;
-            // background: var(--type, #000);
+            // background-color: var(--type, #000);
             // font-size: 0;
             @media (width >=480px) {
                 // width: 8px;
@@ -132,6 +132,6 @@
     }
 
     &[data-catched] {
-        background: var(--card__catched--bg);
+        background-color: var(--card__catched--bg);
     }
 }

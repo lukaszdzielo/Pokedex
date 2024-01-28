@@ -25,7 +25,7 @@
         padding: 0;
         width: 36px;
         aspect-ratio: 1/1;
-        background: var(--pagination--bg);
+        background-color: var(--pagination--bg);
         color: var(--pagination--color);
         cursor: pointer;
         user-select: none;
@@ -33,7 +33,7 @@
 
     .active {
         display: flex;
-        background: var(--pagination__active--bg);
+        background-color: var(--pagination__active--bg);
         color: var(--pagination__active--color);
     }
 
