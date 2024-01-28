@@ -79,6 +79,10 @@
   --backdrop--bg: #263238;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 #app {
   position: relative;
 }
@@ -101,9 +105,13 @@ body {
 }
 
 nav {
+  position: sticky;
+  top: 0;
   display: flex;
   padding: 12px 16px;
   background: var(--nav--bg);
+  z-index: 1;
+  box-shadow: 0 1px var(--app--bg);
 }
 
 #pokemonList {

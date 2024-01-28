@@ -1,5 +1,9 @@
 nav {
+    position: sticky;
+    top: 0;
     display: flex;
     padding: 12px 16px;
     background: var(--nav--bg);
+    z-index: 1;
+    box-shadow: 0 1px var(--app--bg);
 }

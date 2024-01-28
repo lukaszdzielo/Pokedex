@@ -11,7 +11,7 @@ export class AppBuilder {
         this.schemeManager = new SchemeManager(this.app);
 
         this.currentPage;
-        this.showedPerPage = 60;
+        this.showedPerPage = 50;
 
         this.navBuilder = new NavBuilder(this.app);
         this.pagination = new PaginationBuilder(this.app);
@@ -50,6 +50,11 @@ export class AppBuilder {
         }
         this.removeList();
         this.appList.insertAdjacentHTML('afterbegin', list);
+        this.scrollTop();
+    }
+
+    scrollTop() {
+        window.scrollTo(0, 0);
     }
 
     handleEvents() {
