@@ -1,5 +1,7 @@
 :root {
   color-scheme: light;
+  --form__select: #E0E0E0;
+  --form__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23212121" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
   --app--bg: #E0E0E0;
   --app--color: #212121;
   --nav--bg: #FFFFFF;
@@ -8,6 +10,7 @@
   --pagination--color: #212121;
   --pagination__active--bg: #ffffff;
   --pagination__active--color: #212121;
+  --pagination__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23212121" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
   --card--bg: #ffffff;
   --card__catched--bg: #EEEEEE;
   --dialog--bg: #ffffff;
@@ -17,6 +20,8 @@
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
+    --form__select: #212121;
+    --form__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23EEEEEE" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
     --app--bg: #212121;
     --app--color: #EEEEEE;
     --nav--bg: #424242;
@@ -25,6 +30,7 @@
     --pagination--color: #EEEEEE;
     --pagination__active--bg: #757575;
     --pagination__active--color: #EEEEEE;
+    --pagination__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23EEEEEE" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
     --card--bg: #424242;
     --card__catched--bg: #2f2f2f;
     --dialog--bg: #424242;
@@ -33,6 +39,8 @@
 }
 [color-scheme=light] {
   color-scheme: light;
+  --form__select: #E0E0E0;
+  --form__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23212121" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
   --app--bg: #E0E0E0;
   --app--color: #212121;
   --nav--bg: #FFFFFF;
@@ -41,6 +49,7 @@
   --pagination--color: #212121;
   --pagination__active--bg: #ffffff;
   --pagination__active--color: #212121;
+  --pagination__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23212121" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
   --card--bg: #ffffff;
   --card__catched--bg: #EEEEEE;
   --dialog--bg: #ffffff;
@@ -49,6 +58,8 @@
 
 [color-scheme=dark] {
   color-scheme: dark;
+  --form__select: #212121;
+  --form__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23EEEEEE" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
   --app--bg: #212121;
   --app--color: #EEEEEE;
   --nav--bg: #424242;
@@ -57,6 +68,7 @@
   --pagination--color: #EEEEEE;
   --pagination__active--bg: #757575;
   --pagination__active--color: #EEEEEE;
+  --pagination__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23EEEEEE" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
   --card--bg: #424242;
   --card__catched--bg: #2f2f2f;
   --dialog--bg: #424242;
@@ -65,6 +77,8 @@
 
 [color-scheme=dim] {
   color-scheme: dark;
+  --form__select: #263238;
+  --form__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23EEEEEE" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
   --app--bg: #263238;
   --app--color: #EEEEEE;
   --nav--bg: #37474F;
@@ -73,6 +87,7 @@
   --pagination--color: #EEEEEE;
   --pagination__active--bg: #546E7A;
   --pagination__active--color: #EEEEEE;
+  --pagination__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23EEEEEE" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
   --card--bg: #37474F;
   --card__catched--bg: #2c3a42;
   --dialog--bg: #37474F;
@@ -104,6 +119,48 @@ body {
   overflow: hidden;
 }
 
+input {
+  padding: 9px 11px;
+  border: 1px solid var(--backdrop--bg);
+  border-radius: 8px;
+  height: 40px;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+@container navDialog (width >=400px) {
+  .input-group {
+    flex-direction: row;
+  }
+}
+.input-group input {
+  flex-grow: 1;
+  width: 100%;
+}
+
+select {
+  border: 1px solid var(--backdrop--bg);
+  border-radius: 8px;
+  padding: 0 39px 0 11px;
+  height: 40px;
+  color: var(--app--color);
+  background-color: var(--form__select);
+  background-image: var(--form__select__arrow);
+  background-position: calc(100% - 11px) 50%;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  font-size: 0.875rem;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
 nav {
   position: sticky;
   top: 0;
@@ -113,13 +170,20 @@ nav {
   z-index: 1;
   box-shadow: 0 1px var(--app--bg);
 }
+nav #settingsBtn {
+  width: 40px;
+  aspect-ratio: 1/1;
+}
+nav select {
+  border-color: var(--pagination--bg);
+}
 
 #pokemonList {
-  gap: 16px;
-  margin: 16px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
   grid-gap: 12px;
+  gap: 16px;
+  margin: 16px;
 }
 
 .card {
@@ -152,8 +216,8 @@ nav {
 .card:after {
   content: " ";
   position: absolute;
-  z-index: 2;
   display: block;
+  z-index: 2;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -311,7 +375,7 @@ dialog button.close {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 8px;
+  gap: 8px 16px;
 }
 @container navDialog (width >=400px) {
   #dialogSettings section ul li.inline {
@@ -325,41 +389,9 @@ dialog button.close {
 #dialogSettings .danger button {
   color: #f85149;
 }
-#dialogSettings input {
-  padding: 9px 11px;
-  border: 1px solid var(--backdrop--bg);
-  border-radius: 4px;
-  font-size: 0.875rem;
-  box-sizing: border-box;
-}
-#dialogSettings select {
-  border: 1px solid var(--backdrop--bg);
-  border-radius: 4px;
-  padding: 9px 11px;
-  color: var(--app--color);
-  font-size: 0.875rem;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-}
-#dialogSettings .input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 8px;
-}
-@container navDialog (width >=400px) {
-  #dialogSettings .input-group {
-    flex-direction: row;
-  }
-}
-#dialogSettings .input-group input {
-  flex-grow: 1;
-  width: 100%;
-}
 #dialogSettings .heading {
-  margin-block-end: 4px;
   display: block;
+  margin-block-end: 4px;
   font-weight: bold;
 }
 #dialogSettings p {
@@ -417,25 +449,32 @@ dialog button.close {
 }
 
 .btn {
-  padding: 9px 13px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 7px 13px;
   border: 1px solid var(--nav__btn--bg);
-  border-radius: 4px;
+  border-radius: 8px;
   background-color: var(--nav__btn--bg);
   color: var(--app--color);
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: 1rem;
+  line-height: 1.5;
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
 }
 .btn svg {
   display: block;
-  aspect-ratio: 1/1;
   width: 20px;
   height: 20px;
+  aspect-ratio: 1/1;
 }
 .btn#settingsBtn, .btn.close {
   padding: 8px;
+  width: 40px;
+  height: 40px;
+  aspect-ratio: 1/1;
 }
 
 .pagination {
@@ -461,9 +500,10 @@ dialog button.close {
   justify-content: center;
   align-items: center;
   margin: 0;
+  border: 1px solid var(--pagination--bg);
   border-radius: 4px;
   padding: 0;
-  width: 36px;
+  width: 40px;
   aspect-ratio: 1/1;
   background-color: var(--pagination--bg);
   color: var(--pagination--color);
@@ -471,6 +511,7 @@ dialog button.close {
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
+  box-sizing: border-box;
 }
 .pagination .active {
   display: flex;
@@ -485,15 +526,10 @@ dialog button.close {
   display: flex;
 }
 .pagination select {
-  border: 1px solid var(--backdrop--bg);
-  border-radius: 4px;
-  padding: 9px 11px;
+  border-color: var(--pagination--bg);
   background-color: var(--pagination--bg);
-  color: var(--app--color);
-  font-size: 0.875rem;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  background-image: var(--pagination__select__arrow);
+  text-align: center;
 }
 @media (width >= 480px) {
   .pagination select {

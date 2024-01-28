@@ -21,14 +21,16 @@
         justify-content: center;
         align-items: center;
         margin: 0;
+        border: 1px solid var(--pagination--bg);
         border-radius: 4px;
         padding: 0;
-        width: 36px;
+        width: 40px;
         aspect-ratio: 1/1;
         background-color: var(--pagination--bg);
         color: var(--pagination--color);
         cursor: pointer;
         user-select: none;
+        box-sizing: border-box;
     }
 
     .active {
@@ -46,13 +48,10 @@
     }
 
     select {
-        border: 1px solid var(--backdrop--bg);
-        border-radius: 4px;
-        padding: 9px 11px;
+        border-color: var(--pagination--bg);
         background-color: var(--pagination--bg);
-        color: var(--app--color);
-        font-size: 0.875rem;
-        appearance: none;
+        background-image: var(--pagination__select__arrow);
+        text-align: center;
 
         @media (width >=480px) {
             display: none;

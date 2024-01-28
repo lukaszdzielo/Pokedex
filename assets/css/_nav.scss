@@ -6,4 +6,13 @@ nav {
     background-color: var(--nav--bg);
     z-index: 1;
     box-shadow: 0 1px var(--app--bg);
+
+    #settingsBtn {
+        width: 40px;
+        aspect-ratio: 1/1;
+    }
+
+    select {
+        border-color: var(--pagination--bg);
+    }
 }

@@ -1,6 +1,9 @@
 :root {
     color-scheme: light;
 
+    --form__select: #E0E0E0;
+    --form__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23212121" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
+
     --app--bg: #E0E0E0;
     --app--color: #212121;
 
@@ -11,6 +14,7 @@
     --pagination--color: #212121;
     --pagination__active--bg: #ffffff;
     --pagination__active--color: #212121;
+    --pagination__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23212121" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
 
     --card--bg: #ffffff;
     --card__catched--bg: #EEEEEE;
@@ -23,6 +27,9 @@
     :root {
         color-scheme: dark;
 
+        --form__select: #212121;
+        --form__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23EEEEEE" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
+
         --app--bg: #212121;
         --app--color: #EEEEEE;
 
@@ -33,6 +40,7 @@
         --pagination--color: #EEEEEE;
         --pagination__active--bg: #757575;
         --pagination__active--color: #EEEEEE;
+        --pagination__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23EEEEEE" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
 
         --card--bg: #424242;
         --card__catched--bg: #2f2f2f;
@@ -45,6 +53,9 @@
 [color-scheme="light"] {
     color-scheme: light;
 
+    --form__select: #E0E0E0;
+    --form__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23212121" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
+
     --app--bg: #E0E0E0;
     --app--color: #212121;
 
@@ -55,6 +66,7 @@
     --pagination--color: #212121;
     --pagination__active--bg: #ffffff;
     --pagination__active--color: #212121;
+    --pagination__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23212121" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
 
     --card--bg: #ffffff;
     --card__catched--bg: #EEEEEE;
@@ -66,6 +78,9 @@
 [color-scheme="dark"] {
     color-scheme: dark;
 
+    --form__select: #212121;
+    --form__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23EEEEEE" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
+
     --app--bg: #212121;
     --app--color: #EEEEEE;
 
@@ -76,6 +91,7 @@
     --pagination--color: #EEEEEE;
     --pagination__active--bg: #757575;
     --pagination__active--color: #EEEEEE;
+    --pagination__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23EEEEEE" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
 
     --card--bg: #424242;
     --card__catched--bg: #2f2f2f;
@@ -87,6 +103,9 @@
 [color-scheme="dim"] {
     color-scheme: dark;
 
+    --form__select: #263238;
+    --form__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23EEEEEE" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
+
     --app--bg: #263238;
     --app--color: #EEEEEE;
 
@@ -97,6 +116,7 @@
     --pagination--color: #EEEEEE;
     --pagination__active--bg: #546E7A;
     --pagination__active--color: #EEEEEE;
+    --pagination__select__arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23EEEEEE" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
 
     --card--bg: #37474F;
     --card__catched--bg: #2c3a42;

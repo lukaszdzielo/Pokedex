@@ -1,0 +1,39 @@
+input {
+    padding: 9px 11px;
+    border: 1px solid var(--backdrop--bg);
+    border-radius: 8px;
+    height: 40px;
+    font-size: 0.875rem;
+    box-sizing: border-box;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+
+    @container navDialog (width >=400px) {
+        flex-direction: row;
+    }
+
+    input {
+        flex-grow: 1;
+        width: 100%;
+    }
+}
+
+select {
+    border: 1px solid var(--backdrop--bg);
+    border-radius: 8px;
+    padding: 0 39px 0 11px;
+    height: 40px;
+    color: var(--app--color);
+    background-color: var(--form__select);
+    background-image: var(--form__select__arrow);
+    background-position: calc(100% - 11px) 50%;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    font-size: 0.875rem;
+    appearance: none;
+}
