@@ -3,4 +3,5 @@ This is a project to create a Pokedex using data from the PokemonAPI. This proje
 
 Todo list
 - test
-    - [] test
+    - [ ] test
+    - [x] test
