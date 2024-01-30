@@ -16,7 +16,6 @@ Todo list
     - [x] names
     - [ ] images
     - [ ] types
-    - [ ] 
 - Pagination
     - [ ] desktop list
     - [ ] desktop arrows
