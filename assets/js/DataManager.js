@@ -25,9 +25,9 @@ export class DataManager {
         const isLocalList = !!this.list && !!this.types && !!this.generations[0];
 
         if (isLocalList && Object.keys(this.list).length === this.speciesNum) {
-            console.log('Use local storage');
+            this.app.options.dev.on && this.app.isDev && console.log('Use local storage');
         } else {
-            console.log('Get new pokemon data and save localy');
+            this.app.options.dev.on && this.app.isDev && console.log('Get new pokemon data and save localy');
             await this.dataBuilder.getList();
         }
 

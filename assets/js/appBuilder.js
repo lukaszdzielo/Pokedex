@@ -43,13 +43,15 @@ export class AppBuilder {
         return Object.entries(this.app.currentShown).slice(start, end);
     }
 
-    updateList() {
-        let list = '';
+    async updateList() {
+        const responses = [];
         for (const [id, pokemon] of this.page()) {
-            list += this.cardBuilder.pattern(id, pokemon);
+            responses.push(this.cardBuilder.get(id, pokemon));
         }
+        const list = await Promise.all(responses);
+        
         this.removeList();
-        this.appList.insertAdjacentHTML('afterbegin', list);
+        this.appList.insertAdjacentHTML('afterbegin', list.join(''));
         this.scrollTop();
     }
 

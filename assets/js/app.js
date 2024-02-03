@@ -45,7 +45,7 @@ export class Pokedex {
 
         this.appBuilder.pagination.build();
 
-        this.localStorageSize();
+        this.options.dev.on && this.isDev && this.localStorageSize();
     }
 
     async fetchAPI(fetchUrl) {
